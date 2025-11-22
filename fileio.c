@@ -8,6 +8,9 @@
 #include <string.h>
 #include "fileio.h"
 #include "book.h"
+#include "queue.h"
+#include "history.h"
+#include "utils.h"
 
 /*
  * loadBooksFromCSV()
@@ -117,4 +120,201 @@ void loadUsersFromCSV(void) {
 
 void saveUsersToCSV(void) {
     /* TODO: Save user data to users.csv */
+}
+
+/*
+ * loadQueueFromCSV()
+ * Purpose: Loads borrow queue from queue_data.csv
+ * Format: queue_number,student_id,student_name,book_id,book_title,status
+ */
+void loadQueueFromCSV(void) {
+    FILE *fp = fopen("queue_data.csv", "r");
+    if (fp == NULL) {
+        /* No queue file exists yet */
+        return;
+    }
+    
+    char line[500];
+    int isFirstLine = 1;
+    int maxQueueNum = 0;
+    
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        line[strcspn(line, "\r\n")] = '\0';
+        
+        /* Skip header */
+        if (isFirstLine) {
+            isFirstLine = 0;
+            continue;
+        }
+        
+        if (line[0] == '\0') continue;
+        
+        /* Parse: queue_number,student_id,student_name,book_id,book_title,status */
+        char temp[500];
+        strncpy(temp, line, sizeof(temp)-1);
+        temp[sizeof(temp)-1] = '\0';
+        
+        char *qNum = strtok(temp, ",");
+        char *studentId = strtok(NULL, ",");
+        char *studentName = strtok(NULL, ",");
+        char *bookId = strtok(NULL, ",");
+        char *bookTitle = strtok(NULL, ",");
+        char *status = strtok(NULL, ",");
+        
+        if (!qNum || !studentId || !studentName || !bookId || !bookTitle || !status) continue;
+        
+        int queueNumber = atoi(qNum);
+        int bid = atoi(bookId);
+        
+        /* Manually add to queue (don't use enqueue to avoid printing messages) */
+        BorrowRequest *newRequest = (BorrowRequest*)malloc(sizeof(BorrowRequest));
+        if (newRequest) {
+            newRequest->queueNumber = queueNumber;
+            strncpy(newRequest->studentId, studentId, 49);
+            newRequest->studentId[49] = '\0';
+            strncpy(newRequest->studentName, studentName, MAX_STRING-1);
+            newRequest->studentName[MAX_STRING-1] = '\0';
+            strncpy(newRequest->bookTitle, bookTitle, MAX_STRING-1);
+            newRequest->bookTitle[MAX_STRING-1] = '\0';
+            newRequest->bookId = bid;
+            strncpy(newRequest->status, status, 19);
+            newRequest->status[19] = '\0';
+            newRequest->next = NULL;
+            
+            if (queueRear == NULL) {
+                queueFront = queueRear = newRequest;
+            } else {
+                queueRear->next = newRequest;
+                queueRear = newRequest;
+            }
+            
+            if (queueNumber > maxQueueNum) {
+                maxQueueNum = queueNumber;
+            }
+        }
+    }
+    
+    /* Update queue counter */
+    queueCounter = maxQueueNum + 1;
+    
+    fclose(fp);
+    printf("Queue loaded from CSV.\n");
+}
+
+/*
+ * saveQueueToCSV()
+ * Purpose: Saves current borrow queue to queue_data.csv
+ */
+void saveQueueToCSV(void) {
+    FILE *fp = fopen("queue_data.csv", "w");
+    if (fp == NULL) {
+        printf("Error: Unable to save queue to CSV.\n");
+        return;
+    }
+    
+    /* Write header */
+    fprintf(fp, "queue_number,student_id,student_name,book_id,book_title,status\n");
+    
+    /* Write each queue entry */
+    BorrowRequest *temp = queueFront;
+    while (temp != NULL) {
+        fprintf(fp, "%d,%s,%s,%d,%s,%s\n",
+                temp->queueNumber, temp->studentId, temp->studentName,
+                temp->bookId, temp->bookTitle, temp->status);
+        temp = temp->next;
+    }
+    
+    fclose(fp);
+}
+
+/*
+ * loadHistoryFromCSV()
+ * Purpose: Loads borrow history from history_data.csv
+ * Format: student_id,student_name,book_id,book_title,borrow_date,return_date,returned
+ */
+void loadHistoryFromCSV(void) {
+    FILE *fp = fopen("history_data.csv", "r");
+    if (fp == NULL) {
+        /* No history file exists yet */
+        return;
+    }
+    
+    char line[500];
+    int isFirstLine = 1;
+    
+    while (fgets(line, sizeof(line), fp) != NULL) {
+        line[strcspn(line, "\r\n")] = '\0';
+        
+        /* Skip header */
+        if (isFirstLine) {
+            isFirstLine = 0;
+            continue;
+        }
+        
+        if (line[0] == '\0') continue;
+        
+        /* Parse CSV */
+        char temp[500];
+        strncpy(temp, line, sizeof(temp)-1);
+        temp[sizeof(temp)-1] = '\0';
+        
+        char *studentId = strtok(temp, ",");
+        char *studentName = strtok(NULL, ",");
+        char *bookId = strtok(NULL, ",");
+        char *bookTitle = strtok(NULL, ",");
+        char *borrowDate = strtok(NULL, ",");
+        char *returnDate = strtok(NULL, ",");
+        char *returned = strtok(NULL, ",");
+        
+        if (!studentId || !studentName || !bookId || !bookTitle || !borrowDate || !returnDate || !returned) continue;
+        
+        /* Manually add to history list */
+        BorrowHistory *newRecord = (BorrowHistory*)malloc(sizeof(BorrowHistory));
+        if (newRecord) {
+            strncpy(newRecord->studentId, studentId, 49);
+            newRecord->studentId[49] = '\0';
+            strncpy(newRecord->studentName, studentName, MAX_STRING-1);
+            newRecord->studentName[MAX_STRING-1] = '\0';
+            strncpy(newRecord->bookTitle, bookTitle, MAX_STRING-1);
+            newRecord->bookTitle[MAX_STRING-1] = '\0';
+            newRecord->bookId = atoi(bookId);
+            strncpy(newRecord->borrowDate, borrowDate, 19);
+            newRecord->borrowDate[19] = '\0';
+            strncpy(newRecord->returnDate, returnDate, 19);
+            newRecord->returnDate[19] = '\0';
+            newRecord->returned = atoi(returned);
+            newRecord->next = historyList;
+            historyList = newRecord;
+        }
+    }
+    
+    fclose(fp);
+    printf("History loaded from CSV.\n");
+}
+
+/*
+ * saveHistoryToCSV()
+ * Purpose: Saves borrow history to history_data.csv
+ */
+void saveHistoryToCSV(void) {
+    FILE *fp = fopen("history_data.csv", "w");
+    if (fp == NULL) {
+        printf("Error: Unable to save history to CSV.\n");
+        return;
+    }
+    
+    /* Write header */
+    fprintf(fp, "student_id,student_name,book_id,book_title,borrow_date,return_date,returned\n");
+    
+    /* Write each history entry */
+    BorrowHistory *temp = historyList;
+    while (temp != NULL) {
+        fprintf(fp, "%s,%s,%d,%s,%s,%s,%d\n",
+                temp->studentId, temp->studentName, temp->bookId,
+                temp->bookTitle, temp->borrowDate, temp->returnDate,
+                temp->returned);
+        temp = temp->next;
+    }
+    
+    fclose(fp);
 }

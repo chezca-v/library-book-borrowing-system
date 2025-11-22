@@ -60,8 +60,10 @@ int main(void) {
     int choice;
     char studentId[50], studentName[MAX_STRING];
     
-    /* Load initial data */
+    /* Load all data from CSV files */
     loadBooksFromCSV();
+    loadQueueFromCSV();
+    loadHistoryFromCSV();
     
     /* Display welcome screen */
     displayWelcomeScreen();
@@ -106,8 +108,10 @@ int main(void) {
         }
     } while(choice != 3);
     
-    /* Save data before exit */
+    /* Save all data before exit */
     saveBooksToCSV();
+    saveQueueToCSV();
+    saveHistoryToCSV();
     
     /* Free allocated memory */
     freeMemory();
