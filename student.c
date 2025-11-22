@@ -121,13 +121,15 @@ void studentMenu(const char *studentId, const char *studentName) {
         printf("============================================================\n");
         printf("                   STUDENT MENU - %s\n", studentName);
         printf("============================================================\n");
-        printf("[1] Display All Books\n");
+        printf("[1] Browse Books (Paginated)\n");
         printf("[2] Search Book\n");
-        printf("[3] Request to Borrow\n");
-        printf("[4] View Queue Position\n");
-        printf("[5] Return Book\n");
-        printf("[6] View My History\n");
-        printf("[7] Logout\n");
+        printf("[3] Filter by Genre\n");
+        printf("[4] View Top Rated Books\n");
+        printf("[5] Request to Borrow\n");
+        printf("[6] View Queue Position\n");
+        printf("[7] Return Book\n");
+        printf("[8] View My History\n");
+        printf("[9] Logout\n");
         printf("------------------------------------------------------------\n");
         printf("Choice: ");
         
@@ -139,17 +141,29 @@ void studentMenu(const char *studentId, const char *studentName) {
         switch(choice) {
             case 1: displayAllBooks(); pressEnter(); break;
             case 2: studentSearchBook(); break;
-            case 3: studentRequestBorrow(studentId, studentName); break;
-            case 4: {
+            case 3: {
+                char genre[50];
+                while(getchar() != '\n');
+                printf("Enter genre: ");
+                if (fgets(genre, 50, stdin) != NULL) {
+                    genre[strcspn(genre, "\n")] = '\0';
+                    displayBooksByGenre(genre);
+                }
+                pressEnter();
+                break;
+            }
+            case 4: displayTopRatedBooks(); pressEnter(); break;
+            case 5: studentRequestBorrow(studentId, studentName); break;
+            case 6: {
                 int pos = getQueuePosition(studentId);
                 printf("\nQueue position: %d\n", pos > 0 ? pos : 0);
                 pressEnter();
                 break;
             }
-            case 5: studentReturnBook(studentId, studentName); break;
-            case 6: displayBorrowHistory(studentName); pressEnter(); break;
-            case 7: printf("\nLogging out...\n"); break;
+            case 7: studentReturnBook(studentId, studentName); break;
+            case 8: displayBorrowHistory(studentName); pressEnter(); break;
+            case 9: printf("\nLogging out...\n"); break;
             default: printf("Invalid!\n"); pressEnter();
         }
-    } while(choice != 7);
+    } while(choice != 9);
 }

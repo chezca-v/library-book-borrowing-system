@@ -85,14 +85,71 @@ void displayAllBooks(void) {
     
     if (bookCatalog == NULL) {
         printf("No books in the catalog.\n");
-    } else {
+        printf("============================================================\n");
+        return;
+    }
+    
+    /* Count total books first */
+    int totalBooks = 0;
+    Book *counter = bookCatalog;
+    while (counter != NULL) {
+        totalBooks++;
+        counter = counter->next;
+    }
+    
+    const int BOOKS_PER_PAGE = 15;
+    int totalPages = (totalBooks + BOOKS_PER_PAGE - 1) / BOOKS_PER_PAGE;
+    int currentPage = 1;
+    char choice;
+    
+    do {
+        clearScreen();
+        printf("============================================================\n");
+        printf("                  BOOK CATALOG (Page %d/%d)\n", currentPage, totalPages);
+        printf("============================================================\n");
         printf("ID     | Title                      | Author          | Qty\n");
         printf("------------------------------------------------------------\n");
-        int count = 0;
-        displayBooksRecursive(bookCatalog, &count);
+        
+        /* Calculate start and end positions */
+        int startIdx = (currentPage - 1) * BOOKS_PER_PAGE;
+        int endIdx = startIdx + BOOKS_PER_PAGE;
+        
+        /* Display books for current page */
+        Book *temp = bookCatalog;
+        int idx = 0;
+        int displayed = 0;
+        
+        while (temp != NULL) {
+            if (idx >= startIdx && idx < endIdx) {
+                printf("%-7d| %-27s| %-16s| %d\n", 
+                       temp->id, temp->title, temp->author, temp->quantity);
+                displayed++;
+            }
+            idx++;
+            temp = temp->next;
+        }
+        
         printf("------------------------------------------------------------\n");
-        printf("Total Books: %d\n", count);
-    }
+        printf("Showing %d-%d of %d books\n", 
+               startIdx + 1, startIdx + displayed, totalBooks);
+        printf("============================================================\n");
+        
+        /* Navigation menu */
+        if (totalPages > 1) {
+            printf("\n[N] Next Page | [P] Previous Page | [Q] Quit: ");
+            scanf(" %c", &choice);
+            
+            if (choice == 'N' || choice == 'n') {
+                if (currentPage < totalPages) currentPage++;
+            } else if (choice == 'P' || choice == 'p') {
+                if (currentPage > 1) currentPage--;
+            }
+        } else {
+            choice = 'Q'; /* Auto-quit if only one page */
+        }
+        
+    } while (choice != 'Q' && choice != 'q');
+    
     printf("============================================================\n");
 }
 
@@ -155,4 +212,62 @@ void freeBookList(Book **head) {
         *head = (*head)->next;
         free(temp);
     }
+}
+
+void displayBooksByGenre(const char *genre) {
+    clearScreen();
+    printf("============================================================\n");
+    printf("                  BOOKS IN GENRE: %s\n", genre);
+    printf("============================================================\n");
+    printf("ID     | Title                      | Author          | Qty\n");
+    printf("------------------------------------------------------------\n");
+    
+    Book *temp = bookCatalog;
+    int count = 0;
+    
+    while (temp != NULL) {
+        if (strstr(temp->genre, genre) != NULL) {
+            printf("%-7d| %-27s| %-16s| %d\n", 
+                   temp->id, temp->title, temp->author, temp->quantity);
+            count++;
+        }
+        temp = temp->next;
+    }
+    
+    if (count == 0) {
+        printf("No books found in this genre.\n");
+    }
+    
+    printf("------------------------------------------------------------\n");
+    printf("Total: %d books\n", count);
+    printf("============================================================\n");
+}
+
+void displayTopRatedBooks(void) {
+    clearScreen();
+    printf("============================================================\n");
+    printf("                  TOP RATED BOOKS (4.5+ Stars)\n");
+    printf("============================================================\n");
+    printf("ID     | Title                      | Rating | Qty\n");
+    printf("------------------------------------------------------------\n");
+    
+    Book *temp = bookCatalog;
+    int count = 0;
+    
+    while (temp != NULL) {
+        if (temp->rating >= 4.5) {
+            printf("%-7d| %-27s| %.1f    | %d\n", 
+                   temp->id, temp->title, temp->rating, temp->quantity);
+            count++;
+        }
+        temp = temp->next;
+    }
+    
+    if (count == 0) {
+        printf("No highly rated books found.\n");
+    }
+    
+    printf("------------------------------------------------------------\n");
+    printf("Total: %d books\n", count);
+    printf("============================================================\n");
 }

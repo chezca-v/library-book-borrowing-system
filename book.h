@@ -32,6 +32,8 @@ Book* createBook(int id, const char *title, const char *author,
 void addBook(Book **head, Book *newBook);
 void displayBooksRecursive(Book *book, int *count);
 void displayAllBooks(void);
+void displayBooksByGenre(const char *genre);
+void displayTopRatedBooks(void);
 Book* searchBookById(int id);
 Book* searchBookByTitleRecursive(Book *book, const char *query);
 void deleteBook(int id);

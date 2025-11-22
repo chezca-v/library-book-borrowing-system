@@ -1,0 +1,21 @@
+id,title,author,genre,isbn,year,rating,quantity
+101,The Silent Patient,Alex Michaelides,Thriller,978-1250301697,2019,4.5,4
+102,Atomic Habits,James Clear,Self-help,978-0735211292,2018,4.8,2
+103,The Hobbit,J.R.R. Tolkien,Fantasy,978-0547928227,1937,4.7,5
+104,Becoming,Michelle Obama,Biography,978-1524763138,2018,4.6,1
+105,Educated,Tara Westover,Memoir,978-0399590504,2018,4.7,3
+106,Where the Crawdads Sing,Delia Owens,Fiction,978-0735219090,2018,4.5,2
+107,The Midnight Library,Matt Haig,Fiction,978-0525559474,2020,4.4,3
+108,Sapiens,Yuval Noah Harari,History,978-0062316097,2015,4.6,4
+109,The Alchemist,Paulo Coelho,Fiction,978-0062315007,1988,4.3,6
+110,1984,George Orwell,Dystopian,978-0451524935,1949,4.8,3
+111,To Kill a Mockingbird,Harper Lee,Classic,978-0061120084,1960,4.7,2
+112,The Great Gatsby,F. Scott Fitzgerald,Classic,978-0743273565,1925,4.5,4
+113,Harry Potter and the Sorcerer's Stone,J.K. Rowling,Fantasy,978-0439708180,1997,4.9,7
+114,The Catcher in the Rye,J.D. Salinger,Classic,978-0316769488,1951,4.2,3
+115,Pride and Prejudice,Jane Austen,Romance,978-0141439518,1813,4.6,5
+116,The Book Thief,Markus Zusak,Historical Fiction,978-0375842207,2005,4.7,2
+117,Animal Farm,George Orwell,Satire,978-0452284244,1945,4.5,4
+118,The Hunger Games,Suzanne Collins,Dystopian,978-0439023481,2008,4.4,6
+119,The Da Vinci Code,Dan Brown,Mystery,978-0307474278,2003,4.3,3
+120,Thinking Fast and Slow,Daniel Kahneman,Psychology,978-0374533557,2011,4.6,2
