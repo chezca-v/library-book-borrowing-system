@@ -1,12 +1,9 @@
-/*
- * auth.c
- * Implementation of authentication functions
- */
-
 #include <stdio.h>
 #include <string.h>
 #include "auth.h"
 #include "utils.h"
+
+#define USERS_FILE "users.csv"
 
 int adminLogin(void) {
     clearScreen();
@@ -19,13 +16,29 @@ int adminLogin(void) {
     scanf("%s", username);
     printf("Password: ");
     scanf("%s", password);
-    
-    if (strcmp(username, "admin") == 0 && strcmp(password, "admin123") == 0) {
-        printf("\nLogin successful! Welcome, Admin.\n");
+
+    FILE *file = fopen(USERS_FILE, "r");
+    if (!file) {
+        printf("\nError: Cannot open users.csv\n");
         pressEnter();
-        return 1;
+        return 0;
     }
-    
+
+    char line[256];
+    fgets(line, sizeof(line), file); // skip header
+    while (fgets(line, sizeof(line), file)) {
+        char role[20], id[50], name[50], pass[50];
+        sscanf(line, "%[^,],%[^,],%[^,],%s", role, id, name, pass);
+
+        if (strcmp(role, "admin") == 0 && strcmp(id, username) == 0 && strcmp(pass, password) == 0) {
+            printf("\nLogin successful! Welcome, Admin.\n");
+            fclose(file);
+            pressEnter();
+            return 1;
+        }
+    }
+
+    fclose(file);
     printf("\nInvalid credentials!\n");
     pressEnter();
     return 0;
@@ -42,20 +55,30 @@ int studentLogin(char *studentId, char *studentName) {
     scanf("%s", studentId);
     printf("Password  : ");
     scanf("%s", password);
-    
-    /* Demo credentials */
-    if (strcmp(studentId, "student1") == 0 && strcmp(password, "pass1") == 0) {
-        strcpy(studentName, "John Doe");
-        printf("\nLogin successful! Welcome, %s.\n", studentName);
+
+    FILE *file = fopen(USERS_FILE, "r");
+    if (!file) {
+        printf("\nError: Cannot open users.csv\n");
         pressEnter();
-        return 1;
-    } else if (strcmp(studentId, "student2") == 0 && strcmp(password, "pass2") == 0) {
-        strcpy(studentName, "Jane Smith");
-        printf("\nLogin successful! Welcome, %s.\n", studentName);
-        pressEnter();
-        return 1;
+        return 0;
     }
-    
+
+    char line[256];
+    fgets(line, sizeof(line), file); // skip header
+    while (fgets(line, sizeof(line), file)) {
+        char role[20], id[50], name[50], pass[50];
+        sscanf(line, "%[^,],%[^,],%[^,],%s", role, id, name, pass);
+
+        if (strcmp(role, "student") == 0 && strcmp(id, studentId) == 0 && strcmp(pass, password) == 0) {
+            strcpy(studentName, name);
+            printf("\nLogin successful! Welcome, %s.\n", studentName);
+            fclose(file);
+            pressEnter();
+            return 1;
+        }
+    }
+
+    fclose(file);
     printf("\nInvalid credentials!\n");
     pressEnter();
     return 0;

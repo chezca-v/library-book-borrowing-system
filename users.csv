@@ -1,38 +1,38 @@
 ID,NAME,PASSWORD,ROLE
-student1,"Altares, Athran Caldwell T.",password1,student
-student2,"Amores, Princess Jasmine T.",password2,student
-student3,"Arevalo, Ernesto John M.",password3,student
-student4,"Banayad, Franchezca Natividad Z.",password4,student
-student5,"Bernardino, John Renz W.",password5,student
-student6,"Betco, Allen James G.",password6,student
-student7,"Cadayona, Kenneth Lloyd M.",password7,student
-student8,"Contreras, David Lloyd B.",password8,student
-student9,"Culcul, Mark Ian N.",password9,student
-student10,"Diaz, Alexa Yanina C.",password10,student
-student11,"Dizon, Kenshin Cuerl",password11,student
-student12,"Entila, Dann Alfonzo D.",password12,student
-student13,"Escaño, Jose Jerico C.",password13,student
-student14,"Esteban, Karl Joseph L.",password14,student
-student15,"Frigillana, Niña Ysabelle C.",password15,student
-student16,"Jalimao, Lence Jericho",password16,student
-student17,"Lagrason, Rhaivex R.",password17,student
-student18,"Lanuza, Elena Vale F.",password18,student
-student19,"Listangco, John Benedict S.",password19,student
-student20,"Lovedorial, Jhon Ber G.",password20,student
-student21,"Matuto, Rhaine Chelsy M. ",password21,student
-student22,"Mirasol, Juan Miguel Angelo G.",password22,student
-student23,"Monjes, Christjohn Mar B.",password23,student
-student24,"Motus, Angela Gabrielle E.",password24,student
-student25,"Paraiso, Maria Samantha A.",password25,student
-student26,"Patris, Jocel L.",password26,student
-student27,"Revaula, Mark Daniel D.",password27,student
-student28,"Rojo, Recson Avielle T.",password28,student
-student29,"Sacatani, Juliana Mae C.",password29,student
-student30,"Sanchez, Princess Mae V.",password30,student
-student31,"Selim, Rola R.",password31,student
-student32,"Seraspi, Levin R.",password32,student
-student33,"Tombaga, Kenneth P.",password33,student
-student34,"Tuangco, Lee Shailan P.",password34,student
-student35,"Villafuerte, Angela Franceska L.",password35,student
-student36,"Zamora, Tricia Mae D.",password36,student
-admin,Admin,admin123,admin
+admin,ADMIN,admin123,admin
+stud1,ALTARES,password1,student
+stud2,AMORES,password2,student
+stud3,AREVALO,password3,student
+stud4,BANAYAD,password4,student
+stud5,BERNARDINO,password5,student
+stud6,BETCO,password6,student
+stud7,CADAYONA,password7,student
+stud8,CONTRERAS,password8,student
+stud9,CULCUL,password9,student
+stud10,DIAZ,password10,student
+stud11,DIZON,password11,student
+stud12,ENTILA,password12,student
+stud13,ESCAÑO ,password13,student
+stud14,ESTEBAN,password14,student
+stud15,FRIGILLANA,password15,student
+stud16,JALIMAO,password16,student
+stud17,LAGRASON,password17,student
+stud18,LANUZA,password18,student
+stud19,LISTANGCO,password19,student
+stud20,LOVEDORIAL,password20,student
+stud21,MATUTO,password21,student
+stud22,MIRASOL,password22,student
+stud23,MONJES,password23,student
+stud24,MOTUS,password24,student
+stud25,PARAISO,password25,student
+stud26,PATRIS,password26,student
+stud27,REVAULA,password27,student
+stud28,ROJO,password28,student
+stud29,SACATANI,password29,student
+stud30,SANCHEZ,password30,student
+stud31,SELIM,password31,student
+stud32,SERASPI,password32,student
+stud33,TOMBAGA,password33,student
+stud34,TUANGCO,password34,student
+stud35,VILLAFUERTE,password35,student
+stud36,ZAMORA,password36,student
