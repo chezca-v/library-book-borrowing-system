@@ -27,7 +27,7 @@ void studentMenu(const char *studentId, const char *studentName) {
         printf("[4] Request to Borrow Book\n");
         printf("[5] View Borrow Queue Position\n");
         printf("[6] Return a Book\n");
-        printf("[7] View My Borrowed Books History\n");
+        printf("[7] View My Returned Books History\n");
         printf("[8] Log Out\n");
         printf("------------------------------------------------------------\n");
         printf("Choice: ");

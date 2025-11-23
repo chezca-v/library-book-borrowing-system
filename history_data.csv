@@ -1,1 +1,3 @@
 student_id,student_name,book_id,book_title,borrow_date,return_date,returned
+stud4,BANAYAD,10,The Iliad,2025-11-23,2025-11-23,1
+stud15,FRIGILLANA,1,To Kill a Mockingbird,2025-11-23,,0
