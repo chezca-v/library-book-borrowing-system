@@ -15,7 +15,7 @@
 /*
  * loadBooksFromCSV()
  * Purpose: Loads book data from books.csv file
- * Format: id,title,author,genre,isbn,year,rating,quantity
+ * Format: id,title,author,genre,isbn,year,rating,quantity,borrowCount
  */
 void loadBooksFromCSV(void) {
     FILE *fp = fopen("books.csv", "r");
@@ -49,16 +49,16 @@ void loadBooksFromCSV(void) {
     
     /* Read each line and parse CSV */
     while (fgets(line, sizeof(line), fp) != NULL) {
-        int id, year, quantity;
+        int id, year, quantity, borrowCount = 0;
         char title[200], author[200], genre[200], isbn[50];
         float rating;
         
-        /* Parse CSV line: id,title,author,genre,isbn,year,rating,quantity */
+        /* Parse CSV line: id,title,author,genre,isbn,year,rating,quantity[,borrowCount] */
         char *token;
         int field = 0;
         
         token = strtok(line, ",");
-        while (token != NULL && field < 8) {
+        while (token != NULL && field < 9) {
             switch(field) {
                 case 0: id = atoi(token); break;
                 case 1: strncpy(title, token, 199); title[199] = '\0'; break;
@@ -68,15 +68,17 @@ void loadBooksFromCSV(void) {
                 case 5: year = atoi(token); break;
                 case 6: rating = atof(token); break;
                 case 7: quantity = atoi(token); break;
+                case 8: borrowCount = atoi(token); break;  /* Optional field */
             }
             token = strtok(NULL, ",");
             field++;
         }
         
-        /* Create and add book */
-        if (field == 8) {
+        /* Create and add book (minimum 8 fields required) */
+        if (field >= 8) {
             Book *newBook = createBook(id, title, author, genre, isbn, year, rating, quantity);
             if (newBook) {
+                newBook->borrowCount = borrowCount;  /* Set borrowCount if it was in CSV */
                 addBook(&bookCatalog, newBook);
             }
         }
@@ -89,7 +91,7 @@ void loadBooksFromCSV(void) {
 /*
  * saveBooksToCSV()
  * Purpose: Saves current book catalog to books.csv
- * Format: id,title,author,genre,isbn,year,rating,quantity
+ * Format: id,title,author,genre,isbn,year,rating,quantity,borrowCount
  */
 void saveBooksToCSV(void) {
     FILE *fp = fopen("books.csv", "w");
@@ -98,15 +100,15 @@ void saveBooksToCSV(void) {
         return;
     }
     
-    /* Write header */
-    fprintf(fp, "id,title,author,genre,isbn,year,rating,quantity\n");
+    /* Write header with borrowCount */
+    fprintf(fp, "id,title,author,genre,isbn,year,rating,quantity,borrowCount\n");
     
     /* Write each book */
     Book *temp = bookCatalog;
     while (temp != NULL) {
-        fprintf(fp, "%d,%s,%s,%s,%s,%d,%.1f,%d\n",
+        fprintf(fp, "%d,%s,%s,%s,%s,%d,%.1f,%d,%d\n",
                 temp->id, temp->title, temp->author, temp->genre,
-                temp->isbn, temp->year, temp->rating, temp->quantity);
+                temp->isbn, temp->year, temp->rating, temp->quantity, temp->borrowCount);
         temp = temp->next;
     }
     
