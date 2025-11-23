@@ -1,11 +1,16 @@
+/*
+ * student.c
+ * Implementation of student module functions
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "student.h"
 #include "book.h"
 #include "queue.h"
-#include "stack.h"      
-#include "history.h"    
+#include "stack.h"
+#include "history.h"
 #include "utils.h"
 #include "fileio.h"
 
