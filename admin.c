@@ -1,5 +1,5 @@
 /*
- * admin.c - Updated with batch processing option
+ * admin.c - Updated with duplicate detection and batch processing
  */
 
 #include <stdio.h>
@@ -32,9 +32,68 @@ void adminAddBook(void) {
     }
     while(getchar() != '\n');
     
+    /* Check if ID already exists */
+    Book *existingBook = searchBookById(id);
+    if (existingBook != NULL) {
+        printf("\n[!] ERROR: Book ID %d already exists!\n", id);
+        printf("    Existing book: \"%s\" by %s\n", existingBook->title, existingBook->author);
+        printf("\n    Please use a different ID.\n");
+        pressEnter();
+        return;
+    }
+    
     printf("Enter Title: ");
     if (fgets(title, MAX_STRING, stdin) == NULL) return;
     title[strcspn(title, "\n")] = '\0';
+    
+    /* Check if title already exists (case-insensitive) */
+    Book *temp = bookCatalog;
+    while (temp != NULL) {
+        /* Use case-insensitive comparison */
+        #ifdef _WIN32
+        int titleMatch = (_stricmp(temp->title, title) == 0);
+        #else
+        int titleMatch = (strcasecmp(temp->title, title) == 0);
+        #endif
+        
+        if (titleMatch) {
+            printf("\n[!] WARNING: A book with this title already exists!\n");
+            printf("    Existing: \"%s\" by %s (ID: %d)\n", 
+                   temp->title, temp->author, temp->id);
+            printf("    Quantity: %d copies\n\n", temp->quantity);
+            
+            char choice;
+            printf("Do you want to:\n");
+            printf("  [A] Add as new book anyway\n");
+            printf("  [U] Update quantity of existing book\n");
+            printf("  [C] Cancel\n");
+            printf("Choice: ");
+            scanf(" %c", &choice);
+            while(getchar() != '\n');
+            
+            if (choice == 'U' || choice == 'u') {
+                int addQty;
+                printf("\nHow many copies to add? ");
+                if (scanf("%d", &addQty) == 1 && addQty > 0) {
+                    temp->quantity += addQty;
+                    printf("\n[✓] Updated! New quantity: %d copies\n", temp->quantity);
+                    saveBooksToCSV();
+                } else {
+                    printf("Invalid quantity!\n");
+                }
+                pressEnter();
+                return;
+            } else if (choice == 'C' || choice == 'c') {
+                printf("\nCancelled.\n");
+                pressEnter();
+                return;
+            }
+            /* If 'A', continue adding as new book */
+            printf("\nProceeding to add as separate book...\n");
+            break;
+        }
+        temp = temp->next;
+    }
     
     printf("Enter Author: ");
     if (fgets(author, MAX_STRING, stdin) == NULL) return;
@@ -47,6 +106,20 @@ void adminAddBook(void) {
     printf("Enter ISBN: ");
     if (fgets(isbn, 50, stdin) == NULL) return;
     isbn[strcspn(isbn, "\n")] = '\0';
+    
+    /* Check if ISBN already exists */
+    temp = bookCatalog;
+    while (temp != NULL) {
+        if (strcmp(temp->isbn, isbn) == 0) {
+            printf("\n[!] ERROR: ISBN %s already exists!\n", isbn);
+            printf("    Book: \"%s\" by %s (ID: %d)\n", 
+                   temp->title, temp->author, temp->id);
+            printf("\n    Each book must have a unique ISBN.\n");
+            pressEnter();
+            return;
+        }
+        temp = temp->next;
+    }
     
     printf("Enter Year: ");
     if (scanf("%d", &year) != 1) {
@@ -72,7 +145,10 @@ void adminAddBook(void) {
     Book *newBook = createBook(id, title, author, genre, isbn, year, rating, quantity);
     if (newBook) {
         addBook(&bookCatalog, newBook);
-        printf("\nBook successfully added!\n");
+        printf("\n[✓] Book successfully added!\n");
+        printf("    Title: %s\n", title);
+        printf("    Author: %s\n", author);
+        printf("    Quantity: %d copies\n", quantity);
         saveBooksToCSV();
     }
     pressEnter();
@@ -222,6 +298,13 @@ void adminProcessBorrowRequest(void) {
     pressEnter();
 }
 
+/* Comparison function for sorting books by borrowCount */
+static int cmpBorrowCount(const void *a, const void *b) {
+    Book *const *pa = (Book *const *)a;
+    Book *const *pb = (Book *const *)b;
+    return (*pb)->borrowCount - (*pa)->borrowCount;
+}
+
 void adminDashboard(void) {
     clearScreen();
     printf("====================== SYSTEM STATISTICS ====================\n");
@@ -256,11 +339,6 @@ void adminDashboard(void) {
             int i = 0;
             iter = bookCatalog;
             while (iter) { arr[i++] = iter; iter = iter->next; }
-            int cmpBorrowCount(const void *a, const void *b) {
-                Book *const *pa = a;
-                Book *const *pb = b;
-                return (*pb)->borrowCount - (*pa)->borrowCount;
-            }
             qsort(arr, bookCount, sizeof(Book*), cmpBorrowCount);
             int display = bookCount < 5 ? bookCount : 5;
             for (int r = 0; r < display; r++) {
