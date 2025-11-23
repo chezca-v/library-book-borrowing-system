@@ -35,8 +35,6 @@ void displayWelcomeScreen(void) {
     printf("      A C console-based system that helps you\n");
     printf("              see what's borrowed\n");
     printf("============================================================\n");
-    fflush(stdout);
-    pressEnter();
 }
 
 void displayDashboardStats(void) {
