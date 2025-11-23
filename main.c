@@ -101,14 +101,40 @@ void displayDashboardStats(void) {
     /* Show top 5 most popular books */
     printf("Top 5 Most Popular Books (Popularity Counter):\n");
     printf("------------------------------------------------------------\n");
-    
-    /* Simple display - shows first 5 books by borrowCount */
-    temp = bookCatalog;
-    int rank = 1;
-    while (temp != NULL && rank <= 5) {
-        printf("%d. %-40s (Borrowed %d times)\n", 
-               rank++, temp->title, temp->borrowCount);
-        temp = temp->next;
+    /* Collect books into array */
+    int bookCount = 0;
+    Book *iter = bookCatalog;
+    while (iter) { bookCount++; iter = iter->next; }
+    if (bookCount > 0) {
+        Book **arr = (Book**)malloc(sizeof(Book*) * bookCount);
+        if (arr) {
+            int i = 0;
+            iter = bookCatalog;
+            while (iter) { arr[i++] = iter; iter = iter->next; }
+            /* sort descending by borrowCount */
+            int cmpBorrowCount(const void *a, const void *b) {
+                Book *const *pa = a;
+                Book *const *pb = b;
+                return (*pb)->borrowCount - (*pa)->borrowCount;
+            }
+            qsort(arr, bookCount, sizeof(Book*), cmpBorrowCount);
+            int display = bookCount < 5 ? bookCount : 5;
+            for (int r = 0; r < display; r++) {
+                printf("%d. %-40s (Borrowed %d times)\n", r+1, arr[r]->title, arr[r]->borrowCount);
+            }
+            free(arr);
+        } else {
+            /* fallback */
+            temp = bookCatalog;
+            int rank = 1;
+            while (temp != NULL && rank <= 5) {
+                printf("%d. %-40s (Borrowed %d times)\n", 
+                       rank++, temp->title, temp->borrowCount);
+                temp = temp->next;
+            }
+        }
+    } else {
+        printf("No books available.\n");
     }
     
     printf("============================================================\n");
