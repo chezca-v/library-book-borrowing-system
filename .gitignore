@@ -1,0 +1,60 @@
+# 1. Compiled Object Files
+# These are intermediate files created during compilation.
+*.o
+*.obj
+*.ko
+*.elf
+
+# 2. Executables
+# The final program you run. These should be rebuilt from source.
+*.exe
+*.out
+*.app
+*.bin
+
+# 3. Libraries & Archives
+# Static (.a) and dynamic (.so, .dll) libraries.
+*.a
+*.lib
+*.la
+*.lo
+*.so
+*.so.*
+*.dll
+*.dylib
+
+# 4. Build System & Output Directories
+# Common directories used by build systems like Make or CMake.
+build/
+bin/
+obj/
+
+# 5. Precompiled Headers
+*.gch
+*.pch
+
+# 6. Debugging Files
+*.dSYM/
+*.idb
+*.pdb
+
+# 7. Editor/IDE Specific Files
+# Ignores configuration files from popular editors.
+
+# VS Code
+.vscode/
+
+# CLion
+.idea/
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+.#*
+
+# macOS
+.DS_Store

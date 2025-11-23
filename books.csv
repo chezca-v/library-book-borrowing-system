@@ -1,0 +1,251 @@
+id,title,author,genre,isbn,year,rating,quantity
+1,To Kill a Mockingbird,Harper Lee,Philosophy,2852792095852,1882,4.96,1
+2,1984,George Orwell,Philosophy,8611908019106,1955,4.95,1
+3,The Great Gatsby,F. Scott Fitzgerald,Sci-Fi,3435842592082,1981,4.16,3
+4,Pride and Prejudice,Jane Austen,Classic,9377662678857,1853,3.27,3
+5,The Catcher in the Rye,J.D. Salinger,Fiction,3742142561580,1952,3.86,4
+6,Moby Dick,Herman Melville,Fiction,5250614836004,1903,4.45,1
+7,War and Peace,Leo Tolstoy,Sci-Fi,2293420507217,2014,4.22,2
+8,Crime and Punishment,Fyodor Dostoevsky,Fantasy,4648780396671,1989,3.99,4
+9,The Odyssey,Homer,Fantasy,9793769921949,1988,4.34,1
+10,The Iliad,Homer,Philosophy,7710429251604,1893,4.7,2
+11,Jane Eyre,Charlotte Bront,Sci-Fi,3458168614713,1985,3.2,1
+12,Wuthering Heights,Emily Bront,Philosophy,3003409805933,1967,3.65,2
+13,The Scarlet Letter,Nathaniel Hawthorne,Romance,9087067299573,1930,4.52,1
+14,Great Expectations,Charles Dickens,Historical,6757854894215,2017,3.09,1
+15,Brave New World,Aldous Huxley,Classic,2082907749200,1884,3.85,4
+16,Animal Farm,George Orwell,Historical,1968806657060,1880,3.37,4
+17,The Picture of Dorian Gray,Oscar Wilde,Philosophy,1429530213071,1932,3.19,3
+18,Les Misérables,Victor Hugo,Classic,6417949136596,1986,4.2,1
+19,The Count of Monte Cristo,Alexandre Dumas,Fantasy,1254191400744,1942,4.71,1
+20,The Brothers Karamazov,Fyodor Dostoevsky,Sci-Fi,8634895033672,1865,3.84,4
+21,Don Quixote,Miguel de Cervantes,Romance,2148312062251,1940,3.04,3
+22,The Grapes of Wrath,John Steinbeck,Sci-Fi,8602964788723,1858,4.98,2
+23,Of Mice and Men,John Steinbeck,Historical,4814874334277,2006,4.24,2
+24,Dracula,Bram Stoker,Philosophy,4229631642608,1865,4.82,3
+25,Frankenstein,Mary Shelley,Historical,3172815919421,1955,3.33,4
+26,The Lord of the Flies,William Golding,Fiction,3336074784790,1971,4.75,1
+27,The Old Man and the Sea,Ernest Hemingway,Fantasy,5058902510875,1860,3.08,4
+28,Fahrenheit 451,Ray Bradbury,Classic,8356568255783,1884,4.6,3
+29,The Sun Also Rises,Ernest Hemingway,Sci-Fi,5624153065702,1930,4.03,2
+30,A Tale of Two Cities,Charles Dickens,Fantasy,9688172989230,1935,4.69,4
+31,Sense and Sensibility,Jane Austen,Horror,2962496171831,1970,3.47,1
+32,Emma,Jane Austen,Fiction,9827263725648,1913,3.07,2
+33,Persuasion,Jane Austen,Fantasy,4836522799231,1872,4.67,2
+34,The Hobbit,J.R.R. Tolkien,Horror,7036687039096,2024,3.73,1
+35,The Lord of the Rings,J.R.R. Tolkien,Horror,5274875548647,2022,4.45,4
+36,The Silmarillion,J.R.R. Tolkien,Horror,8526802339989,1959,4.53,1
+37,The Chronicles of Narnia,C.S. Lewis,Horror,4485370252497,1894,4.99,4
+38,The Little Prince,Antoine de Saint-Exupry,Sci-Fi,9557051036597,1902,3.97,2
+39,The Metamorphosis,Franz Kafka,Fiction,6284452854931,1999,4.51,2
+40,Heart of Darkness,Joseph Conrad,Romance,8131426804137,1976,3.75,4
+41,The Stranger,Albert Camus,Horror,6559503173637,1978,3.22,2
+42,The Trial,Franz Kafka,Classic,6257555678286,1926,4.64,3
+43,Madame Bovary,Gustave Flaubert,Horror,7683387905009,1905,3.39,1
+44,Anna Karenina,Leo Tolstoy,Horror,3355116387399,1852,3.33,4
+45,The Hunchback of Notre-Dame,Victor Hugo,Romance,5287831318551,1899,3.06,3
+46,Treasure Island,Robert Louis Stevenson,Classic,8780807291827,1892,4.91,1
+47,Kidnapped,Robert Louis Stevenson,Historical,7515314962631,2017,3.06,1
+48,Gulliver’s Travels,Jonathan Swift,Sci-Fi,7705096962351,1976,4.03,2
+49,Journey to the Center of the Earth,Jules Verne,Sci-Fi,8358034338855,1856,4.99,3
+50,Twenty Thousand Leagues Under the Sea,Jules Verne,Historical,9335567538802,1908,3.81,1
+51,A Christmas Carol,Charles Dickens,Romance,6947953179988,1875,3.6,4
+52,The Time Machine,H.G. Wells,Horror,5563545432988,2002,3.23,3
+53,The War of the Worlds,H.G. Wells,Horror,5998291028303,1855,4.12,1
+54,The Invisible Man,H.G. Wells,Fantasy,7781190298932,1877,4.26,1
+55,The Call of the Wild,Jack London,Romance,2430261357173,1885,3.85,1
+56,White Fang,Jack London,Horror,1147662047244,1945,3.31,1
+57,The Jungle Book,Rudyard Kipling,Horror,4034043618815,1985,3.17,4
+58,The Secret Garden,Frances Hodgson Burnett,Historical,8784056013190,1988,3.69,3
+59,Anne of Green Gables,L.M. Montgomery,Philosophy,1465032793153,2003,4.76,1
+60,Little Women,Louisa May Alcott,Philosophy,4356337567150,1910,4.66,3
+61,The Wind in the Willows,Kenneth Grahame,Horror,2767011189393,1992,3.11,4
+62,Black Beauty,Anna Sewell,Historical,4547747016413,1882,3.77,1
+63,The Adventures of Tom Sawyer,Mark Twain,Fantasy,9809466154697,1899,4.01,4
+64,Adventures of Huckleberry Finn,Mark Twain,Fiction,6390981335576,1934,3.81,2
+65,The Three Musketeers,Alexandre Dumas,Philosophy,5097284875747,2013,3.6,4
+66,Around the World in Eighty Days,Jules Verne,Classic,9425685404635,2013,3.17,3
+67,The Phantom of the Opera,Gaston Leroux,Sci-Fi,2560256082774,1942,3.05,2
+68,The Red Badge of Courage,Stephen Crane,Philosophy,3099717083508,2000,3.24,3
+69,The Wizard of Oz,L. Frank Baum,Classic,9810567753248,1865,4.5,3
+70,Peter Pan,J.M. Barrie,Classic,8141447664381,1893,3.62,4
+71,Alice’s Adventures in Wonderland,Lewis Carroll,Philosophy,4950748525661,1852,3.37,3
+72,Through the Looking Glass,Lewis Carroll,Philosophy,6803734513970,1880,4.77,3
+73,The Swiss Family Robinson,Johann David Wyss,Classic,7158304657536,1918,4.21,2
+74,The Prince and the Pauper,Mark Twain,Fantasy,1419339101912,1964,3.93,3
+75,The Last of the Mohicans,James Fenimore Cooper,Fiction,8152892443790,1875,3.18,3
+76,Robinson Crusoe,Daniel Defoe,Sci-Fi,8543127194593,1967,3.75,4
+77,The Pilgrim’s Progress,John Bunyan,Classic,3707760611744,1875,3.04,1
+78,Uncle Tom’s Cabin,Harriet Beecher Stowe,Fiction,9350417522814,1942,4.21,2
+79,The Secret Adversary,Agatha Christie,Historical,8088787360793,1897,4.66,2
+80,Murder on the Orient Express,Agatha Christie,Philosophy,5806016023724,1969,3.76,1
+81,And Then There Were None,Agatha Christie,Fiction,1668144223979,1980,3.86,2
+82,The Murder of Roger Ackroyd,Agatha Christie,Fantasy,5864511449979,2024,5,1
+83,Death on the Nile,Agatha Christie,Romance,8466800294910,1961,3.54,2
+84,The Kite Runner,Khaled Hosseini,Fantasy,9648732326744,1850,4.46,1
+85,The Book Thief,Markus Zusak,Classic,3994941132065,1867,3.78,3
+86,Life of Pi,Yann Martel,Horror,4186628458624,1937,3.15,1
+87,The Alchemist,Paulo Coelho,Horror,3945737331396,2018,4.45,1
+88,The Road,Cormac McCarthy,Classic,8538310044534,2000,3.35,1
+89,The Help,Kathryn Stockett,Classic,2335036246806,1898,4.03,2
+90,A Thousand Splendid Suns,Khaled Hosseini,Sci-Fi,6634256149713,2007,4.06,2
+91,Gone Girl,Gillian Flynn,Fantasy,7814579088860,1894,4.15,1
+92,The Fault in Our Stars,John Green,Horror,7531165112128,1920,3.75,3
+93,The Girl on the Train,Paula Hawkins,Sci-Fi,6833182987898,1947,3.36,2
+94,The Night Circus,Erin Morgenstern,Historical,5402161255695,1962,3.03,3
+95,The Goldfinch,Donna Tartt,Sci-Fi,9281709770002,1899,3.17,3
+96,Normal People,Sally Rooney,Fiction,3221838208907,1887,4.53,2
+97,The Silent Patient,Alex Michaelides,Horror,8235480203281,2023,3.94,3
+98,All the Light We Cannot See,Anthony Doerr,Historical,1654444542171,1879,4.68,3
+99,The Shadow of the Wind,Carlos Ruiz Zaf贸n,Fiction,7344255965499,1873,3.98,1
+100,The Da Vinci Code,Dan Brown,Classic,7981017089475,1919,3.13,4
+101,Angels & Demons,Dan Brown,Sci-Fi,5265468377969,1883,4.69,3
+102,The Name of the Wind,Patrick Rothfuss,Historical,6251045358569,1986,3.71,4
+103,The Wise Man’s Fear,Patrick Rothfuss,Historical,9126476976835,1880,4.46,4
+104,The Song of Achilles,Madeline Miller,Classic,1234786006106,1946,3.89,1
+105,Circe,Madeline Miller,Fiction,8892207518791,1890,3.86,2
+106,The Hunger Games,Suzanne Collins,Historical,3977740047402,1967,4.58,4
+107,Catching Fire,Suzanne Collins,Classic,9925351384645,1967,4.73,2
+108,Mockingjay,Suzanne Collins,Fiction,4173331299923,2022,3.3,2
+109,Divergent,Veronica Roth,Fiction,5012982991724,2012,4.02,4
+110,Insurgent,Veronica Roth,Classic,7371064214671,1985,3.72,3
+111,Allegiant,Veronica Roth,Fiction,4731497697636,1880,4.4,3
+112,The Maze Runner,James Dashner,Fiction,2537288660788,1851,4.96,3
+113,The Scorch Trials,James Dashner,Horror,8662735737029,1985,3.08,3
+114,The Death Cure,James Dashner,Philosophy,1848985936553,1965,3.44,4
+115,Ready Player One,Ernest Cline,Historical,5696300591798,1953,3.2,3
+116,The Martian,Andy Weir,Fiction,8286712677176,2013,3.73,1
+117,Cloud Atlas,David Mitchell,Sci-Fi,5714685400409,1967,3.78,1
+118,Shutter Island,Dennis Lehane,Classic,8044053015462,1949,4.23,3
+119,The Godfather,Mario Puzo,Horror,8265223786515,1890,4.33,4
+120,A Clockwork Orange,Anthony Burgess,Fiction,7963372554892,1891,4.27,2
+121,The Handmaid’s Tale,Margaret Atwood,Classic,4316641929480,1953,4.56,2
+122,The Blind Assassin,Margaret Atwood,Sci-Fi,5392321472227,2013,4.81,1
+123,The Poisonwood Bible,Barbara Kingsolver,Philosophy,2574533478688,1885,4.49,3
+124,The Remains of the Day,Kazuo Ishiguro,Horror,7308047788511,1898,4.31,3
+125,Beloved,Toni Morrison,Sci-Fi,2354727810080,1897,3.73,1
+126,The Color Purple,Alice Walker,Romance,2405790013014,2012,4.75,3
+127,The Joy Luck Club,Amy Tan,Classic,6072030463243,1939,3.05,3
+128,The Lovely Bones,Alice Sebold,Horror,7651134561908,2014,4.97,4
+129,Memoirs of a Geisha,Arthur Golden,Fiction,9483081987269,1985,3.9,1
+130,Norwegian Wood,Haruki Murakami,Romance,5687757831969,1893,3.96,2
+131,Kafka on the Shore,Haruki Murakami,Fiction,7465847300148,1914,4.53,3
+132,1Q84,Haruki Murakami,Philosophy,7335268340314,1974,4.48,1
+133,Dune,Frank Herbert,Historical,9432176465334,1871,3.41,1
+134,Dune Messiah,Frank Herbert,Sci-Fi,8920538534831,1997,4.79,1
+135,Children of Dune,Frank Herbert,Historical,7203878425903,1973,3.78,1
+136,Ender’s Game,Orson Scott Card,Sci-Fi,9066742896634,1967,3.28,1
+137,Speaker for the Dead,Orson Scott Card,Horror,4803464351919,1947,3.56,4
+138,Foundation,Isaac Asimov,Classic,8841240047673,1898,4.51,1
+139,Foundation and Empire,Isaac Asimov,Philosophy,4728090963330,1985,3.95,3
+140,Second Foundation,Isaac Asimov,Philosophy,6549862574277,1936,4.98,4
+141,Neuromancer,William Gibson,Fantasy,5071705601763,2002,4.92,2
+142,Snow Crash,Neal Stephenson,Classic,6554324811937,1865,4.61,4
+143,Do Androids Dream of Electric Sheep?,Philip K. Dick,Historical,2167099410618,1957,4.56,1
+144,The Left Hand of Darkness,Ursula K. Le Guin,Horror,6539073145843,1911,3.63,1
+145,A Wizard of Earthsea,Ursula K. Le Guin,Horror,5215859215418,2012,4.7,4
+146,The Tombs of Atuan,Ursula K. Le Guin,Fiction,6215242455230,2014,4.59,4
+147,The Farthest Shore,Ursula K. Le Guin,Historical,9213016797045,1887,4.98,1
+148,Mistborn,Brandon Sanderson,Fiction,5835604030093,1981,3.98,4
+149,The Well of Ascension,Brandon Sanderson,Sci-Fi,3562362650476,1878,3.89,4
+150,The Hero of Ages,Brandon Sanderson,Fantasy,4557216698724,1885,4.9,1
+151,The Way of Kings,Brandon Sanderson,Romance,8479162475896,1918,4.4,1
+152,Words of Radiance,Brandon Sanderson,Fantasy,5016279575921,1994,4.43,4
+153,Oathbringer,Brandon Sanderson,Philosophy,1112164756842,1916,3.03,4
+154,Rhythm of War,Brandon Sanderson,Philosophy,5363068965123,2003,3.72,4
+155,Good Omens,Neil Gaiman & Terry Pratchett,Fiction,9723421597954,1905,4.26,1
+156,American Gods,Neil Gaiman,Romance,9673765093368,1998,3.21,2
+157,Neverwhere,Neil Gaiman,Fantasy,8334075251126,2004,3.41,2
+158,Coraline,Neil Gaiman,Romance,2843354471298,2001,3.16,3
+159,His Dark Materials: The Golden Compass,Philip Pullman,Sci-Fi,6456070740622,1929,4.62,2
+160,The Subtle Knife,Philip Pullman,Sci-Fi,8449379973103,1907,4.79,4
+161,The Amber Spyglass,Philip Pullman,Sci-Fi,4815224020514,1944,3.54,3
+162,Eragon,Christopher Paolini,Horror,6019947442289,1880,3.11,3
+163,Eldest,Christopher Paolini,Romance,7545033342407,1960,4.5,4
+164,Brisingr,Christopher Paolini,Historical,8000772881242,1909,3.26,2
+165,Inheritance,Christopher Paolini,Fiction,8164895072952,1865,3.81,1
+166,The Witcher: The Last Wish,Andrzej Sapkowski,Sci-Fi,3041858216722,1930,4.31,3
+167,Sword of Destiny,Andrzej Sapkowski,Historical,4344679479970,1991,4.15,3
+168,Blood of Elves,Andrzej Sapkowski,Classic,1574547562851,2012,4.27,2
+169,Time of Contempt,Andrzej Sapkowski,Fiction,3280331036629,1882,4.72,4
+170,Baptism of Fire,Andrzej Sapkowski,Fantasy,4037724751944,1880,3.54,1
+171,The Tower of the Swallow,Andrzej Sapkowski,Fantasy,9619411600968,1980,4.67,2
+172,The Lady of the Lake,Andrzej Sapkowski,Classic,4080640627582,1966,4.63,1
+173,The Shining,Stephen King,Historical,5438598488475,1917,3.7,1
+174,It,Stephen King,Fantasy,4510856561457,1851,4.59,3
+175,Carrie,Stephen King,Historical,2555629444447,1871,4.56,4
+176,Pet Sematary,Stephen King,Fiction,6817505332093,1880,4.2,1
+177,Misery,Stephen King,Fiction,8276413746587,1951,4.16,4
+178,Doctor Sleep,Stephen King,Classic,8721378633439,1976,3.85,4
+179,The Exorcist,William Peter Blatty,Classic,9308512457843,2024,4.82,3
+180,The Haunting of Hill House,Shirley Jackson,Sci-Fi,3081325995415,1894,3.07,4
+181,Bird Box,Josh Malerman,Fantasy,7212526693895,1933,3.74,1
+182,The Silence of the Lambs,Thomas Harris,Classic,9367096333460,1892,4.55,4
+183,The Souls of Black Folk,W.E.B. Du Bois,Historical,9622475379484,2024,3.88,1
+184,Narrative of the Life of Frederick Douglass,Frederick Douglass,Sci-Fi,7021335612603,1872,4.52,3
+185,The Federalist Papers,Alexander Hamilton / James Madison / John Jay,Horror,6022839315370,1892,3.33,2
+186,Poems by Emily Dickinson,Emily Dickinson,Historical,5550913477059,1869,4.33,2
+187,Aesop’s Fables,Aesop,Fantasy,1233775671938,1862,3.95,2
+188,Beowulf,Unknown,Classic,1073339937620,1904,4.25,3
+189,The Canterbury Tales,Geoffrey Chaucer,Historical,5926306392478,1926,3.25,3
+190,Paradise Lost,John Milton,Horror,1191197403900,1975,3.01,3
+191,The Divine Comedy,Dante Alighieri,Fiction,6551950941579,1988,4.7,2
+192,Faust,Johann Wolfgang von Goethe,Sci-Fi,5587906370624,1927,3.95,2
+193,The Bhagavad Gita,Unknown,Fantasy,9355041472981,1936,3.86,1
+194,Tao Te Ching,Lao Tzu,Historical,3241769379894,1930,4.54,1
+195,The Analects,Confucius,Horror,2859218766308,1861,3.58,4
+196,The Quran,Multiple Authors,Fiction,2310925988249,1924,4.77,1
+197,The Bible (Public Domain KJV),Multiple Authors,Philosophy,8493493741636,1882,3.75,1
+198,The Epic of Gilgamesh,Unknown,Sci-Fi,6724673157298,1969,3.73,2
+199,The Rubaiyat,Omar Khayyam,Classic,2919327590905,1982,3.11,2
+200,The Egyptian Book of the Dead,Multiple Authors,Horror,7655119202352,1952,3.73,4
+201,The Talmud (Selections),Multiple Authors,Historical,6490925111506,1922,3.11,2
+202,Timaeus,Plato,Fiction,4034390801272,1963,3.75,2
+203,Phaedo,Plato,Horror,3658438638777,1862,4.88,3
+204,Phaedrus,Plato,Fantasy,7423045984300,1862,3.95,3
+205,Symposium,Plato,Sci-Fi,8808520182361,1910,3.97,4
+206,The Clouds,Aristophanes,Philosophy,4194472545801,1884,3.87,3
+207,Oedipus Rex,Sophocles,Romance,3916184999451,1882,4.29,3
+208,Antigone,Sophocles,Philosophy,2423014318034,1998,3.38,2
+209,Lysistrata,Aristophanes,Classic,4023290430725,1865,4.98,1
+210,The Aeneid,Virgil,Philosophy,2282524976376,1903,4.54,1
+211,The Histories,Herodotus,Sci-Fi,3303508001705,1860,4.48,2
+212,On the Nature of Things,Lucretius,Fantasy,7633892638348,1931,3.7,4
+213,Pensees,Descartes,Romance,3758096077558,1865,3.89,4
+214,Candide,Voltaire,Sci-Fi,8722333903690,1908,3.72,3
+215,The Social Contract,Jean-Jacques Rousseau,Romance,3545848155572,1952,4.98,2
+216,The Theory of Moral Sentiments,Adam Smith,Fantasy,6025224013525,1915,3.23,2
+217,Wealth of Nations,Adam Smith,Sci-Fi,1698852473444,1914,4.35,2
+218,Leviathan,Thomas Hobbes,Sci-Fi,1509802642810,1933,3.81,4
+219,Confessions,St. Augustine,Romance,2416613883158,1977,3.22,1
+220,The Enchiridion,Epictetus,Fiction,3771305740902,1861,3.2,4
+221,The Complete Sherlock Holmes,Arthur Conan Doyle,Classic,6526438548961,2006,3.25,1
+222,The Importance of Being Earnest,Oscar Wilde,Fantasy,6604911115319,1870,3.05,1
+223,The Turn of the Screw,Henry James,Classic,2385689871526,2024,3.01,1
+224,The Red and the Black,Stendhal,Classic,3498133264922,1979,4.27,4
+225,Nostromo,Joseph Conrad,Fantasy,8202980757179,2002,4.69,4
+226,The Way of All Flesh,Samuel Butler,Historical,6468475956794,1855,3.36,1
+227,Vanity Fair,William Makepeace Thackeray,Fantasy,6220390116925,1941,4.18,4
+228,Sons and Lovers,D.H. Lawrence,Fiction,7845092558044,2014,4.2,2
+229,The Republic,Plato,Fantasy,4702002626170,1915,3.24,1
+230,Utopia,Thomas More,Horror,9718256704308,1983,4.67,4
+231,Meditations,Marcus Aurelius,Horror,9539011566519,2004,4.11,4
+232,The Art of War,Sun Tzu,Classic,2508960777304,1872,3.7,1
+233,Beyond Good and Evil,Friedrich Nietzsche,Sci-Fi,3624927883558,1877,3.33,3
+234,Thus Spoke Zarathustra,Friedrich Nietzsche,Sci-Fi,7548606550378,1889,4.91,4
+235,Walden,Henry David Thoreau,Historical,2783473041146,1995,4.06,1
+236,Leaves of Grass,Walt Whitman,Historical,6496009632103,1886,4.8,1
+237,The Prince,Niccol貌 Machiavelli,Sci-Fi,5147568423384,1996,4.22,2
+238,Common Sense,Thomas Paine,Fiction,8992770796716,1936,4.01,4
+239,Democracy in America,Alexis de Tocqueville,Romance,7607194507146,1954,4.12,1
+240,The Souls of Black Folk,W.E.B. Du Bois,Romance,3615139778175,1986,3.33,2
+241,Narrative of the Life of Frederick Douglass,Frederick Douglass,Sci-Fi,4558959199917,1998,3.73,1
+242,The Federalist Papers,Alexander Hamilton / James Madison / John Jay,Classic,3784024537382,1857,4.17,2
+243,Poems by Emily Dickinson,Emily Dickinson,Sci-Fi,7444946666116,1994,3.14,1
+244,Aesop’s Fables,Aesop,Classic,1389082799234,2020,4.41,2
+245,Beowulf,Unknown,Fantasy,2417465130199,1855,3.93,3
+246,The Canterbury Tales,Geoffrey Chaucer,Historical,7917100677761,2014,3.03,4
+247,Paradise Lost,John Milton,Horror,3945187600895,1863,3.65,1
+248,The Divine Comedy,Dante Alighieri,Philosophy,1601973667356,1915,4.08,2
+249,Faust,Johann Wolfgang von Goethe,Philosophy,8265414288168,2007,3.59,3
+250,The Bhagavad Gita,Unknown,Romance,1290455165674,1901,4.76,4
