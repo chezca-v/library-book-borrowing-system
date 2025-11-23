@@ -58,7 +58,7 @@ static int cmpBorrowCountMain(const void *a, const void *b) {
     return (*pb)->borrowCount - (*pa)->borrowCount;
 }
 
-void displayDashboardStats(void) {
+void freeMemory(void) {
     printf("============================================================\n");
     printf("              DASHBOARD / STATISTICS\n");
     printf("============================================================\n");
