@@ -17,14 +17,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-<<<<<<< HEAD
-#include <string.h>
-=======
-#include <locale.h>   // <--- added for setlocale
+#include <string.h>   // <--- ADDED THIS
+#include <locale.h>
 #ifdef _WIN32
-#include <windows.h>  // <--- added for SetConsoleOutputCP / SetConsoleCP
+#include <windows.h>
 #endif
->>>>>>> cd0433575e7f0eaa8f61afc0fea1e38fc28f2e53
 #include "utils.h"
 #include "book.h"
 #include "queue.h"
