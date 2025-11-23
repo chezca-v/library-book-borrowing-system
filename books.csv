@@ -8,7 +8,7 @@ id,title,author,genre,isbn,year,rating,quantity
 7,War and Peace,Leo Tolstoy,Sci-Fi,2293420507217,2014,4.2,2
 8,Crime and Punishment,Fyodor Dostoevsky,Fantasy,4648780396671,1989,4.0,4
 9,The Odyssey,Homer,Fantasy,9793769921949,1988,4.3,1
-10,The Iliad,Homer,Philosophy,7710429251604,1893,4.7,2
+10,The Iliad,Homer,Philosophy,7710429251604,1893,4.7,1
 11,Jane Eyre,Charlotte Bront,Sci-Fi,3458168614713,1985,3.2,1
 12,Wuthering Heights,Emily Bront,Philosophy,3003409805933,1967,3.7,2
 13,The Scarlet Letter,Nathaniel Hawthorne,Romance,9087067299573,1930,4.5,1

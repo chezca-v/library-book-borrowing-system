@@ -273,6 +273,24 @@ void studentReturnBook(const char *studentId, const char *studentName) {
         pressEnter();
         return;
     }
+
+    /* Verify student actually borrowed this book and it is not already returned */
+    BorrowHistory *histCheck = historyList;
+    BorrowHistory *matchingRecord = NULL;
+    while (histCheck != NULL) {
+        if (strcmp(histCheck->studentId, studentId) == 0 &&
+            histCheck->bookId == bookId &&
+            !histCheck->returned) {
+            matchingRecord = histCheck;
+            break;
+        }
+        histCheck = histCheck->next;
+    }
+    if (matchingRecord == NULL) {
+        printf("\nYou have not borrowed this book (or it is already returned).\n");
+        pressEnter();
+        return;
+    }
     
     Book *book = searchBookById(bookId);
     if (book == NULL) {
