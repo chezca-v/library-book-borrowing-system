@@ -17,7 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>   // <--- ADDED THIS
+#include <string.h>   
 #include <locale.h>
 #ifdef _WIN32
 #include <windows.h>
