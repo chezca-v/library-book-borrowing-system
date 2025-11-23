@@ -181,10 +181,14 @@ void adminProcessBorrowRequest(void) {
                 processedCount++;
             } else {
                 printf("\nCannot approve: Book unavailable!\n");
-                printf("Skipping this request...\n");
+                printf("Skipping this request (removing from queue)...\n");
+                BorrowRequest *toFree = dequeue();
+                free(toFree);
             }
         } else {
-            printf("\nRequest rejected. Moving to next...\n");
+            printf("\nRequest rejected (removing from queue)...\n");
+            BorrowRequest *toFree = dequeue();
+            free(toFree);
         }
         
         /* Check if there are more requests */
