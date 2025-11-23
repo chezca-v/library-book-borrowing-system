@@ -12,6 +12,7 @@
 #include "stack.h"
 #include "history.h"
 #include "utils.h"
+#include "fileio.h"
 
 void studentMenu(const char *studentId, const char *studentName) {
     int choice;
@@ -49,7 +50,7 @@ void studentMenu(const char *studentId, const char *studentName) {
                 if (pos > 0) {
                     printf("\nYour queue position: #%d\n", pos);
                 } else {
-                    printf("\n✗ You are not in the borrowing queue.\n");
+                    printf("\nYou are not in the borrowing queue.\n");
                 }
                 pressEnter();
                 break;
@@ -84,7 +85,6 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
     
     while (temp != NULL) {
         if (strcmp(temp->studentId, studentId) == 0 && !temp->returned) {
-            /* Check if overdue (simplified - in production, calculate actual days) */
             const char *status = "Active";
             
             printf("%-25s | %-11s | %s\n", 
@@ -158,7 +158,6 @@ void studentSearchBook(void) {
     printf("Searching for: \"%s\"\n", query);
     printf("------------------------------------------------------------\n");
     
-    /* For ID search, use searchById */
     if (searchType == 4) {
         int id = atoi(query);
         Book *result = searchBookById(id);
@@ -174,10 +173,9 @@ void studentSearchBook(void) {
             printf(" (%.1f/5.0)\n", result->rating);
             printf("Available: %d copies\n", result->quantity);
         } else {
-            printf("\n✗ Book not found.\n");
+            printf("\nBook not found.\n");
         }
     } else {
-        /* Use recursive search for title/author/ISBN */
         Book *result = searchBookByTitleRecursive(bookCatalog, query);
         
         if (result) {
@@ -190,10 +188,9 @@ void studentSearchBook(void) {
             printStars((int)result->rating);
             printf("\nAvailable: %d copies\n", result->quantity);
         } else {
-            printf("\n✗ No exact match found.\n\n");
+            printf("\nNo exact match found.\n\n");
             printf("Search Suggestions (titles containing \"%s\"):\n", query);
             
-            /* Show suggestions - partial matches */
             Book *temp = bookCatalog;
             int suggestionCount = 0;
             
@@ -237,7 +234,6 @@ void studentRequestBorrow(const char *studentId, const char *studentName) {
         return;
     }
     
-    /* Check borrow limit (max 3 books) */
     int currentBorrowed = getCurrentBorrowedCount(studentId);
     if (currentBorrowed >= MAX_BOOKS_PER_STUDENT) {
         printf("\nBorrow Limit Reached!\n");
@@ -246,7 +242,6 @@ void studentRequestBorrow(const char *studentId, const char *studentName) {
         printf("You will be added to the waiting queue.\n\n");
     }
     
-    /* Add to queue with queue number */
     printf("\n------------------------------------------------------------\n");
     printf("Book: %s\n", book->title);
     printf("Author: %s\n", book->author);
@@ -256,6 +251,9 @@ void studentRequestBorrow(const char *studentId, const char *studentName) {
     enqueue(studentName, studentId, book->title, bookId);
     printf("\nReservation created with queuing number.\n");
     printf("Note: Book will be marked as borrowed after admin approval.\n");
+    
+    saveQueueToCSV();
+    
     printf("============================================================\n");
     pressEnter();
 }
@@ -274,7 +272,6 @@ void studentReturnBook(const char *studentId, const char *studentName) {
         return;
     }
 
-    /* Verify student actually borrowed this book and it is not already returned */
     BorrowHistory *histCheck = historyList;
     BorrowHistory *matchingRecord = NULL;
     while (histCheck != NULL) {
@@ -311,14 +308,17 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     printf("Book: %s\n", book->title);
     printf("Before: %d copies available\n", book->quantity);
     
-    book->quantity++;  /* Increase quantity */
+    book->quantity++;
     
     printf("After:  %d copies available\n", book->quantity);
     printf("--- BOOK RETURNED TO SHELF ---\n");
     
     markAsReturned(studentId, bookId);
     pushReturn(studentName, book->title, bookId, rating);
-    
+
+    saveHistoryToCSV();
+    saveBooksToCSV();
+
     printf("\nThank you! Book successfully returned.\n");
     printf("Your rating: ");
     printStars(rating);
@@ -341,7 +341,6 @@ void displayOverdueBooks(const char *studentId, const char *studentName) {
     
     while (temp != NULL) {
         if (strcmp(temp->studentId, studentId) == 0 && !temp->returned) {
-            /* In real implementation, calculate actual overdue days */
             printf("%-25s | %s  |  [Check date]\n", 
                    temp->bookTitle, temp->borrowDate);
             found = 1;

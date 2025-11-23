@@ -12,6 +12,7 @@
 #include "stack.h"
 #include "history.h"
 #include "utils.h"
+#include "fileio.h"
 
 void adminAddBook(void) {
     clearScreen();
@@ -73,6 +74,7 @@ void adminAddBook(void) {
     if (newBook) {
         addBook(&bookCatalog, newBook);
         printf("\nBook successfully added!\n");
+        saveBooksToCSV();
     }
     pressEnter();
 }
@@ -107,6 +109,7 @@ void adminRemoveBook(void) {
     
     if (confirm == 'Y' || confirm == 'y') {
         deleteBook(id);
+        saveBooksToCSV();
     }
     pressEnter();
 }
@@ -150,7 +153,7 @@ void adminProcessBorrowRequest(void) {
             printf("\n--- PROCESSING ---\n");
             printf("Before: %d copies\n", book->quantity);
             
-            book->quantity--;           /* DECREASE QUANTITY */
+            book->quantity--;
             book->borrowCount++;
             
             printf("After:  %d copies\n", book->quantity);
@@ -165,6 +168,10 @@ void adminProcessBorrowRequest(void) {
             printf("\nApproved! Due: %s\n", dueDate);
             BorrowRequest *toFree = dequeue();
             free(toFree);
+            
+            saveBooksToCSV();
+            saveQueueToCSV();
+            saveHistoryToCSV();
         } else {
             printf("\nCannot approve: Book unavailable!\n");
         }
@@ -289,7 +296,6 @@ void displayBorrowedBooks(void) {
     
     while (temp != NULL) {
         if (!temp->returned) {
-            /* Calculate due date (14 days from borrow) */
             printf("%-14s | %-23s | %-11s | +14 days\n", 
                    temp->studentName, temp->bookTitle, temp->borrowDate);
             found = 1;
@@ -340,7 +346,7 @@ void displayAllUsers(void) {
         char *pass = strtok(NULL, ",");
         char *role = strtok(NULL, ",");
         
-        (void)pass; /* Unused - don't display password */
+        (void)pass;
         
         if (!id || !user || !role) continue;
         
