@@ -47,24 +47,28 @@ void displayDashboardStats(void) {
     printf("              DASHBOARD / STATISTICS\n");
     printf("============================================================\n");
     
-    /* Count total books and available */
-    int totalBooks = 0, availableBooks = 0;
+    /* Count total unique books (titles) and total available copies */
+    int totalBookTitles = 0;
+    int totalAvailableCopies = 0;
     Book *temp = bookCatalog;
+    
     while (temp != NULL) {
-        totalBooks++;
-        availableBooks += temp->quantity;
+        totalBookTitles++;
+        totalAvailableCopies += temp->quantity;
         temp = temp->next;
     }
     
-    /* Count borrowed books */
+    /* Count currently borrowed books (unreturned) */
     int borrowedBooks = 0;
     BorrowHistory *hist = historyList;
     while (hist != NULL) {
-        if (!hist->returned) borrowedBooks++;
+        if (!hist->returned) {
+            borrowedBooks++;
+        }
         hist = hist->next;
     }
     
-    /* Count active borrowers */
+    /* Count active borrowers (unique students with unreturned books) */
     int activeBorrowers = 0;
     char counted[100][50];
     int countedIndex = 0;
@@ -89,15 +93,16 @@ void displayDashboardStats(void) {
         hist = hist->next;
     }
     
-    printf("Total Books Available :  %d\n", availableBooks);
-    printf("Total Books Borrowed  :  %d\n", borrowedBooks);
+    printf("Total Book Titles     :  %d\n", totalBookTitles);
+    printf("Total Copies Available:  %d\n", totalAvailableCopies);
+    printf("Total Copies Borrowed :  %d\n", borrowedBooks);
     printf("Active Borrowers      :  %d\n\n", activeBorrowers);
     
     /* Show top 5 most popular books */
     printf("Top 5 Most Popular Books (Popularity Counter):\n");
     printf("------------------------------------------------------------\n");
     
-    /* Simple display - in production, sort by borrowCount */
+    /* Simple display - shows first 5 books by borrowCount */
     temp = bookCatalog;
     int rank = 1;
     while (temp != NULL && rank <= 5) {
