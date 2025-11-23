@@ -1,3 +1,7 @@
 queue_number,student_id,student_name,book_id,book_title,status
 2,stud15,FRIGILLANA,1,To Kill a Mockingbird,Pending
+<<<<<<< HEAD
 3,stud15,FRIGILLANA,1,To Kill a Mockingbird,Pending
+=======
+3,stud4,BANAYAD,10,The Iliad,Pending
+>>>>>>> f6469c869bc0b7021aecad71e2cca2cabff72a2b
