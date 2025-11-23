@@ -30,63 +30,17 @@
 void displayWelcomeScreen(void) {
     clearScreen();
     printf("============================================================\n");
-    printf("                 LIBRARY BORROWING SYSTEM\n");
-    printf("============================================================\n");
-    printf("                   Welcome to the Library!\n");
-    printf("                A Simple Console-Based System\n");
-    printf("------------------------------------------------------------\n");
-    printf("                    Press ENTER to continue\n");
-    printf("============================================================\n");
-    getchar();
-}
-
-void displayExitScreen(void) {
-    clearScreen();
-    printf("============================================================\n");
-    printf("                THANK YOU FOR USING C THE LIBRARY\n");
-    printf("------------------------------------------------------------\n");
-    printf("                \"See what's borrowed, in C.\"\n");
-    printf("============================================================\n");
-}
-
-void freeMemory(void) {
-    freeBookList(&bookCatalog);
-    freeQueue();
-    freeStack();
-    freeHistoryList();
-}
-
-/*
- * main.c
- * C the Library - Main Program Entry Point
- * "A C console-based system that helps you see what's borrowed"
- */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "utils.h"
-#include "book.h"
-#include "queue.h"
-#include "stack.h"
-#include "history.h"
-#include "fileio.h"
-#include "admin.h"
-#include "student.h"
-#include "auth.h"
-
-void displayWelcomeScreen(void) {
-    clearScreen();
-    printf("============================================================\n");
     printf("              WELCOME TO C THE LIBRARY\n");
     printf("============================================================\n");
     printf("      A C console-based system that helps you\n");
     printf("              see what's borrowed\n");
     printf("============================================================\n");
+    fflush(stdout);      // ensure visible before waiting
     pressEnter();
 }
 
 void displayDashboardStats(void) {
-    clearScreen();
+    // Removed clearScreen() so previous context (if any) isn't immediately wiped.
     printf("============================================================\n");
     printf("              DASHBOARD / STATISTICS\n");
     printf("============================================================\n");
@@ -151,7 +105,8 @@ void displayDashboardStats(void) {
     }
     
     printf("============================================================\n");
-    pressEnter();
+    fflush(stdout);      // ensure the dashboard is visible
+    // removed pressEnter() so dashboard stays visible with the main menu
 }
 
 void displayExitScreen(void) {
@@ -173,7 +128,11 @@ void freeMemory(void) {
 int main(void) {
     int choice;
     char studentId[50], studentName[MAX_STRING];
-    
+
+    /* Print build stamp to verify binary was rebuilt */
+    printf("BUILD: compiled on %s %s\n", __DATE__, __TIME__);
+    fflush(stdout);
+
     /* Load all data from CSV files */
     loadBooksFromCSV();
     loadQueueFromCSV();
@@ -183,8 +142,14 @@ int main(void) {
     displayWelcomeScreen();
     
     /* Main menu loop */
+    int firstLoop = 1;            // <--- new: skip initial clear so welcome stays visible
     do {
-        clearScreen();
+        if (!firstLoop) {
+            clearScreen();
+        } else {
+            firstLoop = 0;
+        }
+
         printf("============================================================\n");
         printf("              WELCOME TO C THE LIBRARY\n");
         printf("============================================================\n");
