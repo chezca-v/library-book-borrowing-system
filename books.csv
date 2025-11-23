@@ -8,14 +8,14 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 7,War and Peace,Leo Tolstoy,Sci-Fi,2293420507217,2014,4.2,2,0
 8,Crime and Punishment,Fyodor Dostoevsky,Fantasy,4648780396671,1989,4.0,4,0
 9,The Odyssey,Homer,Fantasy,9793769921949,1988,4.3,1,0
-10,The Iliad,Homer,Philosophy,7710429251604,1893,4.7,1,1
+10,The Iliad,Homer,Philosophy,7710429251604,1893,4.7,1,2
 11,Jane Eyre,Charlotte Bront,Sci-Fi,3458168614713,1985,3.2,1,0
 12,Wuthering Heights,Emily Bront,Philosophy,3003409805933,1967,3.7,2,0
 13,The Scarlet Letter,Nathaniel Hawthorne,Romance,9087067299573,1930,4.5,1,0
 14,Great Expectations,Charles Dickens,Historical,6757854894215,2017,3.1,1,0
 15,Brave New World,Aldous Huxley,Classic,2082907749200,1884,3.8,4,0
 16,Animal Farm,George Orwell,Historical,1968806657060,1880,3.4,4,0
-17,The Picture of Dorian Gray,Oscar Wilde,Philosophy,1429530213071,1932,3.2,3,0
+17,The Picture of Dorian Gray,Oscar Wilde,Philosophy,1429530213071,1932,3.2,2,1
 18,Les Misérables,Victor Hugo,Classic,6417949136596,1986,4.2,1,0
 19,The Count of Monte Cristo,Alexandre Dumas,Fantasy,1254191400744,1942,4.7,1,0
 20,The Brothers Karamazov,Fyodor Dostoevsky,Sci-Fi,8634895033672,1865,3.8,4,0
