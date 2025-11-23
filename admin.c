@@ -162,14 +162,14 @@ void adminProcessBorrowRequest(void) {
             char dueDate[20];
             addDaysToDate(dueDate, 14);
             
-            printf("\n✅ Approved! Due: %s\n", dueDate);
+            printf("\nApproved! Due: %s\n", dueDate);
             BorrowRequest *toFree = dequeue();
             free(toFree);
         } else {
-            printf("\n❌ Cannot approve: Book unavailable!\n");
+            printf("\nCannot approve: Book unavailable!\n");
         }
     } else {
-        printf("\n❌ Request rejected.\n");
+        printf("\nRequest rejected.\n");
     }
     pressEnter();
 }
@@ -216,16 +216,16 @@ void adminMenu(void) {
         printf("============================================================\n");
         printf("                        ADMIN DASHBOARD\n");
         printf("============================================================\n");
-        printf("[1]  ➕ Add New Book to Catalog\n");
-        printf("[2]  ➖ Remove Book from Catalog\n");
-        printf("[3]  📚 Display All Books\n");
-        printf("[4]  🧾 Display Borrowed Books (with borrower info)\n");
-        printf("[5]  👥 Display Borrowing Queue (Full List)\n");
-        printf("[6]  ✅ Process Borrow Requests (Dequeue)\n");
-        printf("[7]  👤 Display All Users\n");
-        printf("[8]  🔁 View User's Return History (Stack)\n");
-        printf("[9]  📖 View User Borrowing History\n");
-        printf("[10] 🚪 Log Out\n");
+        printf("[1]  Add New Book to Catalog\n");
+        printf("[2]  Remove Book from Catalog\n");
+        printf("[3]  Display All Books\n");
+        printf("[4]  Display Borrowed Books (with borrower info)\n");
+        printf("[5]  Display Borrowing Queue (Full List)\n");
+        printf("[6]  Process Borrow Requests (Dequeue)\n");
+        printf("[7]  Display All Users\n");
+        printf("[8]  View User's Return History (Stack)\n");
+        printf("[9]  View User Borrowing History\n");
+        printf("[10] Log Out\n");
         printf("------------------------------------------------------------\n");
         printf("Enter choice: ");
         
@@ -279,7 +279,7 @@ void adminMenu(void) {
 void displayBorrowedBooks(void) {
     clearScreen();
     printf("============================================================\n");
-    printf("            🧾 CURRENTLY BORROWED BOOKS\n");
+    printf("            CURRENTLY BORROWED BOOKS\n");
     printf("============================================================\n");
     printf("Student Name   | Book Title              | Borrow Date | Due Date\n");
     printf("------------------------------------------------------------\n");
@@ -306,7 +306,7 @@ void displayBorrowedBooks(void) {
 void displayAllUsers(void) {
     clearScreen();
     printf("============================================================\n");
-    printf("                   👤 ALL USERS\n");
+    printf("                   ALL USERS\n");
     printf("============================================================\n");
     printf("ID       | Username       | Role\n");
     printf("------------------------------------------------------------\n");

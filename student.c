@@ -20,14 +20,14 @@ void studentMenu(const char *studentId, const char *studentName) {
         printf("============================================================\n");
         printf("                   STUDENT MENU - %s\n", studentName);
         printf("============================================================\n");
-        printf("[1] 📖 View User's Current Books\n");
-        printf("[2] 🔍 Search Book\n");
-        printf("[3] 📚 Display Available Books\n");
-        printf("[4] 📘 Request to Borrow Book (Enqueue)\n");
-        printf("[5] ⏳ View Borrow Queue Position\n");
-        printf("[6] 🔁 Return a Book\n");
-        printf("[7] 📖 View My Borrowed Books History\n");
-        printf("[8] 🚪 Log Out\n");
+        printf("[1] View User's Current Books\n");
+        printf("[2] Search Book\n");
+        printf("[3] Display Available Books\n");
+        printf("[4] Request to Borrow Book (Enqueue)\n");
+        printf("[5] View Borrow Queue Position\n");
+        printf("[6] Return a Book\n");
+        printf("[7] View My Borrowed Books History\n");
+        printf("[8] Log Out\n");
         printf("------------------------------------------------------------\n");
         printf("Choice: ");
         
@@ -71,7 +71,7 @@ void studentMenu(const char *studentId, const char *studentName) {
 void viewCurrentBooks(const char *studentId, const char *studentName) {
     clearScreen();
     printf("============================================================\n");
-    printf("         📖 YOUR CURRENT BORROWED BOOKS\n");
+    printf("         YOUR CURRENT BORROWED BOOKS\n");
     printf("============================================================\n");
     printf("Student: %s\n", studentName);
     printf("------------------------------------------------------------\n");
@@ -99,7 +99,7 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
     } else {
         printf("------------------------------------------------------------\n");
         if (overdueCount > 0) {
-            printf("⚠️  Overdue Tracker: You have %d overdue book(s)!\n", overdueCount);
+            printf("Overdue Tracker: You have %d overdue book(s)!\n", overdueCount);
         } else {
             printf("✓ All books are within due date.\n");
         }
@@ -110,7 +110,7 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
 void studentSearchBook(void) {
     clearScreen();
     printf("============================================================\n");
-    printf("                    🔍 SEARCH BOOK\n");
+    printf("                    SEARCH BOOK\n");
     printf("============================================================\n");
     printf("Search by:\n");
     printf("[1] Author\n");
@@ -219,7 +219,7 @@ void studentSearchBook(void) {
 void studentRequestBorrow(const char *studentId, const char *studentName) {
     clearScreen();
     printf("============================================================\n");
-    printf("              📘 REQUEST TO BORROW BOOK\n");
+    printf("              REQUEST TO BORROW BOOK\n");
     printf("============================================================\n");
     
     int bookId;
@@ -240,7 +240,7 @@ void studentRequestBorrow(const char *studentId, const char *studentName) {
     /* Check borrow limit (max 3 books) */
     int currentBorrowed = getCurrentBorrowedCount(studentId);
     if (currentBorrowed >= MAX_BOOKS_PER_STUDENT) {
-        printf("\n⚠️  Borrow Limit Reached!\n");
+        printf("\nBorrow Limit Reached!\n");
         printf("You have reached the maximum borrowing limit (%d books).\n", 
                MAX_BOOKS_PER_STUDENT);
         printf("You will be added to the waiting queue.\n\n");
@@ -263,7 +263,7 @@ void studentRequestBorrow(const char *studentId, const char *studentName) {
 void studentReturnBook(const char *studentId, const char *studentName) {
     clearScreen();
     printf("============================================================\n");
-    printf("                    🔁 RETURN A BOOK\n");
+    printf("                    RETURN A BOOK\n");
     printf("============================================================\n");
     
     int bookId, rating;
@@ -282,7 +282,7 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     }
     
     printf("\n------------------------------------------------------------\n");
-    printf("⭐ Please rate this book (1-5 stars): ");
+    printf("Please rate this book (1-5 stars): ");
     if (scanf("%d", &rating) != 1 || rating < 1 || rating > 5) {
         printf("Invalid rating! Using default rating of 3.\n");
         rating = 3;
@@ -301,7 +301,7 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     markAsReturned(studentId, bookId);
     pushReturn(studentName, book->title, bookId, rating);
     
-    printf("\n✅ Thank you! Book successfully returned.\n");
+    printf("\nThank you! Book successfully returned.\n");
     printf("Your rating: ");
     printStars(rating);
     printf(" (%d/5)\n", rating);
