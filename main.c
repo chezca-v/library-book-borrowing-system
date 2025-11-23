@@ -17,7 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>   // <--- ADDED THIS
+#include <string.h>
 #include <locale.h>
 #ifdef _WIN32
 #include <windows.h>
@@ -42,15 +42,6 @@ void displayWelcomeScreen(void) {
     printf("============================================================\n");
 }
 
-void displayExitScreen(void) {
-    clearScreen();
-    printf("============================================================\n");
-    printf("           THANK YOU FOR USING C THE LIBRARY\n");
-    printf("------------------------------------------------------------\n");
-    printf("           \"See what's borrowed, in C.\"\n");
-    printf("============================================================\n");
-}
-
 /* Comparison function for sorting books by borrowCount (descending) */
 static int cmpBorrowCountMain(const void *a, const void *b) {
     Book *const *pa = (Book *const *)a;
@@ -58,7 +49,7 @@ static int cmpBorrowCountMain(const void *a, const void *b) {
     return (*pb)->borrowCount - (*pa)->borrowCount;
 }
 
-void freeMemory(void) {
+void displayDashboardStats(void) {
     printf("============================================================\n");
     printf("              DASHBOARD / STATISTICS\n");
     printf("============================================================\n");
