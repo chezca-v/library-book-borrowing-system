@@ -1,262 +1,13 @@
-/*
- * student.c
- * Implementation of student module functions
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "student.h"
 #include "book.h"
 #include "queue.h"
-#include "stack.h"
-#include "history.h"
+#include "stack.h"      
+#include "history.h"    
 #include "utils.h"
 #include "fileio.h"
-
-void studentMenu(const char *studentId, const char *studentName) {
-    int choice;
-    do {
-        clearScreen();
-        printf("============================================================\n");
-        printf("                   STUDENT MENU - %s\n", studentName);
-        printf("============================================================\n");
-        printf("[1] View User's Current Books\n");
-        printf("[2] Search Book\n");
-        printf("[3] Display Available Books\n");
-        printf("[4] Request to Borrow Book\n");
-        printf("[5] View Borrow Queue Position\n");
-        printf("[6] Return a Book\n");
-        printf("[7] View My Returned Books History\n");
-        printf("[8] Log Out\n");
-        printf("------------------------------------------------------------\n");
-        printf("Choice: ");
-        
-        if (scanf("%d", &choice) != 1) {
-            while(getchar() != '\n');
-            continue;
-        }
-        
-        switch(choice) {
-            case 1: 
-                viewCurrentBooks(studentId, studentName);
-                pressEnter();
-                break;
-            case 2: studentSearchBook(); break;
-            case 3: displayAllBooks(); pressEnter(); break;
-            case 4: studentRequestBorrow(studentId, studentName); break;
-            case 5: {
-                int pos = getQueuePosition(studentId);
-                if (pos > 0) {
-                    printf("\nYour queue position: #%d\n", pos);
-                } else {
-                    printf("\nYou are not in the borrowing queue.\n");
-                }
-                pressEnter();
-                break;
-            }
-            case 6: studentReturnBook(studentId, studentName); break;
-            case 7: displayReturnHistory(studentName); pressEnter(); break;
-            case 8: 
-                printf("\n============================================================\n");
-                printf("                     YOU HAVE LOGGED OUT\n");
-                printf("============================================================\n");
-                printf("Returning to Main Menu...\n");
-                pressEnter();
-                break;
-            default: printf("Invalid choice!\n"); pressEnter();
-        }
-    } while(choice != 8);
-}
-
-void viewCurrentBooks(const char *studentId, const char *studentName) {
-    clearScreen();
-    printf("============================================================\n");
-    printf("         YOUR CURRENT BORROWED BOOKS\n");
-    printf("============================================================\n");
-    printf("Student: %s\n", studentName);
-    printf("------------------------------------------------------------\n");
-    printf("Book Title                | Borrow Date | Status\n");
-    printf("------------------------------------------------------------\n");
-    
-    BorrowHistory *temp = historyList;
-    int found = 0;
-    int overdueCount = 0;
-    
-    while (temp != NULL) {
-        if (strcmp(temp->studentId, studentId) == 0 && !temp->returned) {
-            const char *status = "Active";
-            
-            printf("%-25s | %-11s | %s\n", 
-                   temp->bookTitle, temp->borrowDate, status);
-            found = 1;
-        }
-        temp = temp->next;
-    }
-    
-    if (!found) {
-        printf("You have no currently borrowed books.\n");
-    } else {
-        printf("------------------------------------------------------------\n");
-        if (overdueCount > 0) {
-            printf("Overdue Tracker: You have %d overdue book(s)!\n", overdueCount);
-        } else {
-            printf("All books are within due date.\n");
-        }
-    }
-    printf("============================================================\n");
-}
-
-void studentSearchBook(void) {
-    clearScreen();
-    printf("============================================================\n");
-    printf("                    SEARCH BOOK\n");
-    printf("============================================================\n");
-    printf("Search by:\n");
-    printf("[1] Author\n");
-    printf("[2] Title\n");
-    printf("[3] ISBN\n");
-    printf("[4] ID\n");
-    printf("------------------------------------------------------------\n");
-    printf("Choose search type: ");
-    
-    int searchType;
-    if (scanf("%d", &searchType) != 1) {
-        while(getchar() != '\n');
-        printf("Invalid input!\n");
-        pressEnter();
-        return;
-    }
-    
-    while(getchar() != '\n');
-    
-    char query[MAX_STRING];
-    
-    switch(searchType) {
-        case 1:
-            printf("Enter author name: ");
-            break;
-        case 2:
-            printf("Enter book title: ");
-            break;
-        case 3:
-            printf("Enter ISBN: ");
-            break;
-        case 4:
-            printf("Enter book ID: ");
-            break;
-        default:
-            printf("Invalid search type!\n");
-            pressEnter();
-            return;
-    }
-    
-    if (fgets(query, MAX_STRING, stdin) == NULL) return;
-    query[strcspn(query, "\n")] = '\0';
-    
-    printf("\n------------------------------------------------------------\n");
-    printf("Searching for: \"%s\"\n", query);
-    printf("------------------------------------------------------------\n");
-    
-    if (searchType == 4) {
-        int id = atoi(query);
-        Book *result = searchBookById(id);
-        if (result) {
-            printf("\nFound:\n");
-            printf("ID: %d\n", result->id);
-            printf("Title: %s\n", result->title);
-            printf("Author: %s\n", result->author);
-            printf("ISBN: %s\n", result->isbn);
-            printf("Genre: %s\n", result->genre);
-            printf("Rating: ");
-            printStars((int)result->rating);
-            printf(" (%.1f/5.0)\n", result->rating);
-            printf("Available: %d copies\n", result->quantity);
-        } else {
-            printf("\nBook not found.\n");
-        }
-    } else {
-        Book *result = searchBookByTitleRecursive(bookCatalog, query);
-        
-        if (result) {
-            printf("\nFound:\n");
-            printf("ID: %d\n", result->id);
-            printf("Title: %s\n", result->title);
-            printf("Author: %s\n", result->author);
-            printf("ISBN: %s\n", result->isbn);
-            printf("Rating: ");
-            printStars((int)result->rating);
-            printf("\nAvailable: %d copies\n", result->quantity);
-        } else {
-            printf("\nNo exact match found.\n\n");
-            printf("Search Suggestions (titles containing \"%s\"):\n", query);
-            
-            Book *temp = bookCatalog;
-            int suggestionCount = 0;
-            
-            while (temp != NULL) {
-                if (strstr(temp->title, query) != NULL || 
-                    strstr(temp->author, query) != NULL) {
-                    printf("  - %s (by %s)\n", temp->title, temp->author);
-                    suggestionCount++;
-                }
-                temp = temp->next;
-            }
-            
-            if (suggestionCount == 0) {
-                printf("  No suggestions available.\n");
-            }
-        }
-    }
-    
-    printf("============================================================\n");
-    pressEnter();
-}
-
-void studentRequestBorrow(const char *studentId, const char *studentName) {
-    clearScreen();
-    printf("============================================================\n");
-    printf("              REQUEST TO BORROW BOOK\n");
-    printf("============================================================\n");
-    
-    int bookId;
-    printf("Enter Book ID: ");
-    if (scanf("%d", &bookId) != 1) {
-        while(getchar() != '\n');
-        pressEnter();
-        return;
-    }
-    
-    Book *book = searchBookById(bookId);
-    if (book == NULL) {
-        printf("Book not found!\n");
-        pressEnter();
-        return;
-    }
-    
-    int currentBorrowed = getCurrentBorrowedCount(studentId);
-    if (currentBorrowed >= MAX_BOOKS_PER_STUDENT) {
-        printf("\nBorrow Limit Reached!\n");
-        printf("You have reached the maximum borrowing limit (%d books).\n", 
-               MAX_BOOKS_PER_STUDENT);
-        printf("You will be added to the waiting queue.\n\n");
-    }
-    
-    printf("\n------------------------------------------------------------\n");
-    printf("Book: %s\n", book->title);
-    printf("Author: %s\n", book->author);
-    printf("Current availability: %d copies\n", book->quantity);
-    printf("------------------------------------------------------------\n");
-    
-    enqueue(studentName, studentId, book->title, bookId);
-    printf("\nReservation created with queuing number.\n");
-    printf("Note: Book will be marked as borrowed after admin approval.\n");
-    
-    saveQueueToCSV();
-    
-    printf("============================================================\n");
-    pressEnter();
-}
 
 void studentReturnBook(const char *studentId, const char *studentName) {
     clearScreen();
@@ -271,7 +22,7 @@ void studentReturnBook(const char *studentId, const char *studentName) {
         pressEnter();
         return;
     }
-
+    
     BorrowHistory *histCheck = historyList;
     BorrowHistory *matchingRecord = NULL;
     while (histCheck != NULL) {
@@ -283,6 +34,7 @@ void studentReturnBook(const char *studentId, const char *studentName) {
         }
         histCheck = histCheck->next;
     }
+    
     if (matchingRecord == NULL) {
         printf("\nYou have not borrowed this book (or it is already returned).\n");
         pressEnter();
@@ -297,6 +49,9 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     }
     
     printf("\n------------------------------------------------------------\n");
+    printf("Book: %s\n", book->title);
+    printf("Current rating: %.1f stars\n", book->rating);
+    printf("------------------------------------------------------------\n");
     printf("Please rate this book (1-5 stars): ");
     if (scanf("%d", &rating) != 1 || rating < 1 || rating > 5) {
         printf("Invalid rating! Using default rating of 3.\n");
@@ -305,51 +60,68 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     }
     
     printf("\n--- PROCESSING RETURN ---\n");
-    printf("Book: %s\n", book->title);
     printf("Before: %d copies available\n", book->quantity);
     
+    /* Update book quantity */
     book->quantity++;
     
     printf("After:  %d copies available\n", book->quantity);
-    printf("--- BOOK RETURNED TO SHELF ---\n");
     
-    markAsReturned(studentId, bookId);
-    pushReturn(studentName, book->title, bookId, rating);
-
-    saveHistoryToCSV();
-    saveBooksToCSV();
-
-    printf("\nThank you! Book successfully returned.\n");
-    printf("Your rating: ");
-    printStars(rating);
-    printf(" (%d/5)\n", rating);
-    printf("This book has been logged in your Return History.\n");
-    printf("============================================================\n");
-    pressEnter();
-}
-
-void displayOverdueBooks(const char *studentId, const char *studentName) {
-    clearScreen();
-    printf("========================== OVERDUE BOOKS =====================\n");
-    printf("Student: %s\n", studentName);
-    printf("------------------------------------------------------------\n");
-    printf("Book Title                | Due Date    | Days Overdue\n");
-    printf("------------------------------------------------------------\n");
+    /* Update book rating (weighted average) */
+    /* Formula: newRating = (oldRating * borrowCount + userRating) / (borrowCount + 1) */
+    /* But since borrowCount tracks total borrows, we use a simpler running average */
     
-    BorrowHistory *temp = historyList;
-    int found = 0;
+    /* Count how many ratings this book has received */
+    int ratingCount = 0;
+    float totalRating = book->rating; /* Start with current rating as baseline */
     
+    /* Count ratings from return stack */
+    ReturnRecord *temp = returnStack;
     while (temp != NULL) {
-        if (strcmp(temp->studentId, studentId) == 0 && !temp->returned) {
-            printf("%-25s | %s  |  [Check date]\n", 
-                   temp->bookTitle, temp->borrowDate);
-            found = 1;
+        if (temp->bookId == bookId) {
+            ratingCount++;
+            if (ratingCount == 1) {
+                totalRating = temp->rating; /* First rating found */
+            }
         }
         temp = temp->next;
     }
     
-    if (!found) {
-        printf("No overdue books. Great job!\n");
+    /* Calculate new average rating */
+    float oldRating = book->rating;
+    if (ratingCount == 0) {
+        /* No previous ratings in stack, use simple average with current rating */
+        book->rating = (book->rating + (float)rating) / 2.0;
+    } else {
+        /* Calculate running average */
+        book->rating = (book->rating * ratingCount + (float)rating) / (ratingCount + 1);
     }
-    printf("==============================================================\n");
+    
+    /* Ensure rating stays within 0-5 range */
+    if (book->rating > 5.0) book->rating = 5.0;
+    if (book->rating < 0.0) book->rating = 0.0;
+    
+    printf("\n--- RATING UPDATED ---\n");
+    printf("Previous rating: %.1f stars\n", oldRating);
+    printf("Your rating:     %d stars ", rating);
+    printStars(rating);
+    printf("\n");
+    printf("New rating:      %.1f stars\n", book->rating);
+    printf("--- BOOK RETURNED TO SHELF ---\n");
+    
+    /* Mark as returned in history */
+    markAsReturned(studentId, bookId);
+    
+    /* Push to return stack */
+    pushReturn(studentName, book->title, bookId, rating);
+    
+    /* Save all changes */
+    saveHistoryToCSV();
+    saveBooksToCSV();
+    
+    printf("\n✓ Book successfully returned and rated!\n");
+    printf("  Your rating has been recorded and the book's average\n");
+    printf("  rating has been updated in the catalog.\n");
+    printf("============================================================\n");
+    pressEnter();
 }
