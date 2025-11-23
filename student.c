@@ -23,7 +23,7 @@ void studentMenu(const char *studentId, const char *studentName) {
         printf("[1] View User's Current Books\n");
         printf("[2] Search Book\n");
         printf("[3] Display Available Books\n");
-        printf("[4] Request to Borrow Book (Enqueue)\n");
+        printf("[4] Request to Borrow Book\n");
         printf("[5] View Borrow Queue Position\n");
         printf("[6] Return a Book\n");
         printf("[7] View My Borrowed Books History\n");
@@ -47,7 +47,7 @@ void studentMenu(const char *studentId, const char *studentName) {
             case 5: {
                 int pos = getQueuePosition(studentId);
                 if (pos > 0) {
-                    printf("\n✓ Your queue position: #%d\n", pos);
+                    printf("\nYour queue position: #%d\n", pos);
                 } else {
                     printf("\n✗ You are not in the borrowing queue.\n");
                 }
@@ -101,7 +101,7 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
         if (overdueCount > 0) {
             printf("Overdue Tracker: You have %d overdue book(s)!\n", overdueCount);
         } else {
-            printf("✓ All books are within due date.\n");
+            printf("All books are within due date.\n");
         }
     }
     printf("============================================================\n");
@@ -163,7 +163,7 @@ void studentSearchBook(void) {
         int id = atoi(query);
         Book *result = searchBookById(id);
         if (result) {
-            printf("\n✓ Found:\n");
+            printf("\nFound:\n");
             printf("ID: %d\n", result->id);
             printf("Title: %s\n", result->title);
             printf("Author: %s\n", result->author);
@@ -181,7 +181,7 @@ void studentSearchBook(void) {
         Book *result = searchBookByTitleRecursive(bookCatalog, query);
         
         if (result) {
-            printf("\n✓ Found:\n");
+            printf("\nFound:\n");
             printf("ID: %d\n", result->id);
             printf("Title: %s\n", result->title);
             printf("Author: %s\n", result->author);
@@ -232,7 +232,7 @@ void studentRequestBorrow(const char *studentId, const char *studentName) {
     
     Book *book = searchBookById(bookId);
     if (book == NULL) {
-        printf("✗ Book not found!\n");
+        printf("Book not found!\n");
         pressEnter();
         return;
     }
@@ -254,7 +254,7 @@ void studentRequestBorrow(const char *studentId, const char *studentName) {
     printf("------------------------------------------------------------\n");
     
     enqueue(studentName, studentId, book->title, bookId);
-    printf("\n✓ Reservation created with queuing number.\n");
+    printf("\nReservation created with queuing number.\n");
     printf("Note: Book will be marked as borrowed after admin approval.\n");
     printf("============================================================\n");
     pressEnter();
@@ -276,7 +276,7 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     
     Book *book = searchBookById(bookId);
     if (book == NULL) {
-        printf("✗ Book not found!\n");
+        printf("Book not found!\n");
         pressEnter();
         return;
     }
@@ -332,7 +332,7 @@ void displayOverdueBooks(const char *studentId, const char *studentName) {
     }
     
     if (!found) {
-        printf("✓ No overdue books. Great job!\n");
+        printf("No overdue books. Great job!\n");
     }
     printf("==============================================================\n");
 }
