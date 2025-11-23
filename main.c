@@ -1,122 +1,3 @@
-<<<<<<< HEAD
-#include <stdio.h>
-#include <stdlib.h>
-#include "utils.h"
-#include "book.h"
-#include "queue.h"
-#include "stack.h"
-#include "history.h"
-#include "fileio.h"
-#include "admin.h"
-#include "student.h"
-#include "auth.h"
-
-void displayWelcomeScreen(void)
-{
-    clearScreen();
-    printf("============================================================\n");
-    printf("                 LIBRARY BORROWING SYSTEM\n");
-    printf("============================================================\n");
-    printf("                   Welcome to the Library!\n");
-    printf("                A Simple Console-Based System\n");
-    printf("------------------------------------------------------------\n");
-    printf("                    Press ENTER to continue\n");
-    printf("============================================================\n");
-    getchar();
-}
-
-void displayExitScreen(void)
-{
-    clearScreen();
-    printf("============================================================\n");
-    printf("                THANK YOU FOR USING C THE LIBRARY\n");
-    printf("------------------------------------------------------------\n");
-    printf("                \"See what's borrowed, in C.\"\n");
-    printf("============================================================\n");
-}
-
-void freeMemory(void)
-{
-    freeBookList(&bookCatalog);
-    freeQueue();
-    freeStack();
-    freeHistoryList();
-}
-
-int main(void)
-{
-    int choice;
-    char studentId[50], studentName[MAX_STRING];
-
-    /* Load all data from CSV files */
-    loadBooksFromCSV();
-    loadQueueFromCSV();
-    loadHistoryFromCSV();
-
-    /* Display welcome screen */
-    displayWelcomeScreen();
-
-    /* Main menu loop */
-    do
-    {
-        clearScreen();
-        printf("============================================================\n");
-        printf("                       USER LOGIN\n");
-        printf("============================================================\n");
-        printf("[1] Login as Admin\n");
-        printf("[2] Login as Student\n");
-        printf("[3] Exit Program\n");
-        printf("------------------------------------------------------------\n");
-        printf("Enter choice: ");
-
-        if (scanf("%d", &choice) != 1)
-        {
-            while (getchar() != '\n')
-                ;
-            printf("Invalid input!\n");
-            pressEnter();
-            continue;
-        }
-        printf("============================================================\n");
-
-        switch (choice)
-        {
-        case 1:
-            if (adminLogin())
-            {
-                adminMenu();
-            }
-            break;
-        case 2:
-            if (studentLogin(studentId, studentName))
-            {
-                studentMenu(studentId, studentName);
-            }
-            break;
-        case 3:
-            displayExitScreen();
-            break;
-        default:
-            printf("Invalid choice! Please try again.\n");
-            pressEnter();
-        }
-    } while (choice != 3);
-
-    /* Save all data before exit */
-    saveBooksToCSV();
-    saveQueueToCSV();
-    saveHistoryToCSV();
-
-    /* Free allocated memory */
-    freeMemory();
-
-=======
-<<<<<<< HEAD
-# include <stdio.h>
-
-int main() {
-    printf("Jograt\n");
-=======
 /*
  * main.c
  * C the Library - Main Program Entry Point
@@ -175,6 +56,120 @@ void freeMemory(void) {
     freeHistoryList();
 }
 
+/*
+ * main.c
+ * C the Library - Main Program Entry Point
+ * "A C console-based system that helps you see what's borrowed"
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "utils.h"
+#include "book.h"
+#include "queue.h"
+#include "stack.h"
+#include "history.h"
+#include "fileio.h"
+#include "admin.h"
+#include "student.h"
+#include "auth.h"
+
+void displayWelcomeScreen(void) {
+    clearScreen();
+    printf("============================================================\n");
+    printf("              WELCOME TO C THE LIBRARY\n");
+    printf("============================================================\n");
+    printf("      A C console-based system that helps you\n");
+    printf("              see what's borrowed\n");
+    printf("============================================================\n");
+    pressEnter();
+}
+
+void displayDashboardStats(void) {
+    clearScreen();
+    printf("============================================================\n");
+    printf("              DASHBOARD / STATISTICS\n");
+    printf("============================================================\n");
+    
+    /* Count total books and available */
+    int totalBooks = 0, availableBooks = 0;
+    Book *temp = bookCatalog;
+    while (temp != NULL) {
+        totalBooks++;
+        availableBooks += temp->quantity;
+        temp = temp->next;
+    }
+    
+    /* Count borrowed books */
+    int borrowedBooks = 0;
+    BorrowHistory *hist = historyList;
+    while (hist != NULL) {
+        if (!hist->returned) borrowedBooks++;
+        hist = hist->next;
+    }
+    
+    /* Count active borrowers */
+    int activeBorrowers = 0;
+    char counted[100][50];
+    int countedIndex = 0;
+    hist = historyList;
+    
+    while (hist != NULL && countedIndex < 100) {
+        if (!hist->returned) {
+            int alreadyCounted = 0;
+            for (int i = 0; i < countedIndex; i++) {
+                if (strcmp(counted[i], hist->studentId) == 0) {
+                    alreadyCounted = 1;
+                    break;
+                }
+            }
+            if (!alreadyCounted) {
+                strncpy(counted[countedIndex], hist->studentId, 49);
+                counted[countedIndex][49] = '\0';
+                countedIndex++;
+                activeBorrowers++;
+            }
+        }
+        hist = hist->next;
+    }
+    
+    printf("Total Books Available :  %d\n", availableBooks);
+    printf("Total Books Borrowed  :  %d\n", borrowedBooks);
+    printf("Active Borrowers      :  %d\n\n", activeBorrowers);
+    
+    /* Show top 5 most popular books */
+    printf("Top 5 Most Popular Books (Popularity Counter):\n");
+    printf("------------------------------------------------------------\n");
+    
+    /* Simple display - in production, sort by borrowCount */
+    temp = bookCatalog;
+    int rank = 1;
+    while (temp != NULL && rank <= 5) {
+        printf("%d. %-40s (Borrowed %d times)\n", 
+               rank++, temp->title, temp->borrowCount);
+        temp = temp->next;
+    }
+    
+    printf("============================================================\n");
+    pressEnter();
+}
+
+void displayExitScreen(void) {
+    clearScreen();
+    printf("============================================================\n");
+    printf("           THANK YOU FOR USING C THE LIBRARY\n");
+    printf("------------------------------------------------------------\n");
+    printf("           \"See what's borrowed, in C.\"\n");
+    printf("============================================================\n");
+}
+
+void freeMemory(void) {
+    freeBookList(&bookCatalog);
+    freeQueue();
+    freeStack();
+    freeHistoryList();
+}
+
 int main(void) {
     int choice;
     char studentId[50], studentName[MAX_STRING];
@@ -191,10 +186,22 @@ int main(void) {
     do {
         clearScreen();
         printf("============================================================\n");
-        printf("                       USER LOGIN\n");
+        printf("              WELCOME TO C THE LIBRARY\n");
         printf("============================================================\n");
-        printf("[1] Login as Admin\n");
-        printf("[2] Login as Student\n");
+        printf("      A C console-based system that helps you\n");
+        printf("              see what's borrowed\n");
+        printf("============================================================\n");
+        printf("\n");
+        
+        /* Show Dashboard Statistics */
+        displayDashboardStats();
+        
+        printf("\n");
+        printf("============================================================\n");
+        printf("                     MAIN MENU\n");
+        printf("============================================================\n");
+        printf("[1] Log in as Admin\n");
+        printf("[2] Log in as Student\n");
         printf("[3] Exit Program\n");
         printf("------------------------------------------------------------\n");
         printf("Enter choice: ");
@@ -235,7 +242,5 @@ int main(void) {
     /* Free allocated memory */
     freeMemory();
     
->>>>>>> 70b1755222154172723b14d495a6c1e50c8b63d2
->>>>>>> 321f30469ac5bb8030c281bf5b7235d1d59c5319
     return 0;
 }
