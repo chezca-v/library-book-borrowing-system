@@ -124,18 +124,37 @@ void adminProcessBorrowRequest(void) {
     }
     
     BorrowRequest *request = queueFront;
+    Book *book = searchBookById(request->bookId);
+    
+    printf("Next in Queue:\n");
     printf("Queue #%03d: %s wants \"%s\"\n", 
            request->queueNumber, request->studentName, request->bookTitle);
+    
+    if (book) {
+        printf("Current quantity: %d copies\n", book->quantity);
+        if (book->quantity > 0) {
+            printf("Status: Available\n");
+        } else {
+            printf("Status: OUT OF STOCK!\n");
+        }
+    } else {
+        printf("Warning: Book not found in catalog!\n");
+    }
     
     char confirm;
     printf("\nApprove? (Y/N): ");
     scanf(" %c", &confirm);
     
     if (confirm == 'Y' || confirm == 'y') {
-        Book *book = searchBookById(request->bookId);
         if (book && book->quantity > 0) {
-            book->quantity--;
+            printf("\n--- PROCESSING ---\n");
+            printf("Before: %d copies\n", book->quantity);
+            
+            book->quantity--;           /* DECREASE QUANTITY */
             book->borrowCount++;
+            
+            printf("After:  %d copies\n", book->quantity);
+            printf("--- BOOK MARKED AS BORROWED ---\n");
             
             addBorrowHistory(request->studentId, request->studentName,
                            request->bookTitle, request->bookId);
@@ -147,8 +166,10 @@ void adminProcessBorrowRequest(void) {
             BorrowRequest *toFree = dequeue();
             free(toFree);
         } else {
-            printf("Book unavailable!\n");
+            printf("\nCannot approve: Book unavailable!\n");
         }
+    } else {
+        printf("\nRequest rejected.\n");
     }
     pressEnter();
 }
@@ -195,15 +216,16 @@ void adminMenu(void) {
         printf("============================================================\n");
         printf("                        ADMIN DASHBOARD\n");
         printf("============================================================\n");
-        printf("[1] Add New Book\n");
-        printf("[2] Remove Book\n");
-        printf("[3] Display All Books\n");
-        printf("[4] Display Borrowing Queue\n");
-        printf("[5] Process Borrow Request\n");
-        printf("[6] View User Return History\n");
-        printf("[7] View User Borrow History\n");
-        printf("[8] Dashboard Statistics\n");
-        printf("[9] Logout\n");
+        printf("[1]  Add New Book to Catalog\n");
+        printf("[2]  Remove Book from Catalog\n");
+        printf("[3]  Display All Books\n");
+        printf("[4]  Display Borrowed Books\n");
+        printf("[5]  Display Borrowing Queue\n");
+        printf("[6]  Process Borrow Requests\n");
+        printf("[7]  Display All Users\n");
+        printf("[8]  View User's Return History\n");
+        printf("[9]  View User Borrowing History\n");
+        printf("[10] Log Out\n");
         printf("------------------------------------------------------------\n");
         printf("Enter choice: ");
         
@@ -216,12 +238,14 @@ void adminMenu(void) {
             case 1: adminAddBook(); break;
             case 2: adminRemoveBook(); break;
             case 3: displayAllBooks(); pressEnter(); break;
-            case 4: displayQueue(); pressEnter(); break;
-            case 5: adminProcessBorrowRequest(); break;
-            case 6: {
+            case 4: displayBorrowedBooks(); pressEnter(); break;
+            case 5: displayQueue(); pressEnter(); break;
+            case 6: adminProcessBorrowRequest(); break;
+            case 7: displayAllUsers(); pressEnter(); break;
+            case 8: {
                 char name[MAX_STRING];
                 while(getchar() != '\n');
-                printf("Student name: ");
+                printf("\nEnter student name: ");
                 if (fgets(name, MAX_STRING, stdin) != NULL) {
                     name[strcspn(name, "\n")] = '\0';
                     displayReturnHistory(name);
@@ -229,10 +253,10 @@ void adminMenu(void) {
                 pressEnter();
                 break;
             }
-            case 7: {
+            case 9: {
                 char name[MAX_STRING];
                 while(getchar() != '\n');
-                printf("Student name: ");
+                printf("\nEnter student name: ");
                 if (fgets(name, MAX_STRING, stdin) != NULL) {
                     name[strcspn(name, "\n")] = '\0';
                     displayBorrowHistory(name);
@@ -240,9 +264,96 @@ void adminMenu(void) {
                 pressEnter();
                 break;
             }
-            case 8: adminDashboard(); break;
-            case 9: printf("\nLogging out...\n"); break;
-            default: printf("Invalid!\n"); pressEnter();
+            case 10: 
+                printf("\n============================================================\n");
+                printf("                     YOU HAVE LOGGED OUT\n");
+                printf("============================================================\n");
+                printf("Returning to Main Menu...\n");
+                pressEnter();
+                break;
+            default: printf("Invalid choice!\n"); pressEnter();
         }
-    } while(choice != 9);
+    } while(choice != 10);
+}
+
+void displayBorrowedBooks(void) {
+    clearScreen();
+    printf("============================================================\n");
+    printf("            CURRENTLY BORROWED BOOKS\n");
+    printf("============================================================\n");
+    printf("Student Name   | Book Title              | Borrow Date | Due Date\n");
+    printf("------------------------------------------------------------\n");
+    
+    BorrowHistory *temp = historyList;
+    int found = 0;
+    
+    while (temp != NULL) {
+        if (!temp->returned) {
+            /* Calculate due date (14 days from borrow) */
+            printf("%-14s | %-23s | %-11s | +14 days\n", 
+                   temp->studentName, temp->bookTitle, temp->borrowDate);
+            found = 1;
+        }
+        temp = temp->next;
+    }
+    
+    if (!found) {
+        printf("No books currently borrowed.\n");
+    }
+    printf("============================================================\n");
+}
+
+void displayAllUsers(void) {
+    clearScreen();
+    printf("============================================================\n");
+    printf("                   ALL USERS\n");
+    printf("============================================================\n");
+    printf("ID       | Username       | Role\n");
+    printf("------------------------------------------------------------\n");
+    
+    FILE *file = fopen("users.csv", "r");
+    if (!file) {
+        printf("Error: Cannot open users.csv\n");
+        return;
+    }
+    
+    char line[512];
+    int isFirstLine = 1;
+    int count = 0;
+    
+    while (fgets(line, sizeof(line), file)) {
+        line[strcspn(line, "\r\n")] = '\0';
+        
+        if (isFirstLine) {
+            isFirstLine = 0;
+            continue;
+        }
+        
+        if (line[0] == '\0') continue;
+        
+        char temp[512];
+        strncpy(temp, line, sizeof(temp)-1);
+        temp[sizeof(temp)-1] = '\0';
+        
+        char *id = strtok(temp, ",");
+        char *user = strtok(NULL, ",");
+        char *pass = strtok(NULL, ",");
+        char *role = strtok(NULL, ",");
+        
+        (void)pass; /* Unused - don't display password */
+        
+        if (!id || !user || !role) continue;
+        
+        trimWhitespace(id);
+        trimWhitespace(user);
+        trimWhitespace(role);
+        
+        printf("%-8s | %-14s | %s\n", id, user, role);
+        count++;
+    }
+    
+    fclose(file);
+    printf("------------------------------------------------------------\n");
+    printf("Total Users: %d\n", count);
+    printf("============================================================\n");
 }

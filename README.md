@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# library-book-borrowing-system
+Library Book Borrowing System
+=======
 # C the Library 📚
 
 **"A C console-based system that helps you see what's borrowed"**
@@ -204,3 +208,4 @@ This is an academic project. Feel free to fork and modify for your own learning!
 ---
 
 **Built with ❤️ using C**
+>>>>>>> 70b1755222154172723b14d495a6c1e50c8b63d2
