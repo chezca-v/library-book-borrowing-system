@@ -2,7 +2,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 1,To Kill a Mockingbird,Harper Lee,Philosophy,2852792095852,1882,5.4,1,1
 2,1984,George Orwell,Philosophy,8611908019106,1955,4.9,1,0
 3,The Great Gatsby,F. Scott Fitzgerald,Sci-Fi,3435842592082,1981,4.2,3,0
-4,Pride and Prejudice,Jane Austen,Classic,9377662678857,1853,3.3,3,0
+4,Pride and Prejudice,Jane Austen,Classic,9377662678857,1853,3.3,6,0
 5,The Catcher in the Rye,J.D. Salinger,Fiction,3742142561580,1952,3.9,4,0
 6,Moby Dick,Herman Melville,Fiction,5250614836004,1903,4.4,1,0
 7,War and Peace,Leo Tolstoy,Sci-Fi,2293420507217,2014,4.2,2,0
@@ -249,4 +249,3 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 248,The Divine Comedy,Dante Alighieri,Philosophy,1601973667356,1915,4.1,2,0
 249,Faust,Johann Wolfgang von Goethe,Philosophy,8265414288168,2007,3.6,3,0
 250,The Bhagavad Gita,Unknown,Romance,1290455165674,1901,4.8,4,0
-251,Pride and Prejudice,Jane Austen,Romance,9780141439518,1813,5.0,2,0
