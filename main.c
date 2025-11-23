@@ -17,53 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "utils.h"
-#include "book.h"
-#include "queue.h"
-#include "stack.h"
-#include "history.h"
-#include "fileio.h"
-#include "admin.h"
-#include "student.h"
-#include "auth.h"
-
-void displayWelcomeScreen(void) {
-    clearScreen();
-    printf("============================================================\n");
-    printf("                 LIBRARY BORROWING SYSTEM\n");
-    printf("============================================================\n");
-    printf("                   Welcome to the Library!\n");
-    printf("                A Simple Console-Based System\n");
-    printf("------------------------------------------------------------\n");
-    printf("                    Press ENTER to continue\n");
-    printf("============================================================\n");
-    getchar();
-}
-
-void displayExitScreen(void) {
-    clearScreen();
-    printf("============================================================\n");
-    printf("                THANK YOU FOR USING C THE LIBRARY\n");
-    printf("------------------------------------------------------------\n");
-    printf("                \"See what's borrowed, in C.\"\n");
-    printf("============================================================\n");
-}
-
-void freeMemory(void) {
-    freeBookList(&bookCatalog);
-    freeQueue();
-    freeStack();
-    freeHistoryList();
-}
-
-/*
- * main.c
- * C the Library - Main Program Entry Point
- * "A C console-based system that helps you see what's borrowed"
- */
-
-#include <stdio.h>
-#include <stdlib.h>
+#include <string.h> 
 #include "utils.h"
 #include "book.h"
 #include "queue.h"
