@@ -219,11 +219,11 @@ void adminMenu(void) {
         printf("[1]  Add New Book to Catalog\n");
         printf("[2]  Remove Book from Catalog\n");
         printf("[3]  Display All Books\n");
-        printf("[4]  Display Borrowed Books (with borrower info)\n");
-        printf("[5]  Display Borrowing Queue (Full List)\n");
-        printf("[6]  Process Borrow Requests (Dequeue)\n");
+        printf("[4]  Display Borrowed Books\n");
+        printf("[5]  Display Borrowing Queue\n");
+        printf("[6]  Process Borrow Requests\n");
         printf("[7]  Display All Users\n");
-        printf("[8]  View User's Return History (Stack)\n");
+        printf("[8]  View User's Return History\n");
         printf("[9]  View User Borrowing History\n");
         printf("[10] Log Out\n");
         printf("------------------------------------------------------------\n");
