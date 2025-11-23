@@ -130,13 +130,17 @@ void saveUsersToCSV(void) {
  * Format: queue_number,student_id,student_name,book_id,book_title,status
  */
 void loadQueueFromCSV(void) {
+    /* free existing queue before loading */
+    freeQueue();
+    queueCounter = 1;
+
     FILE *fp = fopen("queue_data.csv", "r");
     if (fp == NULL) {
         /* No queue file exists yet */
         return;
     }
     
-    char line[500];
+    char line[1024];
     int isFirstLine = 1;
     int maxQueueNum = 0;
     
@@ -150,19 +154,35 @@ void loadQueueFromCSV(void) {
         }
         
         if (line[0] == '\0') continue;
-        
-        /* Parse: queue_number,student_id,student_name,book_id,book_title,status */
-        char temp[500];
+
+        /* Robust split preserving empty fields */
+        char temp[1024];
         strncpy(temp, line, sizeof(temp)-1);
         temp[sizeof(temp)-1] = '\0';
-        
-        char *qNum = strtok(temp, ",");
-        char *studentId = strtok(NULL, ",");
-        char *studentName = strtok(NULL, ",");
-        char *bookId = strtok(NULL, ",");
-        char *bookTitle = strtok(NULL, ",");
-        char *status = strtok(NULL, ",");
-        
+
+        char *tokens[8];
+        int fields = 0;
+        char *start = temp;
+        char *p = temp;
+        while (*p) {
+            if (*p == ',') {
+                *p = '\0';
+                if (fields < 8) tokens[fields++] = start;
+                start = p + 1;
+            }
+            p++;
+        }
+        if (fields < 8 && start) tokens[fields++] = start;
+
+        if (fields < 6) continue; /* need at least 6 fields */
+
+        char *qNum = tokens[0];
+        char *studentId = tokens[1];
+        char *studentName = tokens[2];
+        char *bookId = tokens[3];
+        char *bookTitle = tokens[4];
+        char *status = tokens[5];
+
         if (!qNum || !studentId || !studentName || !bookId || !bookTitle || !status) continue;
         
         int queueNumber = atoi(qNum);
@@ -235,13 +255,16 @@ void saveQueueToCSV(void) {
  * Format: student_id,student_name,book_id,book_title,borrow_date,return_date,returned
  */
 void loadHistoryFromCSV(void) {
+    /* free existing in-memory history before (re)loading from disk */
+    freeHistoryList();
+
     FILE *fp = fopen("history_data.csv", "r");
     if (fp == NULL) {
         /* No history file exists yet */
         return;
     }
     
-    char line[500];
+    char line[1024];
     int isFirstLine = 1;
     
     while (fgets(line, sizeof(line), fp) != NULL) {
@@ -255,21 +278,37 @@ void loadHistoryFromCSV(void) {
         
         if (line[0] == '\0') continue;
         
-        /* Parse CSV */
-        char temp[500];
+        /* Robust CSV split that preserves empty fields */
+        char temp[1024];
         strncpy(temp, line, sizeof(temp)-1);
         temp[sizeof(temp)-1] = '\0';
         
-        char *studentId = strtok(temp, ",");
-        char *studentName = strtok(NULL, ",");
-        char *bookId = strtok(NULL, ",");
-        char *bookTitle = strtok(NULL, ",");
-        char *borrowDate = strtok(NULL, ",");
-        char *returnDate = strtok(NULL, ",");
-        char *returned = strtok(NULL, ",");
-        
-        if (!studentId || !studentName || !bookId || !bookTitle || !borrowDate || !returnDate || !returned) continue;
-        
+        char *tokens[8];
+        int fields = 0;
+        char *start = temp;
+        char *p = temp;
+        while (*p) {
+            if (*p == ',') {
+                *p = '\0';
+                if (fields < 8) tokens[fields++] = start;
+                start = p + 1;
+            }
+            p++;
+        }
+        if (fields < 8 && start) tokens[fields++] = start;
+
+        if (fields < 7) continue; /* need exactly 7 fields for history */
+
+        char *studentId = tokens[0];
+        char *studentName = tokens[1];
+        char *bookId = tokens[2];
+        char *bookTitle = tokens[3];
+        char *borrowDate = tokens[4];
+        char *returnDate = tokens[5]; /* may be empty string */
+        char *returned = tokens[6];
+
+        if (!studentId || !studentName || !bookId || !bookTitle || !borrowDate || !returned) continue;
+
         /* Manually add to history list */
         BorrowHistory *newRecord = (BorrowHistory*)malloc(sizeof(BorrowHistory));
         if (newRecord) {
@@ -282,7 +321,8 @@ void loadHistoryFromCSV(void) {
             newRecord->bookId = atoi(bookId);
             strncpy(newRecord->borrowDate, borrowDate, 19);
             newRecord->borrowDate[19] = '\0';
-            strncpy(newRecord->returnDate, returnDate, 19);
+            /* returnDate may be empty - copy safely */
+            strncpy(newRecord->returnDate, returnDate ? returnDate : "", 19);
             newRecord->returnDate[19] = '\0';
             newRecord->returned = atoi(returned);
             newRecord->next = historyList;

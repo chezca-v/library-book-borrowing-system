@@ -86,8 +86,8 @@ library.exe       # Windows
 - **Password:** `admin123`
 
 ### Students
-- **Student 1:** ID: `student1`, Password: `pass1` (John Doe)
-- **Student 2:** ID: `student2`, Password: `pass2` (Jane Smith)
+- **Student 1:** ID: `stud1`, Password: `pass1`
+- **Student 2:** ID: `stud2`, Password: `pass2` 
 
 ---
 
@@ -112,19 +112,6 @@ library.exe       # Windows
 - Comprehensive function documentation
 - Input validation and error handling
 - No global variables (except data structure heads)
-
----
-
-## 📊 Sample Data
-
-The system comes pre-loaded with 7 books:
-1. The Silent Patient - Alex Michaelides
-2. Atomic Habits - James Clear
-3. The Hobbit - J.R.R. Tolkien
-4. Becoming - Michelle Obama
-5. Educated - Tara Westover
-6. Where the Crawdads Sing - Delia Owens
-7. The Midnight Library - Matt Haig
 
 ---
 
@@ -205,7 +192,3 @@ This project is created for educational purposes.
 
 This is an academic project. Feel free to fork and modify for your own learning!
 
----
-
-**Built with ❤️ using C**
->>>>>>> 70b1755222154172723b14d495a6c1e50c8b63d2
