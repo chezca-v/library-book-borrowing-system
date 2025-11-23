@@ -1,6 +1,5 @@
 /*
- * admin.c
- * Implementation of admin module functions
+ * admin.c - Updated with batch processing option
  */
 
 #include <stdio.h>
@@ -116,68 +115,106 @@ void adminRemoveBook(void) {
 
 void adminProcessBorrowRequest(void) {
     clearScreen();
-    printf("============================================================\n");
-    printf("                  PROCESS BORROW REQUEST\n");
-    printf("============================================================\n");
     
     if (queueFront == NULL) {
+        printf("============================================================\n");
+        printf("                  PROCESS BORROW REQUEST\n");
+        printf("============================================================\n");
         printf("No pending requests.\n");
         pressEnter();
         return;
     }
     
-    BorrowRequest *request = queueFront;
-    Book *book = searchBookById(request->bookId);
+    /* Loop to process multiple requests */
+    int processedCount = 0;
+    char continueProcessing = 'Y';
     
-    printf("Next in Queue:\n");
-    printf("Queue #%03d: %s wants \"%s\"\n", 
-           request->queueNumber, request->studentName, request->bookTitle);
-    
-    if (book) {
-        printf("Current quantity: %d copies\n", book->quantity);
-        if (book->quantity > 0) {
-            printf("Status: Available\n");
+    while (queueFront != NULL && (continueProcessing == 'Y' || continueProcessing == 'y')) {
+        clearScreen();
+        printf("============================================================\n");
+        printf("                  PROCESS BORROW REQUEST\n");
+        printf("============================================================\n");
+        
+        BorrowRequest *request = queueFront;
+        Book *book = searchBookById(request->bookId);
+        
+        printf("Next in Queue:\n");
+        printf("Queue #%03d: %s wants \"%s\"\n", 
+               request->queueNumber, request->studentName, request->bookTitle);
+        
+        if (book) {
+            printf("Current quantity: %d copies\n", book->quantity);
+            if (book->quantity > 0) {
+                printf("Status: Available\n");
+            } else {
+                printf("Status: OUT OF STOCK!\n");
+            }
         } else {
-            printf("Status: OUT OF STOCK!\n");
+            printf("Warning: Book not found in catalog!\n");
         }
-    } else {
-        printf("Warning: Book not found in catalog!\n");
+        
+        char confirm;
+        printf("\nApprove this request? (Y/N): ");
+        scanf(" %c", &confirm);
+        
+        if (confirm == 'Y' || confirm == 'y') {
+            if (book && book->quantity > 0) {
+                printf("\n--- PROCESSING ---\n");
+                printf("Before: %d copies\n", book->quantity);
+                
+                book->quantity--;
+                book->borrowCount++;
+                
+                printf("After:  %d copies\n", book->quantity);
+                printf("--- BOOK MARKED AS BORROWED ---\n");
+                
+                addBorrowHistory(request->studentId, request->studentName,
+                               request->bookTitle, request->bookId);
+                
+                char dueDate[20];
+                addDaysToDate(dueDate, 14);
+                
+                printf("\nApproved! Due: %s\n", dueDate);
+                BorrowRequest *toFree = dequeue();
+                free(toFree);
+                
+                processedCount++;
+            } else {
+                printf("\nCannot approve: Book unavailable!\n");
+                printf("Skipping this request...\n");
+            }
+        } else {
+            printf("\nRequest rejected. Moving to next...\n");
+        }
+        
+        /* Check if there are more requests */
+        if (queueFront != NULL) {
+            printf("\n------------------------------------------------------------\n");
+            printf("Remaining requests in queue: ");
+            int remaining = 0;
+            BorrowRequest *temp = queueFront;
+            while (temp != NULL) {
+                remaining++;
+                temp = temp->next;
+            }
+            printf("%d\n", remaining);
+            printf("Process next request? (Y/N): ");
+            scanf(" %c", &continueProcessing);
+        } else {
+            printf("\n✓ All requests processed!\n");
+            break;
+        }
     }
     
-    char confirm;
-    printf("\nApprove? (Y/N): ");
-    scanf(" %c", &confirm);
-    
-    if (confirm == 'Y' || confirm == 'y') {
-        if (book && book->quantity > 0) {
-            printf("\n--- PROCESSING ---\n");
-            printf("Before: %d copies\n", book->quantity);
-            
-            book->quantity--;
-            book->borrowCount++;
-            
-            printf("After:  %d copies\n", book->quantity);
-            printf("--- BOOK MARKED AS BORROWED ---\n");
-            
-            addBorrowHistory(request->studentId, request->studentName,
-                           request->bookTitle, request->bookId);
-            
-            char dueDate[20];
-            addDaysToDate(dueDate, 14);
-            
-            printf("\nApproved! Due: %s\n", dueDate);
-            BorrowRequest *toFree = dequeue();
-            free(toFree);
-            
-            saveBooksToCSV();
-            saveQueueToCSV();
-            saveHistoryToCSV();
-        } else {
-            printf("\nCannot approve: Book unavailable!\n");
-        }
-    } else {
-        printf("\nRequest rejected.\n");
+    /* Save all changes after batch processing */
+    if (processedCount > 0) {
+        saveBooksToCSV();
+        saveQueueToCSV();
+        saveHistoryToCSV();
+        printf("\n%d request(s) processed and saved.\n", processedCount);
     }
+    
+    printf("============================================================\n");
     pressEnter();
 }
 
