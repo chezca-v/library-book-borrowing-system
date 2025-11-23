@@ -35,12 +35,11 @@ void displayWelcomeScreen(void) {
     printf("      A C console-based system that helps you\n");
     printf("              see what's borrowed\n");
     printf("============================================================\n");
-    fflush(stdout);      // ensure visible before waiting
+    fflush(stdout);
     pressEnter();
 }
 
 void displayDashboardStats(void) {
-    // Removed clearScreen() so previous context (if any) isn't immediately wiped.
     printf("============================================================\n");
     printf("              DASHBOARD / STATISTICS\n");
     printf("============================================================\n");
@@ -105,8 +104,7 @@ void displayDashboardStats(void) {
     }
     
     printf("============================================================\n");
-    fflush(stdout);      // ensure the dashboard is visible
-    // removed pressEnter() so dashboard stays visible with the main menu
+    fflush(stdout);
 }
 
 void displayExitScreen(void) {
@@ -142,7 +140,7 @@ int main(void) {
     displayWelcomeScreen();
     
     /* Main menu loop */
-    int firstLoop = 1;            // <--- new: skip initial clear so welcome stays visible
+    int firstLoop = 1;
     do {
         if (!firstLoop) {
             clearScreen();
@@ -150,14 +148,6 @@ int main(void) {
             firstLoop = 0;
         }
 
-        printf("============================================================\n");
-        printf("              WELCOME TO C THE LIBRARY\n");
-        printf("============================================================\n");
-        printf("      A C console-based system that helps you\n");
-        printf("              see what's borrowed\n");
-        printf("============================================================\n");
-        printf("\n");
-        
         /* Show Dashboard Statistics */
         displayDashboardStats();
         
