@@ -1,7 +1,7 @@
 id,title,author,genre,isbn,year,rating,quantity,borrowCount
 1,To Kill a Mockingbird,Harper Lee,Philosophy,2852792095852,1882,5.4,1,1
 2,1984,George Orwell,Philosophy,8611908019106,1955,4.9,1,0
-3,The Great Gatsby,F. Scott Fitzgerald,Sci-Fi,3435842592082,1981,4.2,3,0
+3,The Great Gatsby,F. Scott Fitzgerald,Sci-Fi,3435842592082,1981,4.2,2,1
 4,Pride and Prejudice,Jane Austen,Classic,9377662678857,1853,3.3,6,0
 5,The Catcher in the Rye,J.D. Salinger,Fiction,3742142561580,1952,3.9,4,0
 6,Moby Dick,Herman Melville,Fiction,5250614836004,1903,4.4,1,0
@@ -50,7 +50,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 49,Journey to the Center of the Earth,Jules Verne,Sci-Fi,8358034338855,1856,5.0,3,0
 50,Twenty Thousand Leagues Under the Sea,Jules Verne,Historical,9335567538802,1908,3.8,1,0
 51,A Christmas Carol,Charles Dickens,Romance,6947953179988,1875,3.6,4,0
-52,The Time Machine,H.G. Wells,Horror,5563545432988,2002,3.2,3,0
+52,The Time Machine,H.G. Wells,Horror,5563545432988,2002,3.2,2,1
 53,The War of the Worlds,H.G. Wells,Horror,5998291028303,1855,4.1,1,0
 54,The Invisible Man,H.G. Wells,Fantasy,7781190298932,1877,4.3,1,0
 55,The Call of the Wild,Jack London,Romance,2430261357173,1885,3.8,1,0
@@ -94,7 +94,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 93,The Girl on the Train,Paula Hawkins,Sci-Fi,6833182987898,1947,3.4,2,0
 94,The Night Circus,Erin Morgenstern,Historical,5402161255695,1962,3.0,3,0
 95,The Goldfinch,Donna Tartt,Sci-Fi,9281709770002,1899,3.2,3,0
-96,Normal People,Sally Rooney,Fiction,3221838208907,1887,4.5,1,1
+96,Normal People,Sally Rooney,Fiction,3221838208907,1887,4.5,2,1
 97,The Silent Patient,Alex Michaelides,Horror,8235480203281,2023,3.9,3,0
 98,All the Light We Cannot See,Anthony Doerr,Historical,1654444542171,1879,4.7,3,0
 99,The Shadow of the Wind,Carlos Ruiz Zaf贸n,Fiction,7344255965499,1873,4.0,1,0
