@@ -76,7 +76,7 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
     printf("============================================================\n");
     printf("Student: %s\n", studentName);
     printf("------------------------------------------------------------\n");
-    printf("Book Title                | Borrow Date | Status\n");
+    printf("ID  | Book Title                | Borrow Date | Status\n");
     printf("------------------------------------------------------------\n");
     
     BorrowHistory *temp = historyList;
@@ -87,8 +87,8 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
         if (strcmp(temp->studentId, studentId) == 0 && !temp->returned) {
             const char *status = "Active";
             
-            printf("%-25s | %-11s | %s\n", 
-                   temp->bookTitle, temp->borrowDate, status);
+            printf("%-3d | %-25s | %-11s | %s\n", 
+                   temp->bookId, temp->bookTitle, temp->borrowDate, status);
             found = 1;
         }
         temp = temp->next;
@@ -103,6 +103,7 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
         } else {
             printf("All books are within due date.\n");
         }
+        printf("\nTip: Use the Book ID above when returning books!\n");
     }
     printf("============================================================\n");
 }

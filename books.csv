@@ -50,7 +50,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 49,Journey to the Center of the Earth,Jules Verne,Sci-Fi,8358034338855,1856,5.0,3,0
 50,Twenty Thousand Leagues Under the Sea,Jules Verne,Historical,9335567538802,1908,3.8,1,0
 51,A Christmas Carol,Charles Dickens,Romance,6947953179988,1875,3.6,4,0
-52,The Time Machine,H.G. Wells,Horror,5563545432988,2002,3.2,2,1
+52,The Time Machine,H.G. Wells,Horror,5563545432988,2002,2.6,3,1
 53,The War of the Worlds,H.G. Wells,Horror,5998291028303,1855,4.1,1,0
 54,The Invisible Man,H.G. Wells,Fantasy,7781190298932,1877,4.3,1,0
 55,The Call of the Wild,Jack London,Romance,2430261357173,1885,3.8,1,0
