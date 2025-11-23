@@ -1,7 +1,3 @@
-/*
- * admin.c - Updated with duplicate detection and batch processing
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,53 +42,65 @@ void adminAddBook(void) {
     if (fgets(title, MAX_STRING, stdin) == NULL) return;
     title[strcspn(title, "\n")] = '\0';
     
-    /* Check if title already exists (case-insensitive) */
+    /* Check if title already exists */
     Book *temp = bookCatalog;
+    Book *matchingBook = NULL;
+    
     while (temp != NULL) {
-        /* Use case-insensitive comparison */
-        #ifdef _WIN32
-        int titleMatch = (_stricmp(temp->title, title) == 0);
-        #else
-        int titleMatch = (strcasecmp(temp->title, title) == 0);
-        #endif
-        
-        if (titleMatch) {
-            printf("\n[!] WARNING: A book with this title already exists!\n");
-            printf("    Existing: \"%s\" by %s (ID: %d)\n", 
-                   temp->title, temp->author, temp->id);
-            printf("    Quantity: %d copies\n\n", temp->quantity);
-            
-            char choice;
-            printf("Do you want to:\n");
-            printf("  [A] Add as new book anyway\n");
-            printf("  [U] Update quantity of existing book\n");
-            printf("  [C] Cancel\n");
-            printf("Choice: ");
-            scanf(" %c", &choice);
-            while(getchar() != '\n');
-            
-            if (choice == 'U' || choice == 'u') {
-                int addQty;
-                printf("\nHow many copies to add? ");
-                if (scanf("%d", &addQty) == 1 && addQty > 0) {
-                    temp->quantity += addQty;
-                    printf("\n[✓] Updated! New quantity: %d copies\n", temp->quantity);
-                    saveBooksToCSV();
-                } else {
-                    printf("Invalid quantity!\n");
-                }
-                pressEnter();
-                return;
-            } else if (choice == 'C' || choice == 'c') {
-                printf("\nCancelled.\n");
-                pressEnter();
-                return;
-            }
-            /* If 'A', continue adding as new book */
-            printf("\nProceeding to add as separate book...\n");
+        if (strcmp(temp->title, title) == 0) {
+            matchingBook = temp;
             break;
         }
         temp = temp->next;
+    }
+    
+    if (matchingBook != NULL) {
+        printf("\n============================================================\n");
+        printf("[!] WARNING: A book with this title already exists!\n");
+        printf("============================================================\n");
+        printf("    Title:    \"%s\"\n", matchingBook->title);
+        printf("    Author:   %s\n", matchingBook->author);
+        printf("    ID:       %d\n", matchingBook->id);
+        printf("    Quantity: %d copies\n", matchingBook->quantity);
+        printf("============================================================\n\n");
+        
+        char choice;
+        printf("What would you like to do?\n");
+        printf("  [A] Add as new book anyway (different edition)\n");
+        printf("  [U] Update quantity of existing book\n");
+        printf("  [C] Cancel operation\n");
+        printf("\nYour choice: ");
+        scanf(" %c", &choice);
+        while(getchar() != '\n');
+        
+        if (choice == 'U' || choice == 'u') {
+            int addQty;
+            printf("\nHow many copies to add to existing book? ");
+            if (scanf("%d", &addQty) == 1 && addQty > 0) {
+                matchingBook->quantity += addQty;
+                printf("\n============================================================\n");
+                printf("[✓] SUCCESS: Quantity updated!\n");
+                printf("============================================================\n");
+                printf("    Book:         \"%s\"\n", matchingBook->title);
+                printf("    New quantity: %d copies\n", matchingBook->quantity);
+                printf("============================================================\n");
+                saveBooksToCSV();
+            } else {
+                printf("\n[X] Invalid quantity! Operation cancelled.\n");
+            }
+            pressEnter();
+            return;
+        } else if (choice == 'C' || choice == 'c') {
+            printf("\n[X] Operation cancelled. No changes made.\n");
+            pressEnter();
+            return;
+        } else if (choice == 'A' || choice == 'a') {
+            printf("\n[!] Proceeding to add as separate book...\n\n");
+        } else {
+            printf("\n[X] Invalid choice. Operation cancelled.\n");
+            pressEnter();
+            return;
+        }
     }
     
     printf("Enter Author: ");
