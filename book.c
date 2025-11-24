@@ -6,10 +6,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "book.h"
 
 /* Global book catalog */
 Book *bookCatalog = NULL;
+
+/*
+ * stristr() - Case-insensitive substring search
+ * Similar to strstr() but ignores case
+ */
+static char* stristr(const char *haystack, const char *needle) {
+    if (!*needle) return (char*)haystack;
+    
+    for (; *haystack; haystack++) {
+        const char *h = haystack;
+        const char *n = needle;
+        
+        while (*h && *n && tolower((unsigned char)*h) == tolower((unsigned char)*n)) {
+            h++;
+            n++;
+        }
+        
+        if (!*n) return (char*)haystack;
+    }
+    
+    return NULL;
+}
 
 /*
  * createBook()
@@ -166,14 +189,15 @@ Book* searchBookById(int id) {
  * searchBookByTitleRecursive()
  * Parameters: pointer to current book, search query string
  * Returns: pointer to found book or NULL
- * Purpose: Recursively searches for a book by title or author (partial match)
+ * Purpose: Recursively searches for a book by title or author (case-insensitive partial match)
  * Note: Demonstrates recursive search algorithm
  */
 Book* searchBookByTitleRecursive(Book *book, const char *query) {
     if (book == NULL) return NULL;
     
-    if (strstr(book->title, query) != NULL || 
-        strstr(book->author, query) != NULL) {
+    /* Use case-insensitive substring search */
+    if (stristr(book->title, query) != NULL || 
+        stristr(book->author, query) != NULL) {
         return book;
     }
     
@@ -226,7 +250,8 @@ void displayBooksByGenre(const char *genre) {
     int count = 0;
     
     while (temp != NULL) {
-        if (strstr(temp->genre, genre) != NULL) {
+        /* Case-insensitive genre search */
+        if (stristr(temp->genre, genre) != NULL) {
             printf("%-7d| %-27s| %-16s| %d\n", 
                    temp->id, temp->title, temp->author, temp->quantity);
             count++;
