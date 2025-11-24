@@ -15,9 +15,9 @@
 
 void adminAddBook(void) {
     clearScreen();
-    printf("============================================================\n");
-    printf("                        ADD NEW BOOK\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("                        %sADD NEW BOOK%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     int id, year, quantity;
     char title[MAX_STRING], author[MAX_STRING], genre[MAX_STRING], isbn[50];
@@ -25,7 +25,7 @@ void adminAddBook(void) {
     
     printf("Enter Book ID: ");
     if (scanf("%d", &id) != 1) {
-        printf("Invalid input!\n");
+        printf("%sInvalid input!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         while(getchar() != '\n');
         pressEnter();
         return;
@@ -35,7 +35,7 @@ void adminAddBook(void) {
     /* Check if ID already exists */
     Book *existingBook = searchBookById(id);
     if (existingBook != NULL) {
-        printf("\n[!] ERROR: Book ID %d already exists!\n", id);
+        printf("\n%s[!] ERROR: Book ID %d already exists!%s\n", ANSI_COLOR_RED, id, ANSI_COLOR_RESET);
         printf("    Existing book: \"%s\" by %s\n", existingBook->title, existingBook->author);
         printf("\n    Please use a different ID.\n");
         pressEnter();
@@ -51,7 +51,6 @@ void adminAddBook(void) {
     Book *matchingBook = NULL;
     
     while (temp != NULL) {
-        /* Case-insensitive comparison */
         #ifdef _WIN32
         int titleMatch = (_stricmp(temp->title, title) == 0);
         #else
@@ -66,20 +65,20 @@ void adminAddBook(void) {
     }
     
     if (matchingBook != NULL) {
-        printf("\n============================================================\n");
-        printf("[!] WARNING: A book with this title already exists!\n");
-        printf("============================================================\n");
+        printf("\n%s============================================================%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[!] WARNING: A book with this title already exists!%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s============================================================%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
         printf("    Title:    \"%s\"\n", matchingBook->title);
         printf("    Author:   %s\n", matchingBook->author);
         printf("    ID:       %d\n", matchingBook->id);
         printf("    Quantity: %d copies\n", matchingBook->quantity);
-        printf("============================================================\n\n");
+        printf("%s============================================================%s\n\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
         
         char choice;
         printf("What would you like to do?\n");
-        printf("  [A] Add as new book anyway (different edition)\n");
-        printf("  [U] Update quantity of existing book\n");
-        printf("  [C] Cancel operation\n");
+        printf("  %s[A]%s Add as new book anyway (different edition)\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("  %s[U]%s Update quantity of existing book\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("  %s[C]%s Cancel operation\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
         printf("\nYour choice: ");
         scanf(" %c", &choice);
         while(getchar() != '\n');
@@ -89,26 +88,26 @@ void adminAddBook(void) {
             printf("\nHow many copies to add to existing book? ");
             if (scanf("%d", &addQty) == 1 && addQty > 0) {
                 matchingBook->quantity += addQty;
-                printf("\n============================================================\n");
-                printf("[✓] SUCCESS: Quantity updated!\n");
-                printf("============================================================\n");
+                printf("\n%s============================================================%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s[✓] SUCCESS: Quantity updated!%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s============================================================%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
                 printf("    Book:         \"%s\"\n", matchingBook->title);
                 printf("    New quantity: %d copies\n", matchingBook->quantity);
-                printf("============================================================\n");
+                printf("%s============================================================%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
                 saveBooksToCSV();
             } else {
-                printf("\n[X] Invalid quantity! Operation cancelled.\n");
+                printf("\n%s[X] Invalid quantity! Operation cancelled.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
             }
             pressEnter();
             return;
         } else if (choice == 'C' || choice == 'c') {
-            printf("\n[X] Operation cancelled. No changes made.\n");
+            printf("\n%s[X] Operation cancelled. No changes made.%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
             pressEnter();
             return;
         } else if (choice == 'A' || choice == 'a') {
-            printf("\n[!] Proceeding to add as separate book...\n\n");
+            printf("\n%s[!] Proceeding to add as separate book...%s\n\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
         } else {
-            printf("\n[X] Invalid choice. Operation cancelled.\n");
+            printf("\n%s[X] Invalid choice. Operation cancelled.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
             pressEnter();
             return;
         }
@@ -130,7 +129,7 @@ void adminAddBook(void) {
     temp = bookCatalog;
     while (temp != NULL) {
         if (strcmp(temp->isbn, isbn) == 0) {
-            printf("\n[!] ERROR: ISBN %s already exists!\n", isbn);
+            printf("\n%s[!] ERROR: ISBN %s already exists!%s\n", ANSI_COLOR_RED, isbn, ANSI_COLOR_RESET);
             printf("    Book: \"%s\" by %s (ID: %d)\n", 
                    temp->title, temp->author, temp->id);
             printf("\n    Each book must have a unique ISBN.\n");
@@ -164,7 +163,7 @@ void adminAddBook(void) {
     Book *newBook = createBook(id, title, author, genre, isbn, year, rating, quantity);
     if (newBook) {
         addBook(&bookCatalog, newBook);
-        printf("\n[✓] Book successfully added!\n");
+        printf("\n%s[✓] Book successfully added!%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
         printf("    Title: %s\n", title);
         printf("    Author: %s\n", author);
         printf("    Quantity: %d copies\n", quantity);
@@ -175,9 +174,9 @@ void adminAddBook(void) {
 
 void adminRemoveBook(void) {
     clearScreen();
-    printf("============================================================\n");
-    printf("                        REMOVE BOOK\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("                        %sREMOVE BOOK%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     int id;
     printf("Enter Book ID to remove: ");
@@ -189,13 +188,13 @@ void adminRemoveBook(void) {
     
     Book *book = searchBookById(id);
     if (book == NULL) {
-        printf("Book not found!\n");
+        printf("%sBook not found!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         pressEnter();
         return;
     }
     
-    printf("------------------------------------------------------------\n");
-    printf("Book: %s by %s (Qty: %d)\n", book->title, book->author, book->quantity);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("Book: %s%s%s by %s (Qty: %d)\n", ANSI_COLOR_BOLD, book->title, ANSI_COLOR_RESET, book->author, book->quantity);
     
     char confirm;
     printf("Delete? (Y/N): ");
@@ -204,6 +203,7 @@ void adminRemoveBook(void) {
     if (confirm == 'Y' || confirm == 'y') {
         deleteBook(id);
         saveBooksToCSV();
+        printf("%sBook deleted.%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
     }
     pressEnter();
 }
@@ -212,40 +212,41 @@ void adminProcessBorrowRequest(void) {
     clearScreen();
     
     if (queueFront == NULL) {
-        printf("============================================================\n");
-        printf("                  PROCESS BORROW REQUEST\n");
-        printf("============================================================\n");
-        printf("No pending requests.\n");
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("                  %sPROCESS BORROW REQUEST%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("%sNo pending requests.%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
         pressEnter();
         return;
     }
     
-    /* Loop to process multiple requests */
     int processedCount = 0;
     char continueProcessing = 'Y';
     
     while (queueFront != NULL && (continueProcessing == 'Y' || continueProcessing == 'y')) {
         clearScreen();
-        printf("============================================================\n");
-        printf("                  PROCESS BORROW REQUEST\n");
-        printf("============================================================\n");
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("                  %sPROCESS BORROW REQUEST%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
         
         BorrowRequest *request = queueFront;
         Book *book = searchBookById(request->bookId);
         
         printf("Next in Queue:\n");
-        printf("Queue #%03d: %s wants \"%s\"\n", 
-               request->queueNumber, request->studentName, request->bookTitle);
+        printf("Queue %s#%03d%s: %s%s%s wants \"%s%s%s\"\n", 
+               ANSI_COLOR_CYAN, request->queueNumber, ANSI_COLOR_RESET,
+               ANSI_COLOR_BOLD, request->studentName, ANSI_COLOR_RESET,
+               ANSI_COLOR_BOLD, request->bookTitle, ANSI_COLOR_RESET);
         
         if (book) {
             printf("Current quantity: %d copies\n", book->quantity);
             if (book->quantity > 0) {
-                printf("Status: Available\n");
+                printf("Status: %sAvailable%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
             } else {
-                printf("Status: OUT OF STOCK!\n");
+                printf("Status: %sOUT OF STOCK!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
             }
         } else {
-            printf("Warning: Book not found in catalog!\n");
+            printf("%sWarning: Book not found in catalog!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         }
         
         char confirm;
@@ -269,26 +270,25 @@ void adminProcessBorrowRequest(void) {
                 char dueDate[20];
                 addDaysToDate(dueDate, 14);
                 
-                printf("\nApproved! Due: %s\n", dueDate);
+                printf("\n%sApproved! Due: %s%s\n", ANSI_COLOR_GREEN, dueDate, ANSI_COLOR_RESET);
                 BorrowRequest *toFree = dequeue();
                 free(toFree);
                 
                 processedCount++;
             } else {
-                printf("\nCannot approve: Book unavailable!\n");
+                printf("\n%sCannot approve: Book unavailable!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
                 printf("Skipping this request (removing from queue)...\n");
                 BorrowRequest *toFree = dequeue();
                 free(toFree);
             }
         } else {
-            printf("\nRequest rejected (removing from queue)...\n");
+            printf("\n%sRequest rejected (removing from queue)...%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
             BorrowRequest *toFree = dequeue();
             free(toFree);
         }
         
-        /* Check if there are more requests */
         if (queueFront != NULL) {
-            printf("\n------------------------------------------------------------\n");
+            printf("\n%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
             printf("Remaining requests in queue: ");
             int remaining = 0;
             BorrowRequest *temp = queueFront;
@@ -300,20 +300,19 @@ void adminProcessBorrowRequest(void) {
             printf("Process next request? (Y/N): ");
             scanf(" %c", &continueProcessing);
         } else {
-            printf("\n✓ All requests processed!\n");
+            printf("\n%s✓ All requests processed!%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
             break;
         }
     }
     
-    /* Save all changes after batch processing */
     if (processedCount > 0) {
         saveBooksToCSV();
         saveQueueToCSV();
         saveHistoryToCSV();
-        printf("\n%d request(s) processed and saved.\n", processedCount);
+        printf("\n%s%d request(s) processed and saved.%s\n", ANSI_COLOR_GREEN, processedCount, ANSI_COLOR_RESET);
     }
     
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     pressEnter();
 }
 
@@ -326,7 +325,7 @@ static int cmpBorrowCount(const void *a, const void *b) {
 
 void adminDashboard(void) {
     clearScreen();
-    printf("====================== SYSTEM STATISTICS ====================\n");
+    printf("%s====================== SYSTEM STATISTICS ====================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     int totalBooks = 0, availableBooks = 0;
     Book *temp = bookCatalog;
@@ -343,11 +342,11 @@ void adminDashboard(void) {
         qTemp = qTemp->next;
     }
     
-    printf("Total Books in Catalog:  %d\n", totalBooks);
-    printf("Books Available       :  %d\n", availableBooks);
-    printf("Queue Length          :  %d\n\n", queueLength);
+    printf("Total Books in Catalog:  %s%d%s\n", ANSI_COLOR_CYAN, totalBooks, ANSI_COLOR_RESET);
+    printf("Books Available       :  %s%d%s\n", ANSI_COLOR_GREEN, availableBooks, ANSI_COLOR_RESET);
+    printf("Queue Length          :  %s%d%s\n\n", ANSI_COLOR_YELLOW, queueLength, ANSI_COLOR_RESET);
     
-    printf("Most Borrowed Books:\n");
+    printf("%sMost Borrowed Books:%s\n", ANSI_COLOR_MAGENTA, ANSI_COLOR_RESET);
     /* Collect books into array and sort by borrowCount desc */
     int bookCount = 0;
     Book *iter = bookCatalog;
@@ -361,7 +360,10 @@ void adminDashboard(void) {
             qsort(arr, bookCount, sizeof(Book*), cmpBorrowCount);
             int display = bookCount < 5 ? bookCount : 5;
             for (int r = 0; r < display; r++) {
-                printf("%d. %s (%d times)\n", r+1, arr[r]->title, arr[r]->borrowCount);
+                printf("%s%d.%s %s (%s%d%s times)\n", 
+                       ANSI_COLOR_YELLOW, r+1, ANSI_COLOR_RESET, 
+                       arr[r]->title, 
+                       ANSI_COLOR_CYAN, arr[r]->borrowCount, ANSI_COLOR_RESET);
             }
             free(arr);
         } else {
@@ -377,7 +379,7 @@ void adminDashboard(void) {
         printf("No books available.\n");
     }
     
-    printf("==============================================================\n");
+    printf("%s==============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     pressEnter();
 }
 
@@ -385,21 +387,21 @@ void adminMenu(void) {
     int choice;
     do {
         clearScreen();
-        printf("============================================================\n");
-        printf("                        ADMIN DASHBOARD\n");
-        printf("============================================================\n");
-        printf("[1]  Add New Book to Catalog\n");
-        printf("[2]  Remove Book from Catalog\n");
-        printf("[3]  Display All Books\n");
-        printf("[4]  Display Borrowed Books\n");
-        printf("[5]  Display Borrowing Queue\n");
-        printf("[6]  Process Borrow Requests\n");
-        printf("[7]  Display All Users\n");
-        printf("[8]  View User's Return History\n");
-        printf("[9]  View User Borrowing History\n");
-        printf("[10] Log Out\n");
-        printf("------------------------------------------------------------\n");
-        printf("Enter choice: ");
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("                        %sADMIN DASHBOARD%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("%s[1]%s  Add New Book to Catalog\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[2]%s  Remove Book from Catalog\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[3]%s  Display All Books\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[4]%s  Display Borrowed Books\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[5]%s  Display Borrowing Queue\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[6]%s  Process Borrow Requests\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[7]%s  Display All Users\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[8]%s  View User's Return History\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[9]%s  View User Borrowing History\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[10]%s Log Out\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("%sEnter choice: %s", ANSI_COLOR_BOLD, ANSI_COLOR_RESET);
         
         if (scanf("%d", &choice) != 1) {
             while(getchar() != '\n');
@@ -437,24 +439,24 @@ void adminMenu(void) {
                 break;
             }
             case 10: 
-                printf("\n============================================================\n");
-                printf("                     YOU HAVE LOGGED OUT\n");
-                printf("============================================================\n");
+                printf("\n%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+                printf("                   %sYOU HAVE LOGGED OUT%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
                 printf("Returning to Main Menu...\n");
                 pressEnter();
                 break;
-            default: printf("Invalid choice!\n"); pressEnter();
+            default: printf("%sInvalid choice!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET); pressEnter();
         }
     } while(choice != 10);
 }
 
 void displayBorrowedBooks(void) {
     clearScreen();
-    printf("============================================================\n");
-    printf("            CURRENTLY BORROWED BOOKS\n");
-    printf("============================================================\n");
-    printf("Student Name   | Book Title              | Borrow Date | Due Date\n");
-    printf("------------------------------------------------------------\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("            %sCURRENTLY BORROWED BOOKS%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("%sStudent Name   | Book Title              | Borrow Date | Due Date%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     BorrowHistory *temp = historyList;
     int found = 0;
@@ -469,22 +471,22 @@ void displayBorrowedBooks(void) {
     }
     
     if (!found) {
-        printf("No books currently borrowed.\n");
+        printf("%sNo books currently borrowed.%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
     }
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
 }
 
 void displayAllUsers(void) {
     clearScreen();
-    printf("============================================================\n");
-    printf("                   ALL USERS\n");
-    printf("============================================================\n");
-    printf("ID       | Username       | Role\n");
-    printf("------------------------------------------------------------\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("                  %sALL USERS%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("%sID       | Username       | Role%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     FILE *file = fopen("users.csv", "r");
     if (!file) {
-        printf("Error: Cannot open users.csv\n");
+        printf("%sError: Cannot open users.csv%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         return;
     }
     
@@ -524,7 +526,7 @@ void displayAllUsers(void) {
     }
     
     fclose(file);
-    printf("------------------------------------------------------------\n");
-    printf("Total Users: %d\n", count);
-    printf("============================================================\n");
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("Total Users: %s%d%s\n", ANSI_COLOR_GREEN, count, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
 }
