@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-# library-book-borrowing-system
-Library Book Borrowing System
+# Library Book Borrowing System
 =======
 # C the Library 📚
 
@@ -115,18 +113,6 @@ library.exe       # Windows
 
 ---
 
-## 🔧 Future Enhancements
-
-- [ ] Full CSV file I/O implementation
-- [ ] User registration system
-- [ ] Advanced search filters
-- [ ] Overdue book notifications
-- [ ] Book reservation system
-- [ ] Multi-admin support
-- [ ] Database integration
-
----
-
 ## 📝 Assignment Requirements Met
 
 ✅ **Data Structures:**
@@ -169,15 +155,6 @@ gcc *.o -o library
 ```bash
 gcc -g -std=c99 *.c -o library
 gdb ./library
-```
-
-### Adding New Books
-Modify `fileio.c` in the `loadBooksFromCSV()` function:
-```c
-addBook(&bookCatalog, createBook(
-    108, "New Book", "Author Name", 
-    "Genre", "ISBN", 2024, 4.5, 3
-));
 ```
 
 ---
