@@ -181,6 +181,56 @@ addBook(&bookCatalog, createBook(
 ```
 
 ---
+## Team
+
+### Core Team
+
+<table>
+  <tr>
+    <td align="center">
+      <b>Franchezca Natividad Banayad</b><br />
+      <i>Lead Developer</i><br />
+      <a href="https://github.com/chezca-v">GitHub</a>
+    </td>
+    <td align="center">
+      <b> Niña Ysabelle Frigillana</b><br />
+      <i> Developer </i><br />
+      <a href="https://github.com/ysaf-dev">GitHub</a>
+    </td>
+ <td align="center">
+      <b> Princess Mae Sanchez</b><br />
+      <i> Developer </i><br />
+      <a href="https://github.com/cessamaeeee">GitHub</a>
+    </td>
+ <td align="center">
+      <b> John Benedict Listangco</b><br />
+      <i> Developer </i><br />
+      <a href="https://github.com/jbenedict-l">GitHub</a>
+    </td>
+<td align="center">
+      <b> Karl Joseph Esteban</b><br />
+      <i> Data Gathere </i><br />
+ <a href="https://github.com/krljsph09">GitHub</a>
+    </td>
+<td align="center">
+      <b> Elena Vale Lanuza</b><br />
+      <i> Data Gathere </i><br />
+ <a href="https://github.com/lenadevug">GitHub</a>
+    </td>
+<td align="center">
+      <b> Jose Jerico Escaño</b><br />
+      <i> Data Gatherer</i><br />
+ <a href="https://github.com/Jose-Jerico">GitHub</a>
+    </td>
+  </tr>
+</table>
+
+### Contributors
+
+Thanks to all the amazing contributors who have helped make this project better!
+
+[![Contributors](https://contrib.rocks/image?repo=jbenedict-l/library-book-borrowing-system)](https://github.com/jbenedict-l/library-book-borrowing-system/graphs/contributors)
+
 
 ## 📄 License
 
