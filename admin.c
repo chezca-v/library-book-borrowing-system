@@ -1,3 +1,7 @@
+/*
+ * admin.c - Updated with duplicate detection and batch processing
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,12 +46,19 @@ void adminAddBook(void) {
     if (fgets(title, MAX_STRING, stdin) == NULL) return;
     title[strcspn(title, "\n")] = '\0';
     
-    /* Check if title already exists */
+    /* Check if title already exists (case-insensitive) */
     Book *temp = bookCatalog;
     Book *matchingBook = NULL;
     
     while (temp != NULL) {
-        if (strcmp(temp->title, title) == 0) {
+        /* Case-insensitive comparison */
+        #ifdef _WIN32
+        int titleMatch = (_stricmp(temp->title, title) == 0);
+        #else
+        int titleMatch = (strcasecmp(temp->title, title) == 0);
+        #endif
+        
+        if (titleMatch) {
             matchingBook = temp;
             break;
         }
