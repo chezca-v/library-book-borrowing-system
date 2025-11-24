@@ -18,19 +18,19 @@ void studentMenu(const char *studentId, const char *studentName) {
     int choice;
     do {
         clearScreen();
-        printf("============================================================\n");
-        printf("                   STUDENT MENU - %s\n", studentName);
-        printf("============================================================\n");
-        printf("[1] View User's Current Books\n");
-        printf("[2] Search Book\n");
-        printf("[3] Display Available Books\n");
-        printf("[4] Request to Borrow Book\n");
-        printf("[5] View Borrow Queue Position\n");
-        printf("[6] Return a Book\n");
-        printf("[7] View My Returned Books History\n");
-        printf("[8] Log Out\n");
-        printf("------------------------------------------------------------\n");
-        printf("Choice: ");
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("                  %sSTUDENT MENU - %s%s\n", ANSI_COLOR_CYAN, studentName, ANSI_COLOR_RESET);
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("%s[1]%s View User's Current Books\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[2]%s Search Book\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[3]%s Display Available Books\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[4]%s Request to Borrow Book\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[5]%s View Borrow Queue Position\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[6]%s Return a Book\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[7]%s View My Returned Books History\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[8]%s Log Out\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("%sChoice: %s", ANSI_COLOR_BOLD, ANSI_COLOR_RESET);
         
         if (scanf("%d", &choice) != 1) {
             while(getchar() != '\n');
@@ -48,9 +48,9 @@ void studentMenu(const char *studentId, const char *studentName) {
             case 5: {
                 int pos = getQueuePosition(studentId);
                 if (pos > 0) {
-                    printf("\nYour queue position: #%d\n", pos);
+                    printf("\nYour queue position: %s#%d%s\n", ANSI_COLOR_CYAN, pos, ANSI_COLOR_RESET);
                 } else {
-                    printf("\nYou are not in the borrowing queue.\n");
+                    printf("\n%sYou are not in the borrowing queue.%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
                 }
                 pressEnter();
                 break;
@@ -58,26 +58,26 @@ void studentMenu(const char *studentId, const char *studentName) {
             case 6: studentReturnBook(studentId, studentName); break;
             case 7: displayReturnHistory(studentName); pressEnter(); break;
             case 8: 
-                printf("\n============================================================\n");
-                printf("                     YOU HAVE LOGGED OUT\n");
-                printf("============================================================\n");
+                printf("\n%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+                printf("                   %sYOU HAVE LOGGED OUT%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+                printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
                 printf("Returning to Main Menu...\n");
                 pressEnter();
                 break;
-            default: printf("Invalid choice!\n"); pressEnter();
+            default: printf("%sInvalid choice!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET); pressEnter();
         }
     } while(choice != 8);
 }
 
 void viewCurrentBooks(const char *studentId, const char *studentName) {
     clearScreen();
-    printf("============================================================\n");
-    printf("         YOUR CURRENT BORROWED BOOKS\n");
-    printf("============================================================\n");
-    printf("Student: %s\n", studentName);
-    printf("------------------------------------------------------------\n");
-    printf("ID  | Book Title                | Borrow Date | Status\n");
-    printf("------------------------------------------------------------\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("         %sYOUR CURRENT BORROWED BOOKS%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("Student: %s%s%s\n", ANSI_COLOR_BOLD, studentName, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("%sID  | Book Title                | Borrow Date | Status%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     BorrowHistory *temp = historyList;
     int found = 0;
@@ -85,46 +85,45 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
     
     while (temp != NULL) {
         if (strcmp(temp->studentId, studentId) == 0 && !temp->returned) {
-            const char *status = "Active";
-            
-            printf("%-3d | %-25s | %-11s | %s\n", 
-                   temp->bookId, temp->bookTitle, temp->borrowDate, status);
+            // "Active" status in Green
+            printf("%-3d | %-25s | %-11s | %sActive%s\n", 
+                   temp->bookId, temp->bookTitle, temp->borrowDate, ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
             found = 1;
         }
         temp = temp->next;
     }
     
     if (!found) {
-        printf("You have no currently borrowed books.\n");
+        printf("%sYou have no currently borrowed books.%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
     } else {
-        printf("------------------------------------------------------------\n");
+        printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
         if (overdueCount > 0) {
-            printf("Overdue Tracker: You have %d overdue book(s)!\n", overdueCount);
+            printf("%sOverdue Tracker: You have %d overdue book(s)!%s\n", ANSI_COLOR_RED, overdueCount, ANSI_COLOR_RESET);
         } else {
-            printf("All books are within due date.\n");
+            printf("%sAll books are within due date.%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
         }
         printf("\nTip: Use the Book ID above when returning books!\n");
     }
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
 }
 
 void studentSearchBook(void) {
     clearScreen();
-    printf("============================================================\n");
-    printf("                    SEARCH BOOK\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("                    %sSEARCH BOOK%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     printf("Search by:\n");
-    printf("[1] Author\n");
-    printf("[2] Title\n");
-    printf("[3] ISBN\n");
-    printf("[4] ID\n");
-    printf("------------------------------------------------------------\n");
-    printf("Choose search type: ");
+    printf("%s[1]%s Author\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+    printf("%s[2]%s Title\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+    printf("%s[3]%s ISBN\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+    printf("%s[4]%s ID\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("%sChoose search type: %s", ANSI_COLOR_BOLD, ANSI_COLOR_RESET);
     
     int searchType;
     if (scanf("%d", &searchType) != 1) {
         while(getchar() != '\n');
-        printf("Invalid input!\n");
+        printf("%sInvalid input!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         pressEnter();
         return;
     }
@@ -134,20 +133,12 @@ void studentSearchBook(void) {
     char query[MAX_STRING];
     
     switch(searchType) {
-        case 1:
-            printf("Enter author name: ");
-            break;
-        case 2:
-            printf("Enter book title: ");
-            break;
-        case 3:
-            printf("Enter ISBN: ");
-            break;
-        case 4:
-            printf("Enter book ID: ");
-            break;
+        case 1: printf("Enter author name: "); break;
+        case 2: printf("Enter book title: "); break;
+        case 3: printf("Enter ISBN: "); break;
+        case 4: printf("Enter book ID: "); break;
         default:
-            printf("Invalid search type!\n");
+            printf("%sInvalid search type!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
             pressEnter();
             return;
     }
@@ -155,41 +146,41 @@ void studentSearchBook(void) {
     if (fgets(query, MAX_STRING, stdin) == NULL) return;
     query[strcspn(query, "\n")] = '\0';
     
-    printf("\n------------------------------------------------------------\n");
-    printf("Searching for: \"%s\"\n", query);
-    printf("------------------------------------------------------------\n");
+    printf("\n%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("Searching for: \"%s%s%s\"\n", ANSI_COLOR_BOLD, query, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     if (searchType == 4) {
         int id = atoi(query);
         Book *result = searchBookById(id);
         if (result) {
-            printf("\nFound:\n");
+            printf("\n%sFound:%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
             printf("ID: %d\n", result->id);
-            printf("Title: %s\n", result->title);
+            printf("Title: %s%s%s\n", ANSI_COLOR_BOLD, result->title, ANSI_COLOR_RESET);
             printf("Author: %s\n", result->author);
             printf("ISBN: %s\n", result->isbn);
             printf("Genre: %s\n", result->genre);
             printf("Rating: ");
             printStars((int)result->rating);
             printf(" (%.1f/5.0)\n", result->rating);
-            printf("Available: %d copies\n", result->quantity);
+            printf("Available: %s%d copies%s\n", ANSI_COLOR_CYAN, result->quantity, ANSI_COLOR_RESET);
         } else {
-            printf("\nBook not found.\n");
+            printf("\n%sBook not found.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         }
     } else {
         Book *result = searchBookByTitleRecursive(bookCatalog, query);
         
         if (result) {
-            printf("\nFound:\n");
+            printf("\n%sFound:%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
             printf("ID: %d\n", result->id);
-            printf("Title: %s\n", result->title);
+            printf("Title: %s%s%s\n", ANSI_COLOR_BOLD, result->title, ANSI_COLOR_RESET);
             printf("Author: %s\n", result->author);
             printf("ISBN: %s\n", result->isbn);
             printf("Rating: ");
             printStars((int)result->rating);
-            printf("\nAvailable: %d copies\n", result->quantity);
+            printf("\nAvailable: %s%d copies%s\n", ANSI_COLOR_CYAN, result->quantity, ANSI_COLOR_RESET);
         } else {
-            printf("\nNo exact match found.\n\n");
+            printf("\n%sNo exact match found.%s\n\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
             printf("Search Suggestions (titles containing \"%s\"):\n", query);
             
             Book *temp = bookCatalog;
@@ -198,27 +189,27 @@ void studentSearchBook(void) {
             while (temp != NULL) {
                 if (strstr(temp->title, query) != NULL || 
                     strstr(temp->author, query) != NULL) {
-                    printf("  - %s (by %s)\n", temp->title, temp->author);
+                    printf("  - %s%s%s (by %s)\n", ANSI_COLOR_CYAN, temp->title, ANSI_COLOR_RESET, temp->author);
                     suggestionCount++;
                 }
                 temp = temp->next;
             }
             
             if (suggestionCount == 0) {
-                printf("  No suggestions available.\n");
+                printf("  %sNo suggestions available.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
             }
         }
     }
     
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     pressEnter();
 }
 
 void studentRequestBorrow(const char *studentId, const char *studentName) {
     clearScreen();
-    printf("============================================================\n");
-    printf("              REQUEST TO BORROW BOOK\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("              %sREQUEST TO BORROW BOOK%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     int bookId;
     printf("Enter Book ID: ");
@@ -230,40 +221,40 @@ void studentRequestBorrow(const char *studentId, const char *studentName) {
     
     Book *book = searchBookById(bookId);
     if (book == NULL) {
-        printf("Book not found!\n");
+        printf("%sBook not found!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         pressEnter();
         return;
     }
     
     int currentBorrowed = getCurrentBorrowedCount(studentId);
     if (currentBorrowed >= MAX_BOOKS_PER_STUDENT) {
-        printf("\nBorrow Limit Reached!\n");
+        printf("\n%sBorrow Limit Reached!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         printf("You have reached the maximum borrowing limit (%d books).\n", 
                MAX_BOOKS_PER_STUDENT);
         printf("You will be added to the waiting queue.\n\n");
     }
     
-    printf("\n------------------------------------------------------------\n");
-    printf("Book: %s\n", book->title);
+    printf("\n%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("Book: %s%s%s\n", ANSI_COLOR_BOLD, book->title, ANSI_COLOR_RESET);
     printf("Author: %s\n", book->author);
-    printf("Current availability: %d copies\n", book->quantity);
-    printf("------------------------------------------------------------\n");
+    printf("Current availability: %s%d copies%s\n", ANSI_COLOR_CYAN, book->quantity, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     enqueue(studentName, studentId, book->title, bookId);
-    printf("\nReservation created with queuing number.\n");
+    printf("\n%sReservation created with queuing number.%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
     printf("Note: Book will be marked as borrowed after admin approval.\n");
     
     saveQueueToCSV();
     
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     pressEnter();
 }
 
 void studentReturnBook(const char *studentId, const char *studentName) {
     clearScreen();
-    printf("============================================================\n");
-    printf("                    RETURN A BOOK\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("                    %sRETURN A BOOK%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     int bookId, rating;
     printf("Enter Book ID to return: ");
@@ -286,25 +277,25 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     }
     
     if (matchingRecord == NULL) {
-        printf("\nYou have not borrowed this book (or it is already returned).\n");
+        printf("\n%sYou have not borrowed this book (or it is already returned).%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         pressEnter();
         return;
     }
     
     Book *book = searchBookById(bookId);
     if (book == NULL) {
-        printf("Book not found!\n");
+        printf("%sBook not found!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
         pressEnter();
         return;
     }
     
-    printf("\n------------------------------------------------------------\n");
-    printf("Book: %s\n", book->title);
+    printf("\n%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("Book: %s%s%s\n", ANSI_COLOR_BOLD, book->title, ANSI_COLOR_RESET);
     printf("Current rating: %.1f stars\n", book->rating);
-    printf("------------------------------------------------------------\n");
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     printf("Please rate this book (1-5 stars): ");
     if (scanf("%d", &rating) != 1 || rating < 1 || rating > 5) {
-        printf("Invalid rating! Using default rating of 3.\n");
+        printf("%sInvalid rating! Using default rating of 3.%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
         rating = 3;
         while(getchar() != '\n');
     }
@@ -318,7 +309,6 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     printf("After:  %d copies available\n", book->quantity);
     
     /* Update book rating (weighted average) */
-    /* Count ratings from return stack */
     int ratingCount = 0;
     
     ReturnRecord *temp = returnStack;
@@ -329,58 +319,50 @@ void studentReturnBook(const char *studentId, const char *studentName) {
         temp = temp->next;
     }
     
-    /* Calculate new average rating */
     float oldRating = book->rating;
     if (ratingCount == 0) {
-        /* No previous ratings in stack, use simple average with current rating */
         book->rating = (book->rating + (float)rating) / 2.0;
     } else {
-        /* Calculate running average */
         book->rating = (book->rating * ratingCount + (float)rating) / (ratingCount + 1);
     }
     
-    /* Ensure rating stays within 0-5 range */
     if (book->rating > 5.0) book->rating = 5.0;
     if (book->rating < 0.0) book->rating = 0.0;
     
     printf("\n--- RATING UPDATED ---\n");
     printf("Previous rating: %.1f stars\n", oldRating);
     printf("Your rating:     %d stars ", rating);
-    printStars(rating);
+    printStars(rating); // Colors handled in utils.c
     printf("\n");
     printf("New rating:      %.1f stars\n", book->rating);
     printf("--- BOOK RETURNED TO SHELF ---\n");
     
-    /* Mark as returned in history */
     markAsReturned(studentId, bookId);
-    
-    /* Push to return stack */
     pushReturn(studentName, book->title, bookId, rating);
-    
-    /* Save all changes */
     saveHistoryToCSV();
     saveBooksToCSV();
     
-    printf("\n✓ Book successfully returned and rated!\n");
+    printf("\n%s%s✓ Book successfully returned and rated!%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_BOLD, ANSI_COLOR_RESET);
     printf("  Your rating has been recorded and the book's average\n");
     printf("  rating has been updated in the catalog.\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     pressEnter();
 }
 
 void displayOverdueBooks(const char *studentId, const char *studentName) {
     clearScreen();
-    printf("========================== OVERDUE BOOKS =====================\n");
+    printf("%s========================== OVERDUE BOOKS =====================%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     printf("Student: %s\n", studentName);
-    printf("------------------------------------------------------------\n");
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     printf("Book Title                | Due Date    | Days Overdue\n");
-    printf("------------------------------------------------------------\n");
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     
     BorrowHistory *temp = historyList;
     int found = 0;
     
     while (temp != NULL) {
         if (strcmp(temp->studentId, studentId) == 0 && !temp->returned) {
+            // Simplified display for example purposes
             printf("%-25s | %s  |  [Check date]\n", 
                    temp->bookTitle, temp->borrowDate);
             found = 1;
@@ -389,7 +371,7 @@ void displayOverdueBooks(const char *studentId, const char *studentName) {
     }
     
     if (!found) {
-        printf("No overdue books. Great job!\n");
+        printf("%sNo overdue books. Great job!%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
     }
-    printf("==============================================================\n");
+    printf("%s==============================================================%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
 }
