@@ -8,7 +8,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 7,War and Peace,Leo Tolstoy,Sci-Fi,2293420507217,2014,4.2,2,0
 8,Crime and Punishment,Fyodor Dostoevsky,Fantasy,4648780396671,1989,4.0,4,0
 9,The Odyssey,Homer,Fantasy,9793769921949,1988,4.3,1,0
-10,The Iliad,Homer,Philosophy,7710429251604,1893,4.7,1,2
+10,The Iliad,Homer,Philosophy,7710429251604,1893,4.7,0,3
 11,Jane Eyre,Charlotte Bront,Sci-Fi,3458168614713,1985,3.2,1,0
 12,Wuthering Heights,Emily Bront,Philosophy,3003409805933,1967,3.7,2,0
 13,The Scarlet Letter,Nathaniel Hawthorne,Romance,9087067299573,1930,4.5,1,0
@@ -23,7 +23,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 22,The Grapes of Wrath,John Steinbeck,Sci-Fi,8602964788723,1858,5.0,2,0
 23,Of Mice and Men,John Steinbeck,Historical,4814874334277,2006,4.2,2,0
 24,Dracula,Bram Stoker,Philosophy,4229631642608,1865,4.8,3,0
-25,Frankenstein,Mary Shelley,Historical,3172815919421,1955,3.3,4,0
+25,Frankenstein,Mary Shelley,Historical,3172815919421,1955,3.3,3,1
 26,The Lord of the Flies,William Golding,Fiction,3336074784790,1971,4.8,1,0
 27,The Old Man and the Sea,Ernest Hemingway,Fantasy,5058902510875,1860,3.1,4,0
 28,Fahrenheit 451,Ray Bradbury,Classic,8356568255783,1884,4.6,3,0
@@ -218,7 +218,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 217,Wealth of Nations,Adam Smith,Sci-Fi,1698852473444,1914,4.3,2,0
 218,Leviathan,Thomas Hobbes,Sci-Fi,1509802642810,1933,3.8,4,0
 219,Confessions,St. Augustine,Romance,2416613883158,1977,3.2,1,0
-220,The Enchiridion,Epictetus,Fiction,3771305740902,1861,3.2,4,0
+220,The Enchiridion,Epictetus,Fiction,3771305740902,1861,3.2,3,1
 221,The Complete Sherlock Holmes,Arthur Conan Doyle,Classic,6526438548961,2006,3.2,1,0
 222,The Importance of Being Earnest,Oscar Wilde,Fantasy,6604911115319,1870,3.0,1,0
 223,The Turn of the Screw,Henry James,Classic,2385689871526,2024,3.0,1,0

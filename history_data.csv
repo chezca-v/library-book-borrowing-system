@@ -1,7 +1,10 @@
 student_id,student_name,book_id,book_title,borrow_date,return_date,returned
-stud15,FRIGILLANA,3,The Great Gatsby,2025-11-23,,0
-stud15,FRIGILLANA,52,The Time Machine,2025-11-23,2025-11-24,1
+stud15,FRIGILLANA,220,The Enchiridion,2025-11-24,,0
+stud19,LISTANGCO,25,Frankenstein,2025-11-24,,0
+stud19,LISTANGCO,10,The Iliad,2025-11-24,,0
+stud15,FRIGILLANA,96,Normal People,2025-11-23,2025-11-23,1
 stud4,BANAYAD,10,The Iliad,2025-11-23,2025-11-23,1
 stud19,LISTANGCO,17,The Picture of Dorian Gray,2025-11-23,,0
 stud4,BANAYAD,10,The Iliad,2025-11-23,2025-11-23,1
-stud15,FRIGILLANA,96,Normal People,2025-11-23,2025-11-23,1
+stud15,FRIGILLANA,52,The Time Machine,2025-11-23,2025-11-24,1
+stud15,FRIGILLANA,3,The Great Gatsby,2025-11-23,,0
