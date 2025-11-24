@@ -76,7 +76,7 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
     printf("============================================================\n");
     printf("Student: %s\n", studentName);
     printf("------------------------------------------------------------\n");
-    printf("Book Title                | Borrow Date | Status\n");
+    printf("ID  | Book Title                | Borrow Date | Status\n");
     printf("------------------------------------------------------------\n");
     
     BorrowHistory *temp = historyList;
@@ -87,8 +87,8 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
         if (strcmp(temp->studentId, studentId) == 0 && !temp->returned) {
             const char *status = "Active";
             
-            printf("%-25s | %-11s | %s\n", 
-                   temp->bookTitle, temp->borrowDate, status);
+            printf("%-3d | %-25s | %-11s | %s\n", 
+                   temp->bookId, temp->bookTitle, temp->borrowDate, status);
             found = 1;
         }
         temp = temp->next;
@@ -103,6 +103,7 @@ void viewCurrentBooks(const char *studentId, const char *studentName) {
         } else {
             printf("All books are within due date.\n");
         }
+        printf("\nTip: Use the Book ID above when returning books!\n");
     }
     printf("============================================================\n");
 }
@@ -271,7 +272,7 @@ void studentReturnBook(const char *studentId, const char *studentName) {
         pressEnter();
         return;
     }
-
+    
     BorrowHistory *histCheck = historyList;
     BorrowHistory *matchingRecord = NULL;
     while (histCheck != NULL) {
@@ -283,6 +284,7 @@ void studentReturnBook(const char *studentId, const char *studentName) {
         }
         histCheck = histCheck->next;
     }
+    
     if (matchingRecord == NULL) {
         printf("\nYou have not borrowed this book (or it is already returned).\n");
         pressEnter();
@@ -297,6 +299,9 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     }
     
     printf("\n------------------------------------------------------------\n");
+    printf("Book: %s\n", book->title);
+    printf("Current rating: %.1f stars\n", book->rating);
+    printf("------------------------------------------------------------\n");
     printf("Please rate this book (1-5 stars): ");
     if (scanf("%d", &rating) != 1 || rating < 1 || rating > 5) {
         printf("Invalid rating! Using default rating of 3.\n");
@@ -305,25 +310,60 @@ void studentReturnBook(const char *studentId, const char *studentName) {
     }
     
     printf("\n--- PROCESSING RETURN ---\n");
-    printf("Book: %s\n", book->title);
     printf("Before: %d copies available\n", book->quantity);
     
+    /* Update book quantity */
     book->quantity++;
     
     printf("After:  %d copies available\n", book->quantity);
+    
+    /* Update book rating (weighted average) */
+    /* Count ratings from return stack */
+    int ratingCount = 0;
+    
+    ReturnRecord *temp = returnStack;
+    while (temp != NULL) {
+        if (temp->bookId == bookId) {
+            ratingCount++;
+        }
+        temp = temp->next;
+    }
+    
+    /* Calculate new average rating */
+    float oldRating = book->rating;
+    if (ratingCount == 0) {
+        /* No previous ratings in stack, use simple average with current rating */
+        book->rating = (book->rating + (float)rating) / 2.0;
+    } else {
+        /* Calculate running average */
+        book->rating = (book->rating * ratingCount + (float)rating) / (ratingCount + 1);
+    }
+    
+    /* Ensure rating stays within 0-5 range */
+    if (book->rating > 5.0) book->rating = 5.0;
+    if (book->rating < 0.0) book->rating = 0.0;
+    
+    printf("\n--- RATING UPDATED ---\n");
+    printf("Previous rating: %.1f stars\n", oldRating);
+    printf("Your rating:     %d stars ", rating);
+    printStars(rating);
+    printf("\n");
+    printf("New rating:      %.1f stars\n", book->rating);
     printf("--- BOOK RETURNED TO SHELF ---\n");
     
+    /* Mark as returned in history */
     markAsReturned(studentId, bookId);
+    
+    /* Push to return stack */
     pushReturn(studentName, book->title, bookId, rating);
-
+    
+    /* Save all changes */
     saveHistoryToCSV();
     saveBooksToCSV();
-
-    printf("\nThank you! Book successfully returned.\n");
-    printf("Your rating: ");
-    printStars(rating);
-    printf(" (%d/5)\n", rating);
-    printf("This book has been logged in your Return History.\n");
+    
+    printf("\n✓ Book successfully returned and rated!\n");
+    printf("  Your rating has been recorded and the book's average\n");
+    printf("  rating has been updated in the catalog.\n");
     printf("============================================================\n");
     pressEnter();
 }

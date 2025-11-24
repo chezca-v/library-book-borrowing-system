@@ -17,7 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>   
+#include <string.h>
 #include <locale.h>
 #ifdef _WIN32
 #include <windows.h>
@@ -42,33 +42,36 @@ void displayWelcomeScreen(void) {
     printf("============================================================\n");
 }
 
+/* Comparison function for sorting books by borrowCount (descending) */
+static int cmpBorrowCountMain(const void *a, const void *b) {
+    Book *const *pa = (Book *const *)a;
+    Book *const *pb = (Book *const *)b;
+    return (*pb)->borrowCount - (*pa)->borrowCount;
+}
+
 void displayDashboardStats(void) {
     printf("============================================================\n");
     printf("              DASHBOARD / STATISTICS\n");
     printf("============================================================\n");
     
-    /* Count total unique books (titles) and total available copies */
-    int totalBookTitles = 0;
-    int totalAvailableCopies = 0;
+    /* Count total books and available */
+    int totalBooks = 0, availableBooks = 0;
     Book *temp = bookCatalog;
-    
     while (temp != NULL) {
-        totalBookTitles++;
-        totalAvailableCopies += temp->quantity;
+        totalBooks++;
+        availableBooks += temp->quantity;
         temp = temp->next;
     }
     
-    /* Count currently borrowed books (unreturned) */
+    /* Count borrowed books */
     int borrowedBooks = 0;
     BorrowHistory *hist = historyList;
     while (hist != NULL) {
-        if (!hist->returned) {
-            borrowedBooks++;
-        }
+        if (!hist->returned) borrowedBooks++;
         hist = hist->next;
     }
     
-    /* Count active borrowers (unique students with unreturned books) */
+    /* Count active borrowers */
     int activeBorrowers = 0;
     char counted[100][50];
     int countedIndex = 0;
@@ -93,38 +96,37 @@ void displayDashboardStats(void) {
         hist = hist->next;
     }
     
-    printf("Total Book Titles     :  %d\n", totalBookTitles);
-    printf("Total Copies Available:  %d\n", totalAvailableCopies);
-    printf("Total Copies Borrowed :  %d\n", borrowedBooks);
+    printf("Total Books Available :  %d\n", availableBooks);
+    printf("Total Books Borrowed  :  %d\n", borrowedBooks);
     printf("Active Borrowers      :  %d\n\n", activeBorrowers);
     
     /* Show top 5 most popular books */
     printf("Top 5 Most Popular Books (Popularity Counter):\n");
     printf("------------------------------------------------------------\n");
-    /* Collect books into array */
+    
+    /* Collect books into array and sort by borrowCount */
     int bookCount = 0;
     Book *iter = bookCatalog;
     while (iter) { bookCount++; iter = iter->next; }
+    
     if (bookCount > 0) {
         Book **arr = (Book**)malloc(sizeof(Book*) * bookCount);
         if (arr) {
             int i = 0;
             iter = bookCatalog;
             while (iter) { arr[i++] = iter; iter = iter->next; }
-            /* sort descending by borrowCount */
-            int cmpBorrowCount(const void *a, const void *b) {
-                Book *const *pa = a;
-                Book *const *pb = b;
-                return (*pb)->borrowCount - (*pa)->borrowCount;
-            }
-            qsort(arr, bookCount, sizeof(Book*), cmpBorrowCount);
+            
+            /* Sort descending by borrowCount */
+            qsort(arr, bookCount, sizeof(Book*), cmpBorrowCountMain);
+            
             int display = bookCount < 5 ? bookCount : 5;
             for (int r = 0; r < display; r++) {
-                printf("%d. %-40s (Borrowed %d times)\n", r+1, arr[r]->title, arr[r]->borrowCount);
+                printf("%d. %-40s (Borrowed %d times)\n", 
+                       r+1, arr[r]->title, arr[r]->borrowCount);
             }
             free(arr);
         } else {
-            /* fallback */
+            /* Fallback if malloc fails */
             temp = bookCatalog;
             int rank = 1;
             while (temp != NULL && rank <= 5) {

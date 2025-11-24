@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "stack.h"
+#include "history.h"  // Need this to access historyList
 
 /* Global stack pointer */
 ReturnRecord *returnStack = NULL;
@@ -72,17 +73,18 @@ void displayReturnHistory(const char *studentName) {
     printf("======================== RETURN HISTORY ======================\n");
     printf("Student: %s\n", studentName);
     printf("------------------------------------------------------------\n");
-    printf("Book Title                | Rating | Date Returned\n");
+    printf("Book Title                | Borrow Date | Return Date\n");
     printf("------------------------------------------------------------\n");
     
-    ReturnRecord *temp = returnStack;
+    /* Read from historyList (persistent data) instead of returnStack */
+    BorrowHistory *temp = historyList;
     int found = 0;
     
     while (temp != NULL) {
-        if (strcmp(temp->studentName, studentName) == 0) {
-            printf("%-25s |   ", temp->bookTitle);
-            printStars(temp->rating);
-            printf("   | %s\n", temp->dateReturned);
+        /* Check if matches student name AND book was returned */
+        if (strcmp(temp->studentName, studentName) == 0 && temp->returned) {
+            printf("%-25s | %-11s | %s\n", 
+                   temp->bookTitle, temp->borrowDate, temp->returnDate);
             found = 1;
         }
         temp = temp->next;

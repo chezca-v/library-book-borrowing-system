@@ -1,8 +1,8 @@
 id,title,author,genre,isbn,year,rating,quantity,borrowCount
 1,To Kill a Mockingbird,Harper Lee,Philosophy,2852792095852,1882,5.4,1,1
 2,1984,George Orwell,Philosophy,8611908019106,1955,4.9,1,0
-3,The Great Gatsby,F. Scott Fitzgerald,Sci-Fi,3435842592082,1981,4.2,3,0
-4,Pride and Prejudice,Jane Austen,Classic,9377662678857,1853,3.3,3,0
+3,The Great Gatsby,F. Scott Fitzgerald,Sci-Fi,3435842592082,1981,4.2,2,1
+4,Pride and Prejudice,Jane Austen,Classic,9377662678857,1853,3.3,6,0
 5,The Catcher in the Rye,J.D. Salinger,Fiction,3742142561580,1952,3.9,4,0
 6,Moby Dick,Herman Melville,Fiction,5250614836004,1903,4.4,1,0
 7,War and Peace,Leo Tolstoy,Sci-Fi,2293420507217,2014,4.2,2,0
@@ -15,7 +15,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 14,Great Expectations,Charles Dickens,Historical,6757854894215,2017,3.1,1,0
 15,Brave New World,Aldous Huxley,Classic,2082907749200,1884,3.8,4,0
 16,Animal Farm,George Orwell,Historical,1968806657060,1880,3.4,4,0
-17,The Picture of Dorian Gray,Oscar Wilde,Philosophy,1429530213071,1932,3.2,2,1
+17,The Picture of Dorian Gray,Oscar Wilde,Philosophy,1429530213071,1932,3.2,3,0
 18,Les Misérables,Victor Hugo,Classic,6417949136596,1986,4.2,1,0
 19,The Count of Monte Cristo,Alexandre Dumas,Fantasy,1254191400744,1942,4.7,1,0
 20,The Brothers Karamazov,Fyodor Dostoevsky,Sci-Fi,8634895033672,1865,3.8,4,0
@@ -50,7 +50,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 49,Journey to the Center of the Earth,Jules Verne,Sci-Fi,8358034338855,1856,5.0,3,0
 50,Twenty Thousand Leagues Under the Sea,Jules Verne,Historical,9335567538802,1908,3.8,1,0
 51,A Christmas Carol,Charles Dickens,Romance,6947953179988,1875,3.6,4,0
-52,The Time Machine,H.G. Wells,Horror,5563545432988,2002,3.2,3,0
+52,The Time Machine,H.G. Wells,Horror,5563545432988,2002,2.6,3,1
 53,The War of the Worlds,H.G. Wells,Horror,5998291028303,1855,4.1,1,0
 54,The Invisible Man,H.G. Wells,Fantasy,7781190298932,1877,4.3,1,0
 55,The Call of the Wild,Jack London,Romance,2430261357173,1885,3.8,1,0
@@ -94,7 +94,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 93,The Girl on the Train,Paula Hawkins,Sci-Fi,6833182987898,1947,3.4,2,0
 94,The Night Circus,Erin Morgenstern,Historical,5402161255695,1962,3.0,3,0
 95,The Goldfinch,Donna Tartt,Sci-Fi,9281709770002,1899,3.2,3,0
-96,Normal People,Sally Rooney,Fiction,3221838208907,1887,4.5,2,0
+96,Normal People,Sally Rooney,Fiction,3221838208907,1887,4.5,2,1
 97,The Silent Patient,Alex Michaelides,Horror,8235480203281,2023,3.9,3,0
 98,All the Light We Cannot See,Anthony Doerr,Historical,1654444542171,1879,4.7,3,0
 99,The Shadow of the Wind,Carlos Ruiz Zaf贸n,Fiction,7344255965499,1873,4.0,1,0
@@ -249,3 +249,4 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 248,The Divine Comedy,Dante Alighieri,Philosophy,1601973667356,1915,4.1,2,0
 249,Faust,Johann Wolfgang von Goethe,Philosophy,8265414288168,2007,3.6,3,0
 250,The Bhagavad Gita,Unknown,Romance,1290455165674,1901,4.8,4,0
+252,Just For the Summer,Abby Jimenez,Romance,5648958756,2024,5.0,2,0
