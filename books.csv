@@ -156,7 +156,7 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 155,Good Omens,Neil Gaiman & Terry Pratchett,Fiction,9723421597954,1905,4.3,1,0
 156,American Gods,Neil Gaiman,Romance,9673765093368,1998,3.2,2,0
 157,Neverwhere,Neil Gaiman,Fantasy,8334075251126,2004,3.4,2,0
-158,Coraline,Neil Gaiman,Romance,2843354471298,2001,3.2,3,0
+158,Coraline,Neil Gaiman,Romance,2843354471298,2001,4.1,3,1
 159,His Dark Materials: The Golden Compass,Philip Pullman,Sci-Fi,6456070740622,1929,4.6,2,0
 160,The Subtle Knife,Philip Pullman,Sci-Fi,8449379973103,1907,4.8,4,0
 161,The Amber Spyglass,Philip Pullman,Sci-Fi,4815224020514,1944,3.5,3,0
@@ -249,4 +249,4 @@ id,title,author,genre,isbn,year,rating,quantity,borrowCount
 248,The Divine Comedy,Dante Alighieri,Philosophy,1601973667356,1915,4.1,2,0
 249,Faust,Johann Wolfgang von Goethe,Philosophy,8265414288168,2007,3.6,3,0
 250,The Bhagavad Gita,Unknown,Romance,1290455165674,1901,4.8,4,0
-252,Just For the Summer,Abby Jimenez,Romance,5648958756,2024,5.0,2,0
+251,The Never List,Jade Presley,Fantasy,9781649377524,2025,4.0,3,0
