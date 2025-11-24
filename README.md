@@ -1,5 +1,5 @@
 # Library Book Borrowing System
-=======
+
 # C the Library 📚
 
 **"A C console-based system that helps you see what's borrowed"**
