@@ -209,12 +209,12 @@ addBook(&bookCatalog, createBook(
     </td>
 <td align="center">
       <b> Karl Joseph Esteban</b><br />
-      <i> Data Gathere </i><br />
+      <i> Data Gatherer </i><br />
  <a href="https://github.com/krljsph09">GitHub</a>
     </td>
 <td align="center">
       <b> Elena Vale Lanuza</b><br />
-      <i> Data Gathere </i><br />
+      <i> Data Gatherer </i><br />
  <a href="https://github.com/lenadevug">GitHub</a>
     </td>
 <td align="center">
