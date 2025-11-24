@@ -17,7 +17,8 @@ void clearScreen(void) {
 }
 
 void pressEnter(void) {
-    printf("\nPress ENTER to continue...");
+    // Changed to Cyan to make the instruction stand out
+    printf("\n%sPress ENTER to continue...%s", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
     while(getchar() != '\n');
     getchar();
 }
@@ -38,7 +39,11 @@ void addDaysToDate(char *buffer, int days) {
 void printStars(int rating) {
     int i;
     for (i = 0; i < 5; i++) {
-        if (i < rating) printf("*");
-        else printf("-");
+        if (i < rating) 
+            // Prints a YELLOW star
+            printf("%s*%s", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        else 
+            // Prints a normal dash (or you could make it gray)
+            printf("-");
     }
 }
