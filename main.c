@@ -2,17 +2,6 @@
  * main.c
  * C the Library - Main Program Entry Point
  * "A C console-based system that helps you see what's borrowed"
- * 
- * This is a modular library management system demonstrating:
- * - Linked Lists (Book Catalog)
- * - Queues (Borrow Requests) 
- * - Stacks (Return History)
- * - Dynamic Memory Management
- * - Recursion
- * - CSV File I/O
- * 
- * To compile: make
- * Or manually: gcc -std=c99 -Wall -Wextra *.c -o library
  */
 
 #include <stdio.h>
@@ -34,12 +23,13 @@
 
 void displayWelcomeScreen(void) {
     clearScreen();
-    printf("============================================================\n");
-    printf("              WELCOME TO C THE LIBRARY\n");
-    printf("============================================================\n");
-    printf("      A C console-based system that helps you\n");
+    // Blue borders, Cyan Title, Green subtitle for the "C" emphasis
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("              %s%sWELCOME TO C THE LIBRARY%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_BOLD, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("      A %sC%s console-based system that helps you\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
     printf("              see what's borrowed\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
 }
 
 /* Comparison function for sorting books by borrowCount (descending) */
@@ -50,9 +40,9 @@ static int cmpBorrowCountMain(const void *a, const void *b) {
 }
 
 void displayDashboardStats(void) {
-    printf("============================================================\n");
-    printf("              DASHBOARD / STATISTICS\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("              %sDASHBOARD / STATISTICS%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     /* Count total books and available */
     int totalBooks = 0, availableBooks = 0;
@@ -96,13 +86,14 @@ void displayDashboardStats(void) {
         hist = hist->next;
     }
     
-    printf("Total Books Available :  %d\n", availableBooks);
-    printf("Total Books Borrowed  :  %d\n", borrowedBooks);
-    printf("Active Borrowers      :  %d\n\n", activeBorrowers);
+    // Highlighting the numbers in GREEN to make them pop
+    printf("Total Books Available :  %s%d%s\n", ANSI_COLOR_GREEN, availableBooks, ANSI_COLOR_RESET);
+    printf("Total Books Borrowed  :  %s%d%s\n", ANSI_COLOR_YELLOW, borrowedBooks, ANSI_COLOR_RESET);
+    printf("Active Borrowers      :  %s%d%s\n\n", ANSI_COLOR_CYAN, activeBorrowers, ANSI_COLOR_RESET);
     
     /* Show top 5 most popular books */
-    printf("Top 5 Most Popular Books (Popularity Counter):\n");
-    printf("------------------------------------------------------------\n");
+    printf("%sTop 5 Most Popular Books (Popularity Counter):%s\n", ANSI_COLOR_MAGENTA, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     
     /* Collect books into array and sort by borrowCount */
     int bookCount = 0;
@@ -121,8 +112,11 @@ void displayDashboardStats(void) {
             
             int display = bookCount < 5 ? bookCount : 5;
             for (int r = 0; r < display; r++) {
-                printf("%d. %-40s (Borrowed %d times)\n", 
-                       r+1, arr[r]->title, arr[r]->borrowCount);
+                // Highlight the rank number and the borrow count
+                printf("%s%d.%s %-40s (Borrowed %s%d%s times)\n", 
+                       ANSI_COLOR_YELLOW, r+1, ANSI_COLOR_RESET, 
+                       arr[r]->title, 
+                       ANSI_COLOR_CYAN, arr[r]->borrowCount, ANSI_COLOR_RESET);
             }
             free(arr);
         } else {
@@ -139,17 +133,17 @@ void displayDashboardStats(void) {
         printf("No books available.\n");
     }
     
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     fflush(stdout);
 }
 
 void displayExitScreen(void) {
     clearScreen();
-    printf("============================================================\n");
-    printf("           THANK YOU FOR USING C THE LIBRARY\n");
-    printf("------------------------------------------------------------\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    printf("          %sTHANK YOU FOR USING C THE LIBRARY%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+    printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     printf("           \"See what's borrowed, in C.\"\n");
-    printf("============================================================\n");
+    printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
 }
 
 void freeMemory(void) {
@@ -163,11 +157,11 @@ int main(void) {
     int choice;
     char studentId[50], studentName[MAX_STRING];
 
-    /* Print build stamp to verify binary was rebuilt */
+    /* Print build stamp */
     printf("BUILD: compiled on %s %s\n", __DATE__, __TIME__);
     fflush(stdout);
 
-    /* Load all data from CSV files */
+    /* Load all data */
     loadBooksFromCSV();
     loadQueueFromCSV();
     loadHistoryFromCSV();
@@ -188,22 +182,23 @@ int main(void) {
         displayDashboardStats();
         
         printf("\n");
-        printf("============================================================\n");
-        printf("                     MAIN MENU\n");
-        printf("============================================================\n");
-        printf("[1] Log in as Admin\n");
-        printf("[2] Log in as Student\n");
-        printf("[3] Exit Program\n");
-        printf("------------------------------------------------------------\n");
-        printf("Enter choice: ");
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("                      %s%sMAIN MENU%s\n", ANSI_COLOR_CYAN, ANSI_COLOR_BOLD, ANSI_COLOR_RESET);
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        // Using Yellow brackets for options to guide the user
+        printf("%s[1]%s Log in as Admin\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[2]%s Log in as Student\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s[3]%s Exit Program\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
+        printf("%s------------------------------------------------------------%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+        printf("%sEnter choice: %s", ANSI_COLOR_BOLD, ANSI_COLOR_RESET);
         
         if (scanf("%d", &choice) != 1) {
             while(getchar() != '\n');
-            printf("Invalid input!\n");
+            printf("%sInvalid input!%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
             pressEnter();
             continue;
         }
-        printf("============================================================\n");
+        printf("%s============================================================%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
         
         switch(choice) {
             case 1:
@@ -220,17 +215,17 @@ int main(void) {
                 displayExitScreen();
                 break;
             default:
-                printf("Invalid choice! Please try again.\n");
+                printf("%sInvalid choice! Please try again.%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET);
                 pressEnter();
         }
     } while(choice != 3);
     
-    /* Save all data before exit */
+    /* Save all data */
     saveBooksToCSV();
     saveQueueToCSV();
     saveHistoryToCSV();
     
-    /* Free allocated memory */
+    /* Free memory */
     freeMemory();
     
     return 0;
