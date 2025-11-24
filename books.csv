@@ -1,7 +1,7 @@
 id,title,author,genre,isbn,year,rating,quantity,borrowCount
 1,To Kill a Mockingbird,Harper Lee,Philosophy,2852792095852,1882,5.4,1,1
 2,1984,George Orwell,Philosophy,8611908019106,1955,4.9,1,0
-3,The Great Gatsby,F. Scott Fitzgerald,Sci-Fi,3435842592082,1981,4.2,2,1
+3,The Great Gatsby,F. Scott Fitzgerald,Sci-Fi,3435842592082,1981,3.1,3,1
 4,Pride and Prejudice,Jane Austen,Classic,9377662678857,1853,3.3,6,0
 5,The Catcher in the Rye,J.D. Salinger,Fiction,3742142561580,1952,3.9,4,0
 6,Moby Dick,Herman Melville,Fiction,5250614836004,1903,4.4,1,0
